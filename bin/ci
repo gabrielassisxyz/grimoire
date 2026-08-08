@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# The exact checks CI runs. Keep this and .github/workflows/ci.yml in lockstep so
+# "green locally" means "green in CI". Non-zero on any failure, never a silent skip.
+set -euo pipefail
+
+for b in uv python3; do
+    command -v "$b" >/dev/null || { echo "missing: $b, install it before running bin/ci" >&2; exit 1; }
+done
+
+echo "==> ruff format"; uv run ruff format --check .
+echo "==> ruff lint";   uv run ruff check .
+
+echo "==> test";        uv run pytest
+
+echo "==> audit";       uv run pip-audit
+
+echo "==> markdown is soft-wrapped"
+# One paragraph, one line. Rewrapping belongs to whatever renders the text, since that is
+# the only thing that knows the reader's width. It is a gate rather than a written rule
+# because hard wrap spreads by contact: every editor and agent inherits the wrap of the
+# file it is editing. It also prevents a real defect, where a break landing in front of
+# `#`, `-`, `>` or `1.` turns the continuation into a block.
+python3 scripts/md-unwrap.py --check .
+
+# Last, so a prose finding never hides a broken build. A whole-tree scan rather than
+# --diff: this repo starts with no prose debt, so zero tolerance is reachable here, and
+# it stays reachable precisely because nothing is ever grandfathered in.
+echo "==> slop-guard"; bin/slop-guard
+
+echo "CI green."

@@ -1,0 +1,35 @@
+[project]
+name = "grimoire"
+version = "0.0.0"
+description = "A deterministic in-run advisor for roguelike games: structured catalog, simulated effects, LLM as the explanation layer."
+requires-python = ">=3.12"
+# Runtime deps land here as modules import them. `ai-overlay-core` (capture + LLM +
+# settings) is the intended dependency and is NOT declared yet: it is not published, and
+# a lockfile pointing at an unpublished git source fails every clone and every CI run.
+# See ROADMAP.md "Not started".
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15",
+    "pytest>=8.0",
+    "pip-audit>=2.7",
+]
+
+[tool.ruff]
+target-version = "py312"
+# Vendored from the shared harness and kept byte-identical, which the harness checker
+# verifies by checksum. Formatting it here would put this copy permanently out of sync
+# with the source it is checked against, so it is excluded rather than reformatted.
+# Everything this repo actually authors stays linted.
+extend-exclude = ["scripts/md-unwrap.py"]
+
+[tool.ruff.lint]
+# Starter set: pyflakes (F), pycodestyle (E), isort (I), bugbear (B), pyupgrade (UP).
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# The package lives at the repo root (run as `python -m grimoire`); put the root on
+# sys.path so tests import it without an install step.
+pythonpath = ["."]
