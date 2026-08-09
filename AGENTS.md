@@ -84,6 +84,8 @@ The rules that cannot be retrofitted. Publication does not clean a history: a bl
 
 - Every feature is born with a test; every bugfix with a regression test.
 - **Hermetic by default.** Tests must not touch the network, a real game install, a real screenshot, or a real model. Screenshots are committed fixtures, cropped to the game only; vision and LLM calls go through named fakes, never inline stubs.
+- **A fixture is exactly what the tool would send, and nothing else.** Cropped to the game window, never the desktop, and downscaled through the same path production uses. Two reasons, and both have bitten other projects. A full-desktop grab tests the extractor on input it will never receive, so a green test proves nothing about the real path; it also spends most of the model's resolution budget on whatever else was on screen, which is precisely the text that has to be read exactly. And it publishes that surrounding content into a public repository permanently.
+- **Record the window geometry alongside each fixture.** The game's interface reflows with the window, so geometry is a variable the extractor is measured against rather than an incidental detail. A fixture set that varies only in what the game shows, while every capture came from one window size, has not tested the case where the player rearranges their desktop.
 - Every formula in the effect engine has a test derived from a recorded measurement, and the test carries that measurement's provenance. A formula whose test cannot cite its evidence is a guess with a green check next to it.
 - Tests run with ONE command (`uv run pytest`), no manual setup and no credential. If it cannot run headless, it is wrong.
 - Before saying "done", run `bin/ci` and show the result.
