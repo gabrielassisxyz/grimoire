@@ -94,12 +94,12 @@ def read_build_id(install: pathlib.Path) -> str:
     return match.group(1)
 
 
-def read_grants(assets: pathlib.Path) -> dict[str, tuple[str, int]]:
-    """Map each rune identifier to the character and tier of the node that grants it."""
+def read_grants(assets: pathlib.Path) -> dict[str, tuple[str, str, int]]:
+    """Map each rune identifier to the node that grants it, with its character."""
     import UnityPy
 
     env = UnityPy.load(str(assets))
-    grants: dict[str, tuple[str, int]] = {}
+    grants: dict[str, tuple[str, str, int]] = {}
     for obj in env.objects:
         if obj.type.name != "MonoBehaviour":
             continue
@@ -113,7 +113,7 @@ def read_grants(assets: pathlib.Path) -> dict[str, tuple[str, int]]:
         for token in IDENTIFIER.findall(obj.get_raw_data()):
             identifier = token.decode()
             if identifier.startswith("Rune"):
-                grants[identifier] = (node.group(1), int(node.group(2)))
+                grants[identifier] = (name, node.group(1), int(node.group(2)))
     return grants
 
 
@@ -146,13 +146,13 @@ def read_wiki(wiki: pathlib.Path) -> dict[str, tuple[dict[str, tuple[str, int]],
 
 
 def join(
-    grants: dict[str, tuple[str, int]],
+    grants: dict[str, tuple[str, str, int]],
     pages: dict[str, tuple[dict[str, tuple[str, int]], str]],
 ) -> tuple[dict[str, tuple[str, int, str, str]], list[str]]:
     """Pair identifiers with display names, and report every pair that did not form."""
     paired: dict[str, tuple[str, int, str, str]] = {}
     gaps: list[str] = []
-    for identifier, (character, tier) in sorted(grants.items()):
+    for identifier, (node, character, tier) in sorted(grants.items()):
         page = pages.get(character)
         if not page:
             gaps.append(f"{identifier}: no wiki page for {character}")
@@ -173,7 +173,7 @@ def join(
             gaps.append(f"{identifier}: {character} has no row at {threshold}")
             continue
         display, cost = rows[threshold]
-        paired[identifier] = (display, cost, character, url)
+        paired[identifier] = (display, cost, node, url)
     return paired, gaps
 
 
@@ -196,13 +196,15 @@ def check_anchors(paired: dict[str, tuple[str, int, str, str]]) -> None:
 def emit(
     paired: dict[str, tuple[str, int, str, str]], asset_path: str, build_id: str
 ) -> None:
-    for identifier, (display, cost, character, url) in sorted(paired.items()):
+    for identifier, (display, cost, node, url) in sorted(paired.items()):
         print("\n[[rune]]")
         print(f'id = "{identifier}"')
         print(f'display = "{display}"')
         print('slot = "tenacity"')
         print(f"runic_power_cost = {cost}")
-        print(f"# Granted by {character}'s skill tree.")
+        # The node is what makes ownership readable: the save records a node the
+        # player has bought, so a rune whose node is present is a rune they hold.
+        print(f'unlocked_by = "{node}"')
         # The identifier is read from the install and the name from the wiki, so the
         # pair is only as strong as the correspondence joining them.
         print("confidence = 0.9")

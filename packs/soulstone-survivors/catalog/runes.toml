@@ -68,6 +68,7 @@ runic_power_cost = 2
 # Target at that tier's threshold. That is the pair only. The wiki's rune table gives
 # 25% against the 50% above, so this entry now has a third source and it disagrees;
 # nothing here settles that, because the magnitude has not been read out of the install.
+unlocked_by = "Houndmaster_T03S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -100,6 +101,7 @@ display = "Vulnerable Exploit"
 slot = "tenacity"
 effect = "crit damage +0.5% per stack of Dazed or Disoriented, caps at 25% at 50 stacks"
 runic_power_cost = 3
+unlocked_by = "Paladin_T02S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -131,6 +133,7 @@ effect = "damage +30% while any boss is alive, including titans and the cathedra
 # spreadsheet's "any boss, including titans and the cathedral final boss" is wrong, and
 # the effect line above still carries it.
 runic_power_cost = 3
+unlocked_by = "Necromancer_T02S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -249,6 +252,7 @@ display = "Devastating Blow"
 slot = "tenacity"
 runic_power_cost = 4
 # Granted by Pirate's skill tree.
+unlocked_by = "Pirate_T04S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -268,6 +272,7 @@ display = "Chaotic Aptitude"
 slot = "tenacity"
 runic_power_cost = 1
 # Granted by DemonHunter's skill tree.
+unlocked_by = "DemonHunter_T04S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -287,6 +292,7 @@ display = "Prophecy"
 slot = "tenacity"
 runic_power_cost = 1
 # Granted by Shaman's skill tree.
+unlocked_by = "Shaman_T02S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -306,6 +312,7 @@ display = "Advanced Tactics"
 slot = "tenacity"
 runic_power_cost = 2
 # Granted by Machinist's skill tree.
+unlocked_by = "Machinist_T02S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -325,6 +332,7 @@ display = "Impaler"
 slot = "tenacity"
 runic_power_cost = 2
 # Granted by Legionnaire's skill tree.
+unlocked_by = "Legionnaire_T04S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -344,6 +352,7 @@ display = "Death Touch"
 slot = "tenacity"
 runic_power_cost = 2
 # Granted by Necromancer's skill tree.
+unlocked_by = "Necromancer_T03S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -363,6 +372,7 @@ display = "Decapitator"
 slot = "tenacity"
 runic_power_cost = 3
 # Granted by Barbarian's skill tree.
+unlocked_by = "Barbarian_T04S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -382,6 +392,7 @@ display = "Enduring Cold"
 slot = "tenacity"
 runic_power_cost = 1
 # Granted by Myrmidon's skill tree.
+unlocked_by = "Myrmidon_T03S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -401,6 +412,7 @@ display = "Unconventional Start"
 slot = "tenacity"
 runic_power_cost = 0
 # Granted by Sentinel's skill tree.
+unlocked_by = "Sentinel_T02S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -420,6 +432,7 @@ display = "Swift Execution"
 slot = "tenacity"
 runic_power_cost = 2
 # Granted by Samurai's skill tree.
+unlocked_by = "Samurai_T04S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -439,6 +452,7 @@ display = "Pirate's Rum"
 slot = "tenacity"
 runic_power_cost = 0
 # Granted by Pirate's skill tree.
+unlocked_by = "Pirate_T02S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -458,6 +472,7 @@ display = "War Tank"
 slot = "tenacity"
 runic_power_cost = 1
 # Granted by Legionnaire's skill tree.
+unlocked_by = "Legionnaire_T02S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -477,6 +492,7 @@ display = "Pulse of Agony"
 slot = "tenacity"
 runic_power_cost = 2
 # Granted by Houndmaster's skill tree.
+unlocked_by = "Houndmaster_T02S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -496,6 +512,7 @@ display = "Adrenaline"
 slot = "tenacity"
 runic_power_cost = 3
 # Granted by Barbarian's skill tree.
+unlocked_by = "Barbarian_T03S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -515,6 +532,7 @@ display = "Quick Reload"
 slot = "tenacity"
 runic_power_cost = 1
 # Granted by Engineer's skill tree.
+unlocked_by = "Engineer_T03S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -534,6 +552,7 @@ display = "Merciless Precision"
 slot = "tenacity"
 runic_power_cost = 3
 # Granted by Pyromancer's skill tree.
+unlocked_by = "Pyromancer_T02S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -553,6 +572,7 @@ display = "Fateful Strike"
 slot = "tenacity"
 runic_power_cost = 0
 # Granted by DemonHunter's skill tree.
+unlocked_by = "DemonHunter_T02S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -572,6 +592,7 @@ display = "Searing Intensity"
 slot = "tenacity"
 runic_power_cost = 3
 # Granted by Pyromancer's skill tree.
+unlocked_by = "Pyromancer_T03S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -591,6 +612,7 @@ display = "Last Resort"
 slot = "tenacity"
 runic_power_cost = 1
 # Granted by Barbarian's skill tree.
+unlocked_by = "Barbarian_T02S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -610,6 +632,7 @@ display = "Versatile Strength"
 slot = "tenacity"
 runic_power_cost = 3
 # Granted by Beastmaster's skill tree.
+unlocked_by = "Beastmaster_T03S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -629,6 +652,7 @@ display = "Synchrony"
 slot = "tenacity"
 runic_power_cost = 2
 # Granted by Elementalist's skill tree.
+unlocked_by = "Elementalist_T02S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -648,6 +672,7 @@ display = "Sacrificed Growth"
 slot = "tenacity"
 runic_power_cost = 3
 # Granted by ArcaneWeaver's skill tree.
+unlocked_by = "ArcaneWeaver_T03S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -667,6 +692,7 @@ display = "Amplified Power"
 slot = "tenacity"
 runic_power_cost = 3
 # Granted by Houndmaster's skill tree.
+unlocked_by = "Houndmaster_T04S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -686,6 +712,7 @@ display = "Glass Cannon"
 slot = "tenacity"
 runic_power_cost = 2
 # Granted by Rogue's skill tree.
+unlocked_by = "Rogue_T02S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -705,6 +732,7 @@ display = "Immovable Object"
 slot = "tenacity"
 runic_power_cost = 1
 # Granted by Sentinel's skill tree.
+unlocked_by = "Sentinel_T04S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -724,6 +752,7 @@ display = "Immortality"
 slot = "tenacity"
 runic_power_cost = 1
 # Granted by MonkeyKing's skill tree.
+unlocked_by = "MonkeyKing_T04S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -743,6 +772,7 @@ display = "Light Feet"
 slot = "tenacity"
 runic_power_cost = 1
 # Granted by Rogue's skill tree.
+unlocked_by = "Rogue_T03S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -762,6 +792,7 @@ display = "Extended Reach"
 slot = "tenacity"
 runic_power_cost = 3
 # Granted by Sentinel's skill tree.
+unlocked_by = "Sentinel_T03S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -781,6 +812,7 @@ display = "Improved Repertory"
 slot = "tenacity"
 runic_power_cost = 3
 # Granted by Necromancer's skill tree.
+unlocked_by = "Necromancer_T04S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -800,6 +832,7 @@ display = "Armor-piercing Rounds"
 slot = "tenacity"
 runic_power_cost = 2
 # Granted by Engineer's skill tree.
+unlocked_by = "Engineer_T04S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -819,6 +852,7 @@ display = "Absolute Zero"
 slot = "tenacity"
 runic_power_cost = 2
 # Granted by Myrmidon's skill tree.
+unlocked_by = "Myrmidon_T02S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -838,6 +872,7 @@ display = "Extra Help"
 slot = "tenacity"
 runic_power_cost = 1
 # Granted by Beastmaster's skill tree.
+unlocked_by = "Beastmaster_T04S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -857,6 +892,7 @@ display = "Oscillating Power"
 slot = "tenacity"
 runic_power_cost = 3
 # Granted by DeathKnight's skill tree.
+unlocked_by = "DeathKnight_T03S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -876,6 +912,7 @@ display = "Focused Mind"
 slot = "tenacity"
 runic_power_cost = 3
 # Granted by MonkeyKing's skill tree.
+unlocked_by = "MonkeyKing_T02S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -895,6 +932,7 @@ display = "Extended Magazines"
 slot = "tenacity"
 runic_power_cost = 1
 # Granted by Engineer's skill tree.
+unlocked_by = "Engineer_T02S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -914,6 +952,7 @@ display = "Curse of the Depths"
 slot = "tenacity"
 runic_power_cost = 3
 # Granted by Pirate's skill tree.
+unlocked_by = "Pirate_T03S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -933,6 +972,7 @@ display = "Frozen Blood"
 slot = "tenacity"
 runic_power_cost = 1
 # Granted by Myrmidon's skill tree.
+unlocked_by = "Myrmidon_T04S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -952,6 +992,7 @@ display = "Battle Proficiency"
 slot = "tenacity"
 runic_power_cost = 1
 # Granted by MonkeyKing's skill tree.
+unlocked_by = "MonkeyKing_T03S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -971,6 +1012,7 @@ display = "Ready for Battle"
 slot = "tenacity"
 runic_power_cost = 1
 # Granted by DeathKnight's skill tree.
+unlocked_by = "DeathKnight_T02S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -990,6 +1032,7 @@ display = "Divine Legacy"
 slot = "tenacity"
 runic_power_cost = 3
 # Granted by ArcaneWeaver's skill tree.
+unlocked_by = "ArcaneWeaver_T04S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1009,6 +1052,7 @@ display = "Quality Standards"
 slot = "tenacity"
 runic_power_cost = 3
 # Granted by DeathKnight's skill tree.
+unlocked_by = "DeathKnight_T04S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1028,6 +1072,7 @@ display = "Arduous Training"
 slot = "tenacity"
 runic_power_cost = 0
 # Granted by Samurai's skill tree.
+unlocked_by = "Samurai_T02S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1047,6 +1092,7 @@ display = "Savage Pact"
 slot = "tenacity"
 runic_power_cost = 2
 # Granted by Shaman's skill tree.
+unlocked_by = "Shaman_T03S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1066,6 +1112,7 @@ display = "Harmony"
 slot = "tenacity"
 runic_power_cost = 3
 # Granted by Beastmaster's skill tree.
+unlocked_by = "Beastmaster_T02S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1085,6 +1132,7 @@ display = "Elemental Power"
 slot = "tenacity"
 runic_power_cost = 3
 # Granted by Machinist's skill tree.
+unlocked_by = "Machinist_T04S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1104,6 +1152,7 @@ display = "Efficient Extraction"
 slot = "tenacity"
 runic_power_cost = 0
 # Granted by ArcaneWeaver's skill tree.
+unlocked_by = "ArcaneWeaver_T02S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1123,6 +1172,7 @@ display = "Elemental Flow"
 slot = "tenacity"
 runic_power_cost = 1
 # Granted by Elementalist's skill tree.
+unlocked_by = "Elementalist_T03S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1142,6 +1192,7 @@ display = "Enduring Spirit"
 slot = "tenacity"
 runic_power_cost = 1
 # Granted by Samurai's skill tree.
+unlocked_by = "Samurai_T03S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1161,6 +1212,7 @@ display = "Efficiency Focus"
 slot = "tenacity"
 runic_power_cost = 1
 # Granted by Machinist's skill tree.
+unlocked_by = "Machinist_T03S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1180,6 +1232,7 @@ display = "Sacred Offering"
 slot = "tenacity"
 runic_power_cost = 2
 # Granted by Shaman's skill tree.
+unlocked_by = "Shaman_T04S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1199,6 +1252,7 @@ display = "Endless Refill"
 slot = "tenacity"
 runic_power_cost = 0
 # Granted by Elementalist's skill tree.
+unlocked_by = "Elementalist_T04S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1218,6 +1272,7 @@ display = "Healing Flow"
 slot = "tenacity"
 runic_power_cost = 2
 # Granted by Paladin's skill tree.
+unlocked_by = "Paladin_T04S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1237,6 +1292,7 @@ display = "Unwavering Persistence"
 slot = "tenacity"
 runic_power_cost = 3
 # Granted by Paladin's skill tree.
+unlocked_by = "Paladin_T03S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1256,6 +1312,7 @@ display = "All or Nothing"
 slot = "tenacity"
 runic_power_cost = 2
 # Granted by Rogue's skill tree.
+unlocked_by = "Rogue_T04S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1275,6 +1332,7 @@ display = "Adaptive Empowerment"
 slot = "tenacity"
 runic_power_cost = 2
 # Granted by Pyromancer's skill tree.
+unlocked_by = "Pyromancer_T04S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1294,6 +1352,7 @@ display = "Material Harvest"
 slot = "tenacity"
 runic_power_cost = 0
 # Granted by Legionnaire's skill tree.
+unlocked_by = "Legionnaire_T03S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1313,6 +1372,7 @@ display = "Commoner"
 slot = "tenacity"
 runic_power_cost = 2
 # Granted by Spellbreaker's skill tree.
+unlocked_by = "Spellbreaker_T03S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1332,6 +1392,7 @@ display = "Misfortune's Embrace"
 slot = "tenacity"
 runic_power_cost = 2
 # Granted by Bloodmage's skill tree.
+unlocked_by = "Bloodmage_T03S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1351,6 +1412,7 @@ display = "Head Start"
 slot = "tenacity"
 runic_power_cost = 2
 # Granted by Spellbreaker's skill tree.
+unlocked_by = "Spellbreaker_T02S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1370,6 +1432,7 @@ display = "Demonic Pact"
 slot = "tenacity"
 runic_power_cost = -2
 # Granted by DemonHunter's skill tree.
+unlocked_by = "DemonHunter_T03S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1389,6 +1452,7 @@ display = "Gambler"
 slot = "tenacity"
 runic_power_cost = 0
 # Granted by Bloodmage's skill tree.
+unlocked_by = "Bloodmage_T02S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1408,6 +1472,7 @@ display = "Overwhelming Chaos"
 slot = "tenacity"
 runic_power_cost = 1
 # Granted by Bloodmage's skill tree.
+unlocked_by = "Bloodmage_T04S01"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1427,6 +1492,7 @@ display = "Unexpected Arsenal"
 slot = "tenacity"
 runic_power_cost = 0
 # Granted by Spellbreaker's skill tree.
+unlocked_by = "Spellbreaker_T04S01"
 confidence = 0.9
 
 [[rune.evidence]]

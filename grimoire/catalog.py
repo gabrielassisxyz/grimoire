@@ -65,6 +65,11 @@ class CatalogEntry:
     kind: str
     confidence: float
     evidence: tuple[Evidence, ...]
+    # The skill tree node that grants this, where one does. It is what makes ownership
+    # decidable from the save rather than asked of the player: the save lists the nodes
+    # bought, so a record naming its node can be answered, and a record without one can
+    # only be reported as unknown. Optional because most kinds have no such node.
+    unlocked_by: str | None = None
 
 
 class Catalog:
@@ -76,6 +81,9 @@ class Catalog:
 
     def __len__(self) -> int:
         return len(self._by_id)
+
+    def entries_of_kind(self, kind: str) -> list[CatalogEntry]:
+        return [e for e in self._by_id.values() if e.kind == kind]
 
     def entry(self, identifier: str) -> CatalogEntry:
         found = self._by_id.get(identifier)
@@ -159,7 +167,16 @@ def _read_record(where: str, kind: str, record: object) -> CatalogEntry:
         kind=kind,
         confidence=_read_confidence(where, record),
         evidence=_read_evidence(where, record),
+        unlocked_by=_read_optional_text(where, record, "unlocked_by"),
     )
+
+
+def _read_optional_text(
+    where: str, record: Mapping[str, object], field: str
+) -> str | None:
+    if field not in record:
+        return None
+    return _read_text(where, record, field)
 
 
 def _read_text(where: str, record: Mapping[str, object], field: str) -> str:
