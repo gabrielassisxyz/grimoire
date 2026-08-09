@@ -18,6 +18,51 @@ PACK = Path(__file__).resolve().parents[1] / "packs/soulstone-survivors"
 PACK_CATALOG = PACK / "catalog"
 PILOT_BUILD = PACK / "builds/barbarian-electric.toml"
 
+# Every rune identifier this player's save has ever written, across runespresets and
+# game stats. It is the advisor's real input, so it is what the catalog is measured
+# against rather than a sample chosen to pass.
+SAVED_RUNES = [
+    "RuneAffinityElectric",
+    "RuneAffinityNature",
+    "RuneChanceToKill",
+    "RuneCriticalMastery",
+    "RuneDashMastery",
+    "RuneExtraCastFrequencyBleed",
+    "RuneExtraCastFrequencyHealthMissing",
+    "RuneExtraCritChance",
+    "RuneExtraCritDamageAgainstDazed",
+    "RuneExtraDamageHealthLessThan",
+    "RuneExtraDamageHealthMissing",
+    "RuneExtraDamagePerDuplicatedTag",
+    "RuneExtraDamagePerEffect",
+    "RuneExtraDamageWhileBossIsAlive",
+    "RuneInclinationElectric",
+    "RuneMasteryArcane",
+    "RuneMasteryElectric",
+    "RuneMasteryFire",
+    "RuneMasterySwing",
+    "RuneMaterialCollector",
+    "RuneNegativeEffectsDealDamageFaster",
+    "RuneRerollMastery",
+    "RuneStartWeaponSkill",
+    "RuneStunImmune",
+    "RuneSynergiesChance",
+]
+
+# Runes this save holds that no character's skill tree grants. They unlock through
+# achievements, which the extraction does not read, so they have no record yet.
+UNLOCKED_BY_ACHIEVEMENT = [
+    "RuneAffinityNature",
+    "RuneDashMastery",
+    "RuneExtraDamageHealthMissing",
+    "RuneExtraDamagePerEffect",
+    "RuneMasteryArcane",
+    "RuneMasteryFire",
+    "RuneMasterySwing",
+    "RuneStunImmune",
+    "RuneSynergiesChance",
+]
+
 
 def write(directory: Path, kind: str, body: str) -> None:
     (directory / f"{kind}s.toml").write_text(body)
@@ -319,3 +364,27 @@ class TestThePackItself:
         build = tomllib.loads(PILOT_BUILD.read_text())
         wanted = [r["id"] for r in build["runes"]] + [build["meta"]["weapon"]]
         assert catalog.missing(wanted) == []
+
+    def test_the_catalog_covers_the_save_up_to_a_named_boundary(self) -> None:
+        # The identifiers this player's save carries are the advisor's real input, so
+        # they are what the catalog is measured against. Sixteen of the twenty-five now
+        # resolve where ten did before. The nine that do not are one boundary and not
+        # nine accidents: every rune below is unlocked by an achievement rather than by
+        # a character's skill tree, and the extraction only walks the trees. Asserting
+        # the exact set rather than a count is what makes the gap a decision on record;
+        # closing it is expected to change this line.
+        catalog = load(PACK_CATALOG)
+        assert catalog.missing(SAVED_RUNES) == UNLOCKED_BY_ACHIEVEMENT
+
+    def test_a_pair_that_only_the_install_could_produce(self) -> None:
+        # Neither source reaches this on its own: the identifier exists only in the
+        # install and the name only on the wiki, and nothing about one suggests the
+        # other. It is here so the join is pinned by a case that cannot be guessed.
+        catalog = load(PACK_CATALOG)
+        assert catalog.id_for("All or Nothing") == "RuneSetHealthToOne"
+
+    def test_the_extracted_records_cite_the_install_they_were_read_from(self) -> None:
+        catalog = load(PACK_CATALOG)
+        entry = catalog.entry("RuneSetHealthToOne")
+        asset = next(e for e in entry.evidence if e.type == "game_asset")
+        assert asset.detail["build_id"] == "1.5d2"
