@@ -14,18 +14,27 @@
 # than being told, so those records carry the lower confidence and are worth upgrading
 # whenever a tooltip for one of them is captured.
 #
-# Absent on purpose: "Skill Inclination: Electric", which the pilot build needs.
+# Three runes are one rune with a type selector, which the naming hides. Skill
+# Affinity, Skill Inclination and Skill Mastery each appear once in the interface and
+# open a dialog of the fifteen skill types, and the game states that each type selected
+# consumes one versatility slot. So the interface labels a whole family "Skill Affinity"
+# while the save writes RuneAffinityElectric and RuneAffinityNature, and the label alone
+# cannot be a catalog display name because it is not unique per identifier. The
+# qualified name the wiki and the spreadsheet use is, and that is what the records below
+# carry.
 #
-# What is known about that gap is worth writing down, because the obvious answer is a
-# trap. No identifier containing "Inclination" exists in any slot of any domain of the
-# save, while RuneAffinityElectric does, and it sits in a versatility slot of the preset
-# that otherwise matches the pilot build. The spreadsheet and the wiki agree that Skill
-# Affinity and Skill Inclination are two different runes with two different unlock
-# conditions, prestige 30 and prestige 60 on the same character. So either the internal
-# name for the rune the interface calls Inclination is RuneAffinityElectric, and it is
-# Affinity that has never been written to this save, or the reverse holds. Nothing
-# available decides it, and taking the reading that matches the spelling is exactly the
-# resemblance rule this file exists to refuse. The resolver names it as missing.
+# Absent on purpose: "Skill Inclination: Electric", which the pilot build needs. The
+# player owns it, so this is a catalog gap and not an ownership one.
+#
+# It was worth an experiment rather than a guess, and the experiment overturned the
+# reading that looked safe. No identifier containing "Inclination" appears in any slot
+# of any domain of the save, while RuneAffinityElectric does and sits in the versatility
+# slot the pilot build wants. Either the interface's Inclination was written as
+# RuneAffinityElectric, or Inclination had simply never been written to this save. The
+# spelling favoured the second, which is exactly the reason not to trust it. Equipping
+# Skill Affinity with the Electric type into an empty preset settled it: the save gained
+# that one identifier, so it belongs to Affinity, and the rune the build asks for has an
+# identifier nothing here has yet observed.
 
 [[rune]]
 id = "RuneRerollMastery"
@@ -96,6 +105,34 @@ confidence = 0.9
 [[rune.evidence]]
 type = "community_source"
 url = "https://docs.google.com/spreadsheets/d/1eUs13Fx0I-3MRBID-DcGoxcbbm1DviNXl_RYXXxJ9OA/"
+retrieved = "2026-08-08"
+game_version = "1.5d"
+
+[[rune]]
+id = "RuneAffinityElectric"
+display = "Skill Affinity: Electric"
+slot = "versatility"
+effect = "the first offer of active skills contains only Electric skills where possible"
+# The one record here that three unrelated readings agree on, which is why it is the
+# only 0.9 that became a 1.0 by being checked rather than by being restated.
+confidence = 1.0
+
+[[rune.evidence]]
+type = "measured"
+procedure = "equip Skill Affinity with the Electric type into an empty preset, return to the main menu so the game writes, and read runespresets again"
+before = "the preset of character 18 held zero runes; the payload was 4944 bytes at write counter 173"
+after = "that preset holds exactly one rune, RuneAffinityElectric; comparing the payloads byte by byte, the only other difference in the file is the write counter"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "game_screen"
+fixture = "panel_1896x2097_20260809-135427.png"
+window = "1896x2097"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Elementalist"
 retrieved = "2026-08-08"
 game_version = "1.5d"
 

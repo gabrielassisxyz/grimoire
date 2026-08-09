@@ -289,11 +289,22 @@ class TestThePackItself:
         catalog = load(PACK_CATALOG)
         assert catalog.id_for("Lord's Bane") == "RuneExtraDamageWhileBossIsAlive"
 
+    def test_the_neighbouring_rune_of_the_pair_resolves(self) -> None:
+        catalog = load(PACK_CATALOG)
+        assert catalog.id_for("Skill Affinity: Electric") == "RuneAffinityElectric"
+
+    def test_the_experiment_is_recorded_on_the_record_it_settled(self) -> None:
+        # The pair rests on an experiment, and a record claiming 1.0 without the
+        # reading that earns it is the failure the evidence list was added to stop.
+        entry = load(PACK_CATALOG).entry("RuneAffinityElectric")
+        assert "measured" in {e.type for e in entry.evidence}
+        assert entry.confidence == 1.0
+
     def test_the_rune_the_pilot_still_lacks_is_reported_as_a_gap(self) -> None:
-        # Absent on purpose. The save holds RuneAffinityElectric and nothing decides
-        # whether that is this rune or the neighbouring one the interface spells
-        # almost the same way, so a later commit resolving it should have to change
-        # this test deliberately rather than pass it by accident.
+        # Absent on purpose, and now absent for a settled reason: the identifier that
+        # looked like this rune was proven to belong to its neighbour, so this one has
+        # an identifier nothing has observed. A later commit resolving it should have
+        # to change this test deliberately rather than pass it by accident.
         catalog = load(PACK_CATALOG)
         with pytest.raises(CatalogError):
             catalog.id_for("Skill Inclination: Electric")
