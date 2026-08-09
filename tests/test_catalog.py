@@ -388,3 +388,21 @@ class TestThePackItself:
         entry = catalog.entry("RuneSetHealthToOne")
         asset = next(e for e in entry.evidence if e.type == "game_asset")
         assert asset.detail["build_id"] == "1.5d2"
+
+    def test_the_two_contested_magnitudes_are_the_ones_the_game_stores(self) -> None:
+        # Two community sources gave 25% for both of these and the spreadsheet gave 50
+        # and 30. The installed game stores 50 and 30, so the pair of sources is stale
+        # together. Pinned here because it is the one place a later re-extraction could
+        # quietly revert to the wiki's numbers.
+        catalog = load(PACK_CATALOG)
+        assert catalog.entry("RuneExtraCritChance").parameters == (50.0,)
+        assert catalog.entry("RuneExtraDamageWhileBossIsAlive").parameters == (30.0,)
+
+    def test_a_record_whose_parameters_reproduce_its_own_prose(self) -> None:
+        # The control for the reading above. This record's effect was written from the
+        # spreadsheet, before any extraction, and the parameters the install stores are
+        # the same two numbers in the same order. A wrongly identified field would not
+        # land on both.
+        entry = load(PACK_CATALOG).entry("RuneExtraCritDamageAgainstDazed")
+        assert 0.5 in entry.parameters
+        assert 25.0 in entry.parameters

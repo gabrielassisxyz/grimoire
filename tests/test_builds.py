@@ -107,13 +107,25 @@ class TestShippedPilot:
     ) -> None:
         assert pilot.verified_against
 
-    def test_known_disagreements_are_carried_rather_than_resolved_silently(
+    def test_the_open_disagreement_is_carried_rather_than_dropped(
         self, pilot: Build
     ) -> None:
-        # Three sources disagree with the guide on the installed version. Losing that
-        # would be worse than never recording it, since the file would then look
-        # settled while resting on numbers known to be wrong.
-        assert len(pilot.disagreements) >= 3
+        # One entry still rests on a number known to be behind the installed version,
+        # and a file that looked settled while resting on it would be worse than one
+        # that never recorded the conflict.
+        assert pilot.disagreements == (
+            "LightningBeam: guide predates a fourfold increase in stacks applied",
+        )
+
+    def test_a_disagreement_the_install_settled_is_gone_from_the_file(
+        self, pilot: Build
+    ) -> None:
+        # The other half of the same guarantee. Two rune magnitudes were argued between
+        # community sources and are now read out of the game, so carrying them on would
+        # report a conflict that no longer exists and hold the build's confidence down
+        # for no reason.
+        assert not any("Vulnerable Target" in d for d in pilot.disagreements)
+        assert not any("Lord's Bane" in d for d in pilot.disagreements)
 
     def test_confidence_stays_below_one_while_references_are_unresolved(
         self, pilot: Build

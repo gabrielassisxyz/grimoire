@@ -22,7 +22,13 @@ weapon = "WeaponBarbarian-03"
 verified_against = "1.5d2"
 # Confidence is about this encoding, not about the build being good. It is capped
 # below 1.0 while any entry still carries an unresolved disagreement.
-confidence = 0.7
+#
+# It was 0.7 against three disagreements. Two of them were the rune magnitudes, and
+# both are now read out of the installed game rather than argued between sources, so
+# they are gone. What is left is LightningBeam, where the guide predates a fourfold
+# increase in the stacks it applies. That one is about a skill rather than a rune, and
+# skills have no extraction yet, so it cannot be closed the same way.
+confidence = 0.9
 
 [[skills]]
 id = "ThunderingSlash"
@@ -79,11 +85,11 @@ slot = "tenacity"
 id = "RuneExtraCritChance"
 display = "Vulnerable Target"
 effect = "crit chance +50%, additive"
-# The wiki has since become a third source here and it sides with the guide, so the
-# split is two against one rather than one against one. Neither side is a reading of
-# the installed game, which is the only thing that would end it.
-disagreement = "guide and wiki state 25% where the spreadsheet gives 50%"
-evidence = { type = "community_source", source = "spreadsheet", game_version = "1.5d" }
+# Settled. The guide and the wiki both give 25% and the installed game stores 50, so
+# the two community sources are stale together and the spreadsheet is right. The entry
+# no longer disagrees with anything; what it rests on is the catalog record, which
+# carries the reading and the argument for trusting the field it came from.
+evidence = { type = "game_asset", source = "install", game_version = "1.5d2" }
 
 [[runes]]
 slot = "tenacity"
@@ -114,11 +120,11 @@ effect = "damage +30% while a Lord of the Void is alive"
 # so a ranker holding the wider reading would have counted its damage through every
 # titan and the cathedral fight, where it does nothing at all.
 #
-# The magnitude is still open and is now the only thing this entry disagrees about.
-# Two community sources say 25% against the spreadsheet's 30%, and the install has not
-# been read for it yet.
-disagreement = "guide and wiki state 25% where the spreadsheet gives 30%"
-evidence = { type = "community_source", source = "spreadsheet", game_version = "1.5d" }
+# The magnitude is settled too, and the other way round: the game stores 30, against the
+# 25% the guide and the wiki agree on. So the guide was right about the scope and wrong
+# about the number, and the spreadsheet the reverse. Neither is a source to prefer
+# wholesale, which is why disagreements are recorded per entry rather than per source.
+evidence = { type = "game_asset", source = "install", game_version = "1.5d2" }
 
 [[runes]]
 slot = "versatility"

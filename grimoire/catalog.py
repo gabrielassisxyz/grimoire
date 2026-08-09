@@ -70,6 +70,12 @@ class CatalogEntry:
     # bought, so a record naming its node can be answered, and a record without one can
     # only be reported as unknown. Optional because most kinds have no such node.
     unlocked_by: str | None = None
+    # The numeric parameters the installed game stores for this record, in its own
+    # order. Kept apart from the prose effect on purpose: the prose comes from whichever
+    # source described the rune and the numbers are read from the build itself, so a
+    # source that has fallen behind a patch shows up as the two disagreeing rather than
+    # as one silently overwriting the other.
+    parameters: tuple[float, ...] = ()
 
 
 class Catalog:
@@ -168,7 +174,18 @@ def _read_record(where: str, kind: str, record: object) -> CatalogEntry:
         confidence=_read_confidence(where, record),
         evidence=_read_evidence(where, record),
         unlocked_by=_read_optional_text(where, record, "unlocked_by"),
+        parameters=_read_parameters(where, record),
     )
+
+
+def _read_parameters(where: str, record: Mapping[str, object]) -> tuple[float, ...]:
+    values = record.get("parameters", [])
+    if not isinstance(values, list):
+        raise CatalogError(f"{where}: parameters must be an array of numbers")
+    for value in values:
+        if isinstance(value, bool) or not isinstance(value, int | float):
+            raise CatalogError(f"{where}: parameter {value!r} is not a number")
+    return tuple(float(v) for v in values)
 
 
 def _read_optional_text(

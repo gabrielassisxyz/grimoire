@@ -65,10 +65,16 @@ effect = "crit chance +50%, additive"
 runic_power_cost = 2
 # The install reaches this pair independently of the effect join that first produced it:
 # the Hound Master's tier 3 node grants this identifier, and the wiki names Vulnerable
-# Target at that tier's threshold. That is the pair only. The wiki's rune table gives
-# 25% against the 50% above, so this entry now has a third source and it disagrees;
-# nothing here settles that, because the magnitude has not been read out of the install.
+# Target at that tier's threshold.
+#
+# It also settles the magnitude, which two community sources put at 25% against the
+# spreadsheet's 50%. The game stores 50. The parameter was not identified by sitting
+# near this record: the same rule was applied to every rune, and for twenty of them it
+# reproduces every number the wiki prints, so the field is established before this one
+# is read. The five it contradicts are all runes the game has since rebalanced, and one
+# of those moved down, so this is a stale wiki rather than a scaling error.
 unlocked_by = "Houndmaster_T03S01"
+parameters = [50.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -102,6 +108,7 @@ slot = "tenacity"
 effect = "crit damage +0.5% per stack of Dazed or Disoriented, caps at 25% at 50 stacks"
 runic_power_cost = 3
 unlocked_by = "Paladin_T02S01"
+parameters = [0.5, 0.0, 0.0, 25.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -131,10 +138,13 @@ effect = "damage +30% while a Lord of the Void is alive"
 # Bane at that tier's threshold. The install also settles the scope the two sources
 # argued over, in the game's own words, "whenever a Lord of the Void is alive", so the
 # effect above now says that and the spreadsheet's "any boss, including titans and the
-# cathedral final boss" is dropped. The magnitude is untouched by this: the game states
-# the condition in prose and the percentage as a parameter, which has not been read.
+# cathedral final boss" is dropped. The percentage is stored separately from that prose
+# and now reads 30, against the 25% the guide and the wiki both give. So one source was
+# right about the scope and wrong about the number, and the other the reverse, which is
+# the argument for recording a disagreement rather than picking a winning source.
 runic_power_cost = 3
 unlocked_by = "Necromancer_T02S01"
+parameters = [30.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -274,6 +284,7 @@ slot = "tenacity"
 runic_power_cost = 1
 # Granted by DemonHunter's skill tree.
 unlocked_by = "DemonHunter_T04S01"
+parameters = [0.0, 0.0, 0.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -294,6 +305,7 @@ slot = "tenacity"
 runic_power_cost = 1
 # Granted by Shaman's skill tree.
 unlocked_by = "Shaman_T02S01"
+parameters = [0.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -314,6 +326,7 @@ slot = "tenacity"
 runic_power_cost = 2
 # Granted by Machinist's skill tree.
 unlocked_by = "Machinist_T02S01"
+parameters = [20.0, 0.0, 0.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -334,6 +347,7 @@ slot = "tenacity"
 runic_power_cost = 2
 # Granted by Legionnaire's skill tree.
 unlocked_by = "Legionnaire_T04S01"
+parameters = [20.0, 0.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -354,6 +368,7 @@ slot = "tenacity"
 runic_power_cost = 2
 # Granted by Necromancer's skill tree.
 unlocked_by = "Necromancer_T03S01"
+parameters = [20.0, 0.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -474,6 +489,7 @@ slot = "tenacity"
 runic_power_cost = 1
 # Granted by Legionnaire's skill tree.
 unlocked_by = "Legionnaire_T02S01"
+parameters = [50.0, 1.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -494,6 +510,7 @@ slot = "tenacity"
 runic_power_cost = 2
 # Granted by Houndmaster's skill tree.
 unlocked_by = "Houndmaster_T02S01"
+parameters = [0.0, 10.0, 0.5, 10.0, 25.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -534,6 +551,7 @@ slot = "tenacity"
 runic_power_cost = 1
 # Granted by Engineer's skill tree.
 unlocked_by = "Engineer_T03S01"
+parameters = [15.0, 3.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -554,6 +572,7 @@ slot = "tenacity"
 runic_power_cost = 3
 # Granted by Pyromancer's skill tree.
 unlocked_by = "Pyromancer_T02S01"
+parameters = [100.0, 30.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -574,6 +593,7 @@ slot = "tenacity"
 runic_power_cost = 0
 # Granted by DemonHunter's skill tree.
 unlocked_by = "DemonHunter_T02S01"
+parameters = [55.0, 15.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -594,6 +614,7 @@ slot = "tenacity"
 runic_power_cost = 3
 # Granted by Pyromancer's skill tree.
 unlocked_by = "Pyromancer_T03S01"
+parameters = [0.5, 0.0, 0.0, 25.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -614,6 +635,7 @@ slot = "tenacity"
 runic_power_cost = 1
 # Granted by Barbarian's skill tree.
 unlocked_by = "Barbarian_T02S01"
+parameters = [20.0, 30.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -634,6 +656,7 @@ slot = "tenacity"
 runic_power_cost = 3
 # Granted by Beastmaster's skill tree.
 unlocked_by = "Beastmaster_T03S01"
+parameters = [0.6, 24.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -694,6 +717,7 @@ slot = "tenacity"
 runic_power_cost = 3
 # Granted by Houndmaster's skill tree.
 unlocked_by = "Houndmaster_T04S01"
+parameters = [0.1, 500.0, 25.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -714,6 +738,7 @@ slot = "tenacity"
 runic_power_cost = 2
 # Granted by Rogue's skill tree.
 unlocked_by = "Rogue_T02S01"
+parameters = [40.0, 70.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -734,6 +759,7 @@ slot = "tenacity"
 runic_power_cost = 1
 # Granted by Sentinel's skill tree.
 unlocked_by = "Sentinel_T04S01"
+parameters = [20.0, 3.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -754,6 +780,7 @@ slot = "tenacity"
 runic_power_cost = 1
 # Granted by MonkeyKing's skill tree.
 unlocked_by = "MonkeyKing_T04S01"
+parameters = [1.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -774,6 +801,7 @@ slot = "tenacity"
 runic_power_cost = 1
 # Granted by Rogue's skill tree.
 unlocked_by = "Rogue_T03S01"
+parameters = [20.0, 30.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -834,6 +862,7 @@ slot = "tenacity"
 runic_power_cost = 2
 # Granted by Engineer's skill tree.
 unlocked_by = "Engineer_T04S01"
+parameters = [15.0, 5.0, 0.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -854,6 +883,7 @@ slot = "tenacity"
 runic_power_cost = 2
 # Granted by Myrmidon's skill tree.
 unlocked_by = "Myrmidon_T02S01"
+parameters = [15.0, 5.0, 0.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -934,6 +964,7 @@ slot = "tenacity"
 runic_power_cost = 1
 # Granted by Engineer's skill tree.
 unlocked_by = "Engineer_T02S01"
+parameters = [10.0, 2.0, 0.0, 0.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -954,6 +985,7 @@ slot = "tenacity"
 runic_power_cost = 3
 # Granted by Pirate's skill tree.
 unlocked_by = "Pirate_T03S01"
+parameters = [0.0, 1.0, 0.0, 10.0, 4.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -994,6 +1026,7 @@ slot = "tenacity"
 runic_power_cost = 1
 # Granted by MonkeyKing's skill tree.
 unlocked_by = "MonkeyKing_T03S01"
+parameters = [10.0, 0.0, 0.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1034,6 +1067,7 @@ slot = "tenacity"
 runic_power_cost = 3
 # Granted by ArcaneWeaver's skill tree.
 unlocked_by = "ArcaneWeaver_T04S01"
+parameters = [30.0, 0.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1054,6 +1088,7 @@ slot = "tenacity"
 runic_power_cost = 3
 # Granted by DeathKnight's skill tree.
 unlocked_by = "DeathKnight_T04S01"
+parameters = [0.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1134,6 +1169,7 @@ slot = "tenacity"
 runic_power_cost = 3
 # Granted by Machinist's skill tree.
 unlocked_by = "Machinist_T04S01"
+parameters = [200.0, 0.0, 0.0, 0.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1214,6 +1250,7 @@ slot = "tenacity"
 runic_power_cost = 1
 # Granted by Machinist's skill tree.
 unlocked_by = "Machinist_T03S01"
+parameters = [0.0, 0.0, 0.0, 0.0, 4.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1314,6 +1351,7 @@ slot = "tenacity"
 runic_power_cost = 2
 # Granted by Rogue's skill tree.
 unlocked_by = "Rogue_T04S01"
+parameters = [25.0, 25.0, 25.0, 25.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1334,6 +1372,7 @@ slot = "tenacity"
 runic_power_cost = 2
 # Granted by Pyromancer's skill tree.
 unlocked_by = "Pyromancer_T04S01"
+parameters = [0.0, 15.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1374,6 +1413,7 @@ slot = "tenacity"
 runic_power_cost = 2
 # Granted by Spellbreaker's skill tree.
 unlocked_by = "Spellbreaker_T03S01"
+parameters = [0.0, 0.0, 30.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1394,6 +1434,7 @@ slot = "tenacity"
 runic_power_cost = 2
 # Granted by Bloodmage's skill tree.
 unlocked_by = "Bloodmage_T03S01"
+parameters = [20.0, 0.0, 0.0, 0.0, 0.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1414,6 +1455,7 @@ slot = "tenacity"
 runic_power_cost = 2
 # Granted by Spellbreaker's skill tree.
 unlocked_by = "Spellbreaker_T02S01"
+parameters = [25.0, 10.0, 25.0, 50.0]
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1434,6 +1476,7 @@ slot = "tenacity"
 runic_power_cost = -2
 # Granted by DemonHunter's skill tree.
 unlocked_by = "DemonHunter_T03S01"
+parameters = [2.0, 30.0]
 confidence = 0.9
 
 [[rune.evidence]]

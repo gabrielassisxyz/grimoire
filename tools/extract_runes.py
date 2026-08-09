@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import pathlib
 import re
+import struct
 import sys
 
 NODE_NAME = re.compile(r"([A-Za-z]+)_T(\d\d)S\d\d")
@@ -94,26 +95,53 @@ def read_build_id(install: pathlib.Path) -> str:
     return match.group(1)
 
 
-def read_grants(assets: pathlib.Path) -> dict[str, tuple[str, str, int]]:
-    """Map each rune identifier to the node that grants it, with its character."""
+def read_parameters(blob: bytes) -> list[float]:
+    """The numeric parameters a rune record carries, in the order it stores them.
+
+    Each is a serialized reference whose type descriptor ends in the assembly name, so
+    the value sits at the next four-byte boundary after it. Reading them by that marker
+    rather than by a fixed offset is what makes the rule survive records that hold two
+    parameters, or none.
+    """
+    values = []
+    for match in re.finditer(rb"Assembly-CSharp\x00", blob):
+        end = match.end()
+        end += (-end) % 4
+        if end + 4 <= len(blob):
+            values.append(round(struct.unpack_from("<f", blob, end)[0], 4))
+    return values
+
+
+def read_grants(assets: pathlib.Path) -> dict[str, tuple[str, str, int, list[float]]]:
+    """Each rune identifier against the node that grants it and its parameters."""
     import UnityPy
 
     env = UnityPy.load(str(assets))
-    grants: dict[str, tuple[str, str, int]] = {}
+    rune_records: dict[str, bytes] = {}
+    grants: dict[str, tuple[str, str, int, list[float]]] = {}
+    nodes = []
     for obj in env.objects:
         if obj.type.name != "MonoBehaviour":
             continue
         try:
             name = obj.read(check_read=False).m_Name
-        except Exception:  # noqa: BLE001 - an unreadable object is simply not a node
+        except Exception:  # noqa: BLE001
             continue
-        node = NODE_NAME.fullmatch(name or "")
-        if not node:
-            continue
-        for token in IDENTIFIER.findall(obj.get_raw_data()):
+        if name and name.startswith("Rune"):
+            rune_records[name] = obj.get_raw_data()
+        elif NODE_NAME.fullmatch(name or ""):
+            nodes.append((name, obj.get_raw_data()))
+    for name, raw in nodes:
+        node = NODE_NAME.fullmatch(name)
+        for token in IDENTIFIER.findall(raw):
             identifier = token.decode()
             if identifier.startswith("Rune"):
-                grants[identifier] = (name, node.group(1), int(node.group(2)))
+                grants[identifier] = (
+                    name,
+                    node.group(1),
+                    int(node.group(2)),
+                    read_parameters(rune_records.get(identifier, b"")),
+                )
     return grants
 
 
@@ -146,13 +174,13 @@ def read_wiki(wiki: pathlib.Path) -> dict[str, tuple[dict[str, tuple[str, int]],
 
 
 def join(
-    grants: dict[str, tuple[str, str, int]],
+    grants: dict[str, tuple[str, str, int, list[float]]],
     pages: dict[str, tuple[dict[str, tuple[str, int]], str]],
-) -> tuple[dict[str, tuple[str, int, str, str]], list[str]]:
+) -> tuple[dict[str, tuple[str, int, str, str, list[float]]], list[str]]:
     """Pair identifiers with display names, and report every pair that did not form."""
-    paired: dict[str, tuple[str, int, str, str]] = {}
+    paired: dict[str, tuple[str, int, str, str, list[float]]] = {}
     gaps: list[str] = []
-    for identifier, (node, character, tier) in sorted(grants.items()):
+    for identifier, (node, character, tier, values) in sorted(grants.items()):
         page = pages.get(character)
         if not page:
             gaps.append(f"{identifier}: no wiki page for {character}")
@@ -173,11 +201,11 @@ def join(
             gaps.append(f"{identifier}: {character} has no row at {threshold}")
             continue
         display, cost = rows[threshold]
-        paired[identifier] = (display, cost, node, url)
+        paired[identifier] = (display, cost, node, url, values)
     return paired, gaps
 
 
-def check_anchors(paired: dict[str, tuple[str, int, str, str]]) -> None:
+def check_anchors(paired: dict[str, tuple[str, int, str, str, list[float]]]) -> None:
     """Refuse to emit anything if the join stops reproducing what was already proven."""
     wrong = [
         f"{identifier}: joined {paired[identifier][0]!r}, established {expected!r}"
@@ -194,9 +222,11 @@ def check_anchors(paired: dict[str, tuple[str, int, str, str]]) -> None:
 
 
 def emit(
-    paired: dict[str, tuple[str, int, str, str]], asset_path: str, build_id: str
+    paired: dict[str, tuple[str, int, str, str, list[float]]],
+    asset_path: str,
+    build_id: str,
 ) -> None:
-    for identifier, (display, cost, node, url) in sorted(paired.items()):
+    for identifier, (display, cost, node, url, values) in sorted(paired.items()):
         print("\n[[rune]]")
         print(f'id = "{identifier}"')
         print(f'display = "{display}"')
@@ -205,6 +235,8 @@ def emit(
         # The node is what makes ownership readable: the save records a node the
         # player has bought, so a rune whose node is present is a rune they hold.
         print(f'unlocked_by = "{node}"')
+        if values:
+            print(f"parameters = {values}")
         # The identifier is read from the install and the name from the wiki, so the
         # pair is only as strong as the correspondence joining them.
         print("confidence = 0.9")
