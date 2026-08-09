@@ -24,8 +24,11 @@ import sys
 
 NODE_NAME = re.compile(r"([A-Za-z]+)_T(\d\d)S\d\d")
 IDENTIFIER = re.compile(rb"[A-Za-z][A-Za-z0-9_\-]{5,60}")
+# The cost is signed. Demonic Pact is written -2 because it raises the runic power
+# ceiling instead of spending from it, so a pattern that only accepts digits drops the
+# one rune the budget arithmetic most needs to know about.
 WIKI_ROW = re.compile(
-    r"\|\s*\|?\s*([A-Z][^|]*?)RUNIC POWER COST:\s*(\d+)UNLOCK:\s*([\d,]+)"
+    r"\|\s*\|?\s*([A-Z][^|]*?)RUNIC POWER COST:\s*(-?\d+)UNLOCK:\s*([\d,]+)"
 )
 
 # Tier of the granting node against the threshold the wiki prints for the same rune.
@@ -46,18 +49,22 @@ ANCHORS = {
 }
 
 # The wiki names a character in prose; the install names the same one in an identifier,
-# and twice the two disagree outright. The install's Pirate is the wiki's Cursed
-# Captain, whose tier 2 node grants RuneDrunkenEffect against a 30,000 row Pirate's Rum,
-# "makes you drunk". Its Rogue is the wiki's Assassin: the tier 4 node
-# grants RuneSetHealthToOne against All or Nothing, "your maximum health is set to 1".
-# Both readings come from the effect rather than from the position, so each is a second
-# confirmation of the tier correspondence rather than a consequence of it.
+# and four of them disagree outright. Each was settled by reading the effect rather than
+# the position, so each is a second confirmation of the tier correspondence rather than
+# a consequence of it:
+#
+#   Pirate       is Cursed Captain  RuneDrunkenEffect / Pirate's Rum, "makes you drunk"
+#   Rogue        is Assassin        RuneSetHealthToOne / All or Nothing
+#   Bloodmage    is Chaoswalker     RuneIncreaseDamageButSkillAreRandom / Gambler
+#   Spellbreaker is Spellblade      RuneBanishEpicLegendary / Commoner
+#
+# All three of each pair's runes line up this way, not just the one quoted.
 WIKI_TO_INSTALL = {
     "the-arcane-weaver": "ArcaneWeaver",
     "the-assassin": "Rogue",
     "the-barbarian": "Barbarian",
     "the-beastmaster": "Beastmaster",
-    "the-chaoswalker": "Chaoswalker",
+    "the-chaoswalker": "Bloodmage",
     "the-cursed-captain": "Pirate",
     "the-death-knight": "DeathKnight",
     "the-demon-hunter": "DemonHunter",
@@ -74,7 +81,7 @@ WIKI_TO_INSTALL = {
     "the-samurai": "Samurai",
     "the-sentinel": "Sentinel",
     "the-shaman": "Shaman",
-    "the-spellblade": "Spellblade",
+    "the-spellblade": "Spellbreaker",
 }
 
 
@@ -114,7 +121,7 @@ def read_wiki(wiki: pathlib.Path) -> dict[str, tuple[dict[str, tuple[str, int]],
     """Per character, the rows against each threshold and the page they were read from.
 
     The URL travels with the rows rather than being rebuilt from the character
-    later: the install and the wiki disagree on two names, so a URL assembled from
+    later: the install and the wiki disagree on four names, so a URL assembled from
     the install's name would cite a page that does not exist.
     """
     pages: dict[str, tuple[dict[str, tuple[str, int]], str]] = {}

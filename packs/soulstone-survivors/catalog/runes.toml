@@ -1306,3 +1306,136 @@ type = "community_source"
 url = "https://soulstone-survivors.fandom.com/wiki/The_Legionnaire"
 retrieved = "2026-08-08"
 game_version = "1.5d2"
+
+[[rune]]
+id = "RuneBanishEpicLegendary"
+display = "Commoner"
+slot = "tenacity"
+runic_power_cost = 2
+# Granted by Spellbreaker's skill tree.
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Spellblade"
+retrieved = "2026-08-08"
+game_version = "1.5d2"
+
+[[rune]]
+id = "RuneChanceToApplyRandomNegativeEffect"
+display = "Misfortune's Embrace"
+slot = "tenacity"
+runic_power_cost = 2
+# Granted by Bloodmage's skill tree.
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Chaoswalker"
+retrieved = "2026-08-08"
+game_version = "1.5d2"
+
+[[rune]]
+id = "RuneEarlyGameStatsBonus"
+display = "Head Start"
+slot = "tenacity"
+runic_power_cost = 2
+# Granted by Spellbreaker's skill tree.
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Spellblade"
+retrieved = "2026-08-08"
+game_version = "1.5d2"
+
+[[rune]]
+id = "RuneExtraRunicPowerReducedArmor"
+display = "Demonic Pact"
+slot = "tenacity"
+runic_power_cost = -2
+# Granted by DemonHunter's skill tree.
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Demon_Hunter"
+retrieved = "2026-08-08"
+game_version = "1.5d2"
+
+[[rune]]
+id = "RuneIncreaseDamageButSkillAreRandom"
+display = "Gambler"
+slot = "tenacity"
+runic_power_cost = 0
+# Granted by Bloodmage's skill tree.
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Chaoswalker"
+retrieved = "2026-08-08"
+game_version = "1.5d2"
+
+[[rune]]
+id = "RuneRandomDamageToAllSkills"
+display = "Overwhelming Chaos"
+slot = "tenacity"
+runic_power_cost = 1
+# Granted by Bloodmage's skill tree.
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Chaoswalker"
+retrieved = "2026-08-08"
+game_version = "1.5d2"
+
+[[rune]]
+id = "RuneWeaponArsenal"
+display = "Unexpected Arsenal"
+slot = "tenacity"
+runic_power_cost = 0
+# Granted by Spellbreaker's skill tree.
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Spellblade"
+retrieved = "2026-08-08"
+game_version = "1.5d2"
