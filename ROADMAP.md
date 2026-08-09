@@ -28,7 +28,17 @@ The reasoning behind that number, since it is the kind of choice that looks arbi
 2. **Versioned catalog.** Ids, aliases, effects, characters, weapons, runes and powers, each with provenance, build id and confidence.
 3. **Pre-run advisor.** Read the local save for what the player has actually unlocked, then report what a target build requires and does not yet have, and which owned runes and weapons substitute. Deterministic end to end and free of any vision problem.
 4. **Structured extractor.** The multimodal model returns validated JSON constrained to known candidates. Region-based OCR and icon matching are deliberately *not* built first: the direct approach is measured against real screenshots, and OCR is introduced only where it demonstrably fails. Building it before measuring would be premature. One constraint is already known: the shared capture path caps the image by *width*, which treats a tall window generously and a wide one harshly, so two players with different window geometry get very different effective resolution on the same interface. The cap belongs on the longest edge or on total pixels, and that has to be settled before fixtures are measured against each other.
-5. **Run state.** Initial snapshot, inferred deltas, resynchronisation, and the divergence check that makes a stale state loud.
+5. **Run state.** Initial snapshot, inferred deltas, resynchronisation, and the divergence check that makes a stale state loud. What the interface actually offers is now known, and it changes the design (see below).
+
+### What the interface gives us, observed rather than assumed
+
+Read off real frames of a real run. These are the facts the run-state design rests on, and they are load-bearing enough to state before any code exists.
+
+- **A level-up card shows the current value and the value after taking it**, as `+12% ▸ +16%`. That single detail does two jobs at once. It is ground truth to check the effect engine against, since the game states the result the engine is trying to predict. And it is a free partial resynchronisation at every level-up, for whichever stats the offer happens to touch, with no pause and no question asked. Drift in those stats is therefore detectable within a level or two rather than accumulating until someone thinks to check.
+- **The full stats panel appears only on pause and on the end-of-run screen**, not during play and not on the level-up screen. A complete resynchronisation therefore costs an interaction, while a partial one is free. That asymmetry is the whole reason the previous point matters.
+- **Rarity is written as text on the card**, not conveyed by colour alone. A whole class of colour and icon matching is unnecessary for the first cut.
+- **The build version is printed in the corner of every frame.** Fixtures self-document the version they came from, which is exactly what the catalog's staleness checks need and would otherwise have to be recorded by hand.
+- The level-up cards are drawn semi-transparent over live gameplay, so damage numbers and enemies pass behind and through the text. That is the extractor's hard case, and it is the normal case rather than an edge one.
 6. **Effect engine.** A small set of proven operations. No large speculative expression language.
 7. **Ranker.** Guide-derived rules and synergies combined with the deltas the engine computes.
 8. **Overlay surface.** Recommendation, confidence and deltas.
