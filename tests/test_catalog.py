@@ -18,6 +18,37 @@ PACK = Path(__file__).resolve().parents[1] / "packs/soulstone-survivors"
 PACK_CATALOG = PACK / "catalog"
 PILOT_BUILD = PACK / "builds/barbarian-electric.toml"
 
+# Every rune identifier this player's save has ever written, across runespresets and
+# game stats. It is the advisor's real input, so it is what the catalog is measured
+# against rather than a sample chosen to pass.
+SAVED_RUNES = [
+    "RuneAffinityElectric",
+    "RuneAffinityNature",
+    "RuneChanceToKill",
+    "RuneCriticalMastery",
+    "RuneDashMastery",
+    "RuneExtraCastFrequencyBleed",
+    "RuneExtraCastFrequencyHealthMissing",
+    "RuneExtraCritChance",
+    "RuneExtraCritDamageAgainstDazed",
+    "RuneExtraDamageHealthLessThan",
+    "RuneExtraDamageHealthMissing",
+    "RuneExtraDamagePerDuplicatedTag",
+    "RuneExtraDamagePerEffect",
+    "RuneExtraDamageWhileBossIsAlive",
+    "RuneInclinationElectric",
+    "RuneMasteryArcane",
+    "RuneMasteryElectric",
+    "RuneMasteryFire",
+    "RuneMasterySwing",
+    "RuneMaterialCollector",
+    "RuneNegativeEffectsDealDamageFaster",
+    "RuneRerollMastery",
+    "RuneStartWeaponSkill",
+    "RuneStunImmune",
+    "RuneSynergiesChance",
+]
+
 
 def write(directory: Path, kind: str, body: str) -> None:
     (directory / f"{kind}s.toml").write_text(body)
@@ -40,6 +71,8 @@ RUNE = """
 [[rune]]
 id = "RuneExtraCritChance"
 display = "Vulnerable Target"
+slot = "tenacity"
+runic_power_cost = 2
 confidence = 0.9
 
 [[rune.evidence]]
@@ -161,8 +194,8 @@ class TestRefusal:
     def test_a_record_without_evidence_is_refused(self, tmp_path: Path) -> None:
         write(
             tmp_path,
-            "rune",
-            '[[rune]]\nid = "X"\ndisplay = "Y"\nconfidence = 1.0\n',
+            "weapon",
+            '[[weapon]]\nid = "X"\ndisplay = "Y"\nconfidence = 1.0\n',
         )
         with pytest.raises(CatalogError, match="has no evidence"):
             load(tmp_path)
@@ -170,8 +203,8 @@ class TestRefusal:
     def test_an_empty_evidence_list_is_refused(self, tmp_path: Path) -> None:
         write(
             tmp_path,
-            "rune",
-            '[[rune]]\nid = "X"\ndisplay = "Y"\nconfidence = 1.0\nevidence = []\n',
+            "weapon",
+            '[[weapon]]\nid = "X"\ndisplay = "Y"\nconfidence = 1.0\nevidence = []\n',
         )
         with pytest.raises(CatalogError, match="non-empty array"):
             load(tmp_path)
@@ -181,9 +214,9 @@ class TestRefusal:
         # the only reason the field exists.
         write(
             tmp_path,
-            "rune",
-            '[[rune]]\nid = "X"\ndisplay = "Y"\nconfidence = 1.0\n'
-            '[[rune.evidence]]\ntype = "someone said so"\n',
+            "weapon",
+            '[[weapon]]\nid = "X"\ndisplay = "Y"\nconfidence = 1.0\n'
+            '[[weapon.evidence]]\ntype = "someone said so"\n',
         )
         with pytest.raises(CatalogError, match="not one of"):
             load(tmp_path)
@@ -196,9 +229,9 @@ class TestRefusal:
         # prevent. Enforcing it here rather than in a document is the point.
         write(
             tmp_path,
-            "rune",
-            '[[rune]]\nid = "X"\ndisplay = "Y"\nconfidence = 1.0\n'
-            '[[rune.evidence]]\ntype = "community_source"\ngame_version = "1.5d"\n',
+            "weapon",
+            '[[weapon]]\nid = "X"\ndisplay = "Y"\nconfidence = 1.0\n'
+            '[[weapon.evidence]]\ntype = "community_source"\ngame_version = "1.5d"\n',
         )
         with pytest.raises(CatalogError, match="states no url, no retrieved"):
             load(tmp_path)
@@ -211,9 +244,9 @@ class TestRefusal:
         # payload is what a later reader would be trying to compare against.
         write(
             tmp_path,
-            "rune",
-            '[[rune]]\nid = "X"\ndisplay = "Y"\nconfidence = 1.0\n'
-            '[[rune.evidence]]\ntype = "save_file"\n'
+            "weapon",
+            '[[weapon]]\nid = "X"\ndisplay = "Y"\nconfidence = 1.0\n'
+            '[[weapon.evidence]]\ntype = "save_file"\n'
             'domain = "runespresets"\nbuild_id = "1.5d2"\n',
         )
         with pytest.raises(CatalogError, match="states no slot, no write_counter"):
@@ -226,8 +259,8 @@ class TestRefusal:
         # than fail somewhere deeper with a Python type error.
         write(
             tmp_path,
-            "rune",
-            '[[rune]]\nid = "X"\ndisplay = "Y"\nconfidence = 1.0\n'
+            "weapon",
+            '[[weapon]]\nid = "X"\ndisplay = "Y"\nconfidence = 1.0\n'
             'evidence = { type = "measured" }\n',
         )
         with pytest.raises(CatalogError, match="array of tables"):
@@ -236,9 +269,9 @@ class TestRefusal:
     def test_a_confidence_that_is_not_a_number_is_refused(self, tmp_path: Path) -> None:
         write(
             tmp_path,
-            "rune",
-            '[[rune]]\nid = "X"\ndisplay = "Y"\nconfidence = "high"\n'
-            '[[rune.evidence]]\ntype = "game_asset"\n'
+            "weapon",
+            '[[weapon]]\nid = "X"\ndisplay = "Y"\nconfidence = "high"\n'
+            '[[weapon.evidence]]\ntype = "game_asset"\n'
             'asset_path = "a"\nbuild_id = "b"\n',
         )
         with pytest.raises(CatalogError, match="confidence must be a number"):
@@ -247,9 +280,9 @@ class TestRefusal:
     def test_a_confidence_outside_the_scale_is_refused(self, tmp_path: Path) -> None:
         write(
             tmp_path,
-            "rune",
-            '[[rune]]\nid = "X"\ndisplay = "Y"\nconfidence = 4\n'
-            '[[rune.evidence]]\ntype = "game_asset"\n'
+            "weapon",
+            '[[weapon]]\nid = "X"\ndisplay = "Y"\nconfidence = 4\n'
+            '[[weapon.evidence]]\ntype = "game_asset"\n'
             'asset_path = "a"\nbuild_id = "b"\n',
         )
         with pytest.raises(CatalogError, match="outside 0.0 to 1.0"):
@@ -319,3 +352,137 @@ class TestThePackItself:
         build = tomllib.loads(PILOT_BUILD.read_text())
         wanted = [r["id"] for r in build["runes"]] + [build["meta"]["weapon"]]
         assert catalog.missing(wanted) == []
+
+    def test_every_rune_this_save_has_ever_recorded_resolves(self) -> None:
+        # The identifiers this save carries are the advisor's real input, so they are
+        # what the catalog is measured against rather than a sample chosen to pass. Ten
+        # of the twenty-five resolved when this was first written, and the shortfall was
+        # asserted as a named boundary through two rounds of narrowing it. There is no
+        # boundary left to name.
+        catalog = load(PACK_CATALOG)
+        assert catalog.missing(SAVED_RUNES) == []
+
+    def test_a_pair_that_only_the_install_could_produce(self) -> None:
+        # Neither source reaches this on its own: the identifier exists only in the
+        # install and the name only on the wiki, and nothing about one suggests the
+        # other. It is here so the join is pinned by a case that cannot be guessed.
+        catalog = load(PACK_CATALOG)
+        assert catalog.id_for("All or Nothing") == "RuneSetHealthToOne"
+
+    def test_the_extracted_records_cite_the_install_they_were_read_from(self) -> None:
+        catalog = load(PACK_CATALOG)
+        entry = catalog.entry("RuneSetHealthToOne")
+        asset = next(e for e in entry.evidence if e.type == "game_asset")
+        assert asset.detail["build_id"] == "1.5d2"
+
+    def test_the_two_contested_magnitudes_are_the_ones_the_game_stores(self) -> None:
+        # Two community sources gave 25% for both of these and the spreadsheet gave 50
+        # and 30. The installed game stores 50 and 30, so the pair of sources is stale
+        # together. Pinned here because it is the one place a later re-extraction could
+        # quietly revert to the wiki's numbers.
+        catalog = load(PACK_CATALOG)
+        assert catalog.entry("RuneExtraCritChance").parameters == (50.0,)
+        assert catalog.entry("RuneExtraDamageWhileBossIsAlive").parameters == (30.0,)
+
+    def test_a_record_whose_parameters_reproduce_its_own_prose(self) -> None:
+        # The control for the reading above. This record's effect was written from the
+        # spreadsheet, before any extraction existed, and reads "0.5% per stack, caps at
+        # 25%". The install stores exactly those two numbers in that order. Asserted as
+        # a sequence rather than as membership, because a field that landed on both
+        # values in the wrong order would not be the field this claims to have found.
+        entry = load(PACK_CATALOG).entry("RuneExtraCritDamageAgainstDazed")
+        assert entry.parameters == (0.5, 25.0)
+
+    def test_the_family_rule_still_produces_what_experiment_established(self) -> None:
+        # The three pairs the rule was checked against, two of them settled by equipping
+        # the rune and reading the save back. They are asserted here as well as in the
+        # extractor so that hand-editing the file cannot drift from the rule either.
+        catalog = load(PACK_CATALOG)
+        assert catalog.id_for("Skill Affinity: Electric") == "RuneAffinityElectric"
+        assert catalog.id_for("Skill Inclination: Electric") == (
+            "RuneInclinationElectric"
+        )
+        assert catalog.id_for("Skill Mastery: Electric") == "RuneMasteryElectric"
+
+    def test_runes_that_merely_contain_a_family_word_are_not_named_by_the_rule(
+        self,
+    ) -> None:
+        # The boundary the rule would cross if the prefix were not anchored and the
+        # suffix not restricted to a known type. Each of these ends in a family word and
+        # belongs to none of them, so a looser rule would rename them into nonsense.
+        catalog = load(PACK_CATALOG)
+        assert catalog.display_for("RuneCriticalMastery") == "Critical Mastery"
+        assert catalog.display_for("RuneRerollMastery") == "Reroll Mastery"
+
+    def test_all_three_families_carry_the_same_skill_types(self) -> None:
+        # The set of types was derived rather than written down, as the suffixes the
+        # three families share. If one family gained an identifier the others lack, it
+        # was never a skill type and this is what says so.
+        catalog = load(PACK_CATALOG)
+        families = {}
+        for family in ("Affinity", "Inclination", "Mastery"):
+            prefix = f"Rune{family}"
+            families[family] = {
+                e.id.removeprefix(prefix)
+                for e in catalog.entries_of_kind("rune")
+                if e.id.startswith(prefix) and e.display.startswith("Skill ")
+            }
+        assert len(set(map(frozenset, families.values()))) == 1
+        assert len(families["Mastery"]) == 15
+
+    def test_an_achievement_rune_joined_on_its_unlock_condition(self) -> None:
+        # Neither side suggests the other: the identifier says the rune grants immunity
+        # to stuns and the name is Surefooted. What joined them is the condition, an
+        # achievement called ReachExperienceLevel-65 against a wiki row reading "Reach
+        # experience level 65 in a single match".
+        catalog = load(PACK_CATALOG)
+        assert catalog.id_for("Surefooted") == "RuneStunImmune"
+
+    def test_the_one_achievement_rune_joined_on_its_effect_instead(self) -> None:
+        # Its condition is the single place the sources contradict each other, boss rush
+        # cycle 1 against Overlord Mode cycle 3, so the condition rule cannot reach it.
+        # The effect can: rolling damage twice and keeping the highest, against an
+        # identifier that says it rerolls damage rolls.
+        catalog = load(PACK_CATALOG)
+        assert catalog.id_for("ControlledChaos") == "RuneRerollDamageRolls"
+
+    def test_every_rune_record_carries_a_cost_and_a_slot(self) -> None:
+        # The budget check reads both off every record it is handed, and a rune missing
+        # either would be silently counted as free or as belonging to no section.
+        runes = load(PACK_CATALOG).entries_of_kind("rune")
+        assert len(runes) == 128
+        assert all(e.slot in ("tenacity", "versatility") for e in runes)
+
+    def test_a_rune_without_a_cost_is_refused(self, tmp_path: Path) -> None:
+        # It would otherwise load as free. The budget check reads the field off every
+        # record it is handed, so a missing one is not a gap it can report, it is a
+        # wrong total that looks like a right one.
+        write(tmp_path, "rune", RUNE.replace("runic_power_cost = 2\n", ""))
+        with pytest.raises(CatalogError, match="has no runic_power_cost"):
+            load(tmp_path)
+
+    def test_a_rune_without_a_slot_is_refused(self, tmp_path: Path) -> None:
+        write(tmp_path, "rune", RUNE.replace('slot = "tenacity"\n', ""))
+        with pytest.raises(CatalogError, match="has no slot"):
+            load(tmp_path)
+
+    def test_a_slot_that_is_not_a_section_of_the_game_is_refused(
+        self, tmp_path: Path
+    ) -> None:
+        # A misspelling would leave the rune counted against no section at all, so a
+        # build could hold five tenacity runes and pass the slot limit.
+        write(tmp_path, "rune", RUNE.replace('"tenacity"', '"tenacoty"'))
+        with pytest.raises(CatalogError, match="tenacoty"):
+            load(tmp_path)
+
+    def test_a_parameter_that_is_not_finite_is_refused(self, tmp_path: Path) -> None:
+        # TOML has nan and inf and both are floats, so a type check alone admits them.
+        # A non-finite magnitude is a number-shaped hole that would travel through the
+        # effect engine without ever looking wrong.
+        write(
+            tmp_path,
+            "rune",
+            RUNE.replace("confidence", "parameters = [nan]\nconfidence"),
+        )
+        with pytest.raises(CatalogError, match="not a finite number"):
+            load(tmp_path)

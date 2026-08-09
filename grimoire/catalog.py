@@ -20,6 +20,7 @@ by someone who was not there.
 
 from __future__ import annotations
 
+import math
 import tomllib
 from collections.abc import Mapping
 from dataclasses import dataclass
@@ -31,6 +32,13 @@ from pathlib import Path
 KINDS = ("weapon", "rune")
 
 REQUIRED_FIELDS = ("id", "display", "confidence", "evidence")
+
+# Fields a kind cannot do without, beyond the ones every record carries. A rune with no
+# cost would be counted as free by the budget check and a rune with no slot as belonging
+# to no section, and both read as an answer rather than as a gap.
+REQUIRED_PER_KIND = {"rune": ("slot", "runic_power_cost")}
+
+SLOTS = ("tenacity", "versatility")
 
 # What each class of evidence must state for a stranger to be able to check it. These
 # are the project's own provenance rules moved from prose into the loader: a rule that
@@ -65,6 +73,22 @@ class CatalogEntry:
     kind: str
     confidence: float
     evidence: tuple[Evidence, ...]
+    # The skill tree node that grants this, where one does. It is what makes ownership
+    # decidable from the save rather than asked of the player: the save lists the nodes
+    # bought, so a record naming its node can be answered, and a record without one can
+    # only be reported as unknown. Optional because most kinds have no such node.
+    unlocked_by: str | None = None
+    # The numeric parameters the installed game stores for this record, in its own
+    # order. Kept apart from the prose effect on purpose: the prose comes from whichever
+    # source described the rune and the numbers are read from the build itself, so a
+    # source that has fallen behind a patch shows up as the two disagreeing rather than
+    # as one silently overwriting the other.
+    parameters: tuple[float, ...] = ()
+    slot: str | None = None
+    # Signed, because one rune raises the runic power ceiling rather than spending from
+    # it and is written as a negative cost. Summing magnitudes would reject the build
+    # that rune exists to make possible.
+    runic_power_cost: int = 0
 
 
 class Catalog:
@@ -76,6 +100,9 @@ class Catalog:
 
     def __len__(self) -> int:
         return len(self._by_id)
+
+    def entries_of_kind(self, kind: str) -> list[CatalogEntry]:
+        return [e for e in self._by_id.values() if e.kind == kind]
 
     def entry(self, identifier: str) -> CatalogEntry:
         found = self._by_id.get(identifier)
@@ -150,7 +177,7 @@ def _read_file(path: Path, kind: str) -> list[CatalogEntry]:
 def _read_record(where: str, kind: str, record: object) -> CatalogEntry:
     if not isinstance(record, dict):
         raise CatalogError(f"{where} is not a table")
-    for field in REQUIRED_FIELDS:
+    for field in REQUIRED_FIELDS + REQUIRED_PER_KIND.get(kind, ()):
         if field not in record:
             raise CatalogError(f"{where} has no {field}")
     return CatalogEntry(
@@ -159,7 +186,48 @@ def _read_record(where: str, kind: str, record: object) -> CatalogEntry:
         kind=kind,
         confidence=_read_confidence(where, record),
         evidence=_read_evidence(where, record),
+        unlocked_by=_read_optional_text(where, record, "unlocked_by"),
+        parameters=_read_parameters(where, record),
+        slot=_read_slot(where, record),
+        runic_power_cost=_read_cost(where, record),
     )
+
+
+def _read_slot(where: str, record: Mapping[str, object]) -> str | None:
+    slot = _read_optional_text(where, record, "slot")
+    if slot is not None and slot not in SLOTS:
+        raise CatalogError(f"{where}: slot {slot!r} is not one of {', '.join(SLOTS)}")
+    return slot
+
+
+def _read_cost(where: str, record: Mapping[str, object]) -> int:
+    value = record.get("runic_power_cost", 0)
+    if isinstance(value, bool) or not isinstance(value, int):
+        raise CatalogError(f"{where}: runic_power_cost must be a whole number")
+    return value
+
+
+def _read_parameters(where: str, record: Mapping[str, object]) -> tuple[float, ...]:
+    values = record.get("parameters", [])
+    if not isinstance(values, list):
+        raise CatalogError(f"{where}: parameters must be an array of numbers")
+    for value in values:
+        if isinstance(value, bool) or not isinstance(value, int | float):
+            raise CatalogError(f"{where}: parameter {value!r} is not a number")
+        # TOML has nan and inf and they are floats, so the check above admits them.
+        # A non-finite parameter is not a magnitude the effect engine can use; it is
+        # a number-shaped hole that would propagate through arithmetic unnoticed.
+        if not math.isfinite(value):
+            raise CatalogError(f"{where}: parameter {value!r} is not a finite number")
+    return tuple(float(v) for v in values)
+
+
+def _read_optional_text(
+    where: str, record: Mapping[str, object], field: str
+) -> str | None:
+    if field not in record:
+        return None
+    return _read_text(where, record, field)
 
 
 def _read_text(where: str, record: Mapping[str, object], field: str) -> str:

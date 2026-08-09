@@ -44,6 +44,14 @@ Checking the published build against the release notes for the installed version
 **Every identifier in that guide still resolves.** Referential integrity, which is the strong mechanical check, passes completely: no weapon, rune, skill or power has been renamed or removed. A tool relying on it alone would report the build as healthy while recommending against numbers that are off by a factor of two and a factor of four. This is exactly the semantic case that only release notes can catch, found on the first cross-check and on the pilot itself rather than on some hypothetical later build.
 
 It also settles what the video transcripts are for. They are auto-generated captions, noisy enough that names arrive mangled, so they are useless as a source of values. What they carry is *what changed and why*, which is the same role the release notes play: a trigger and a diagnostic, never an input to the catalog.
+
+#### One of those two is closed and the other is what holds the pilot below full confidence
+
+The rune magnitude is settled. Reading the installed game gives 50% where the guide and the wiki both say 25%, so the two of them are stale together, and the same reading reproduces every number the wiki prints for twenty other runes, which is what makes it a measurement rather than a preference between sources.
+
+The skill is not, and it cannot be closed the same way, because extraction currently walks runes and nothing else. So the pilot build sits at 0.9 with exactly one open disagreement on it: `LightningBeam` applies four stacks where the guide it was encoded from describes one.
+
+**Closing it is a two-step job and the second step is easy to forget.** Extend the extraction to skills, read what the installed build stores for that skill, and then go back and lift the pilot's confidence to 1.0. The number will not lift itself, and a build left at 0.9 with nothing open on it is a worse state than the honest 0.9 it has now, because the next reader has no way to tell which of the two it is.
 2. **Versioned catalog.** Ids, aliases, effects, characters, weapons, runes and powers, each with provenance, build id and confidence. The alias half exists for the pilot; the rest does not.
 
 #### The alias layer, and why it could not be a naming convention
@@ -110,6 +118,15 @@ Two of its contents change earlier decisions.
 - **`SkillTreeRunicPower` is part of what bounds a rune preset**, so whether a target build is even loadable is decidable before the run. A build is not only a set of runes the player owns, it is a set that fits a budget, and a build encoded without its cost cannot be checked against that budget at all. The node is half the budget rather than all of it: the wiki gives five points from the skill tree and five more from achievements, for a ceiling of ten, against at most four tenacity and three versatility slots. Versatility runes cost nothing, so the budget constrains the tenacity half and the slot count constrains the rest, and an earlier guess here that capacity was the node level plus four does not survive either number.
 
 **The reader refuses a payload that leaves bytes over.** That check is the whole reason to trust the layout: a record layout wrong by one field consumes the stream just as willingly and returns records that are simply the wrong ones. The leftover count is the only symptom such an error has, so it is fatal rather than logged. On the profile this was settled against, 148 records read and nothing remained.
+
+#### One undecoded domain now holds back two separate answers
+
+`achievementprogression` is the next record layout worth decoding, and it is worth stating why, because the reason is not that achievements are interesting.
+
+- **Ownership stops at the tree.** A rune granted by a skill tree node is decidable: the node is in the save or it is not. Sixty-six of the catalogued runes name such a node and sixty-two do not, because they unlock through an achievement instead, and for those the save currently proves nothing either way. The install already names the achievement behind each one, so the missing half is purely the completion state.
+- **Runic power capacity is a range rather than a number.** Five points come from a skill tree node that reads directly; up to five more come from achievements. So a build costing between those bounds gets a third answer, neither fitting nor failing, which names the gap honestly and is still not an answer. The pilot build lands exactly there: it costs ten against a ceiling of ten, so whether it is loadable at all depends entirely on the half that cannot be read.
+
+Decoding one domain replaces both non-answers at once. What is known: 22691 bytes at the newest slot, 629 identifiers in shapes like `PrestigeBarbarian10`, `UnlockArcaneWeaver` and `UnlockRunicPower5`, and no record layout. The skill tree reader is the worked example to follow, including its refusal to accept a payload with bytes left over.
 
 ### Three constraints the difficulty modifiers made concrete
 

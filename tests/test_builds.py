@@ -8,6 +8,7 @@ loadable.
 
 from __future__ import annotations
 
+import tomllib
 from pathlib import Path
 
 import pytest
@@ -106,16 +107,54 @@ class TestShippedPilot:
     ) -> None:
         assert pilot.verified_against
 
-    def test_known_disagreements_are_carried_rather_than_resolved_silently(
+    def test_the_open_disagreement_is_carried_rather_than_dropped(
         self, pilot: Build
     ) -> None:
-        # Three sources disagree with the guide on the installed version. Losing that
-        # would be worse than never recording it, since the file would then look
-        # settled while resting on numbers known to be wrong.
-        assert len(pilot.disagreements) >= 3
+        # One entry still rests on a number known to be behind the installed version,
+        # and a file that looked settled while resting on it would be worse than one
+        # that never recorded the conflict.
+        assert pilot.disagreements == (
+            "LightningBeam: guide predates a fourfold increase in stacks applied",
+        )
+
+    def test_a_disagreement_the_install_settled_is_gone_from_the_file(
+        self, pilot: Build
+    ) -> None:
+        # The other half of the same guarantee. Two rune magnitudes were argued between
+        # community sources and are now read out of the game, so carrying them on would
+        # report a conflict that no longer exists and hold the build's confidence down
+        # for no reason.
+        assert not any("Vulnerable Target" in d for d in pilot.disagreements)
+        assert not any("Lord's Bane" in d for d in pilot.disagreements)
 
     def test_confidence_stays_below_one_while_references_are_unresolved(
         self, pilot: Build
     ) -> None:
         if pilot.has_unresolved_references:
             assert pilot.confidence < 1.0
+
+    def test_the_boss_rune_is_scoped_the_way_the_game_scopes_it(self) -> None:
+        # A regression, and the correction ran against the source this entry was taken
+        # from. The spreadsheet widened the condition to any boss and the build carried
+        # that; the installed game says "whenever a Lord of the Void is alive". Scope
+        # decides when the rune is live, so the wider reading had the ranker counting
+        # its damage through titans and the cathedral fight, where it contributes
+        # nothing.
+        record = next(
+            r
+            for r in tomllib.loads((PACK / "barbarian-electric.toml").read_text())[
+                "runes"
+            ]
+            if r["id"] == "RuneExtraDamageWhileBossIsAlive"
+        )
+        assert record["effect"] == "damage +30% while a Lord of the Void is alive"
+
+    def test_a_build_with_nothing_open_on_it_claims_full_confidence(
+        self, pilot: Build
+    ) -> None:
+        # A tripwire rather than a description. Today one disagreement is open and this
+        # passes without asserting much; the moment the last one is closed it starts
+        # demanding the number be lifted with it. A build sitting at 0.9 with nothing
+        # open is indistinguishable from an honest 0.9, so nothing else would catch it.
+        if not pilot.disagreements:
+            assert pilot.confidence == 1.0

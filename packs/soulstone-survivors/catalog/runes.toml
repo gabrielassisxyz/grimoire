@@ -49,6 +49,7 @@ slot = "versatility"
 effect = "one extra reroll every five levels"
 # The tooltip states the display name, the effect and a runic power cost of zero in the
 # same frame, and the identifier is in the save's rune presets.
+runic_power_cost = 0
 confidence = 1.0
 
 [[rune.evidence]]
@@ -62,7 +63,26 @@ id = "RuneExtraCritChance"
 display = "Vulnerable Target"
 slot = "tenacity"
 effect = "crit chance +50%, additive"
+runic_power_cost = 2
+# The install reaches this pair independently of the effect join that first produced it:
+# the Hound Master's tier 3 node grants this identifier, and the wiki names Vulnerable
+# Target at that tier's threshold.
+#
+# It also settles the magnitude, which two community sources put at 25% against the
+# spreadsheet's 50%. The game stores 50. The parameter was not identified by sitting
+# near this record: the same rule was applied to every rune, and for twenty-one of them
+# it reproduces every number the wiki prints, so the field is established before this one
+# is read. The six it contradicts are all runes the game has since rebalanced, and they
+# move in both directions, Fateful Strike down from 60 and 20 to 55 and 15 while Focus
+# Fire went up from 30 and 15 to 35 and 20. That is a stale wiki, not a scaling error.
+unlocked_by = "Houndmaster_T03S01"
+parameters = [50.0]
 confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
 
 [[rune.evidence]]
 type = "community_source"
@@ -75,6 +95,7 @@ id = "RuneCriticalMastery"
 display = "Critical Mastery"
 slot = "tenacity"
 effect = "adds 25% of total crit chance to crit damage, additive"
+runic_power_cost = 2
 confidence = 0.9
 
 [[rune.evidence]]
@@ -88,7 +109,15 @@ id = "RuneExtraCritDamageAgainstDazed"
 display = "Vulnerable Exploit"
 slot = "tenacity"
 effect = "crit damage +0.5% per stack of Dazed or Disoriented, caps at 25% at 50 stacks"
+runic_power_cost = 3
+unlocked_by = "Paladin_T02S01"
+parameters = [0.5, 25.0]
 confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
 
 [[rune.evidence]]
 type = "community_source"
@@ -100,13 +129,31 @@ game_version = "1.5d"
 id = "RuneExtraDamageWhileBossIsAlive"
 display = "Lord's Bane"
 slot = "tenacity"
-effect = "damage +30% while any boss is alive, including titans and the cathedral final boss"
+effect = "damage +30% while a Lord of the Void is alive"
 # Joined on the effect, and that join is unique in both directions rather than merely
 # plausible. Of the 73 tenacity runes the spreadsheet lists, two mention a boss at all,
 # and the other is Decapitator, an instant kill whose own candidate identifier
 # (RuneChanceToKill) is present in the save separately. Of every rune identifier the
 # save holds, exactly one names a boss. Neither side has a second claimant.
+#
+# The install has since confirmed the pair by a route that does not use the effect at
+# all: the Necromancer's tier 2 node grants this identifier and the wiki names Lord's
+# Bane at that tier's threshold. The install also settles the scope the two sources
+# argued over, in the game's own words, "whenever a Lord of the Void is alive", so the
+# effect above now says that and the spreadsheet's "any boss, including titans and the
+# cathedral final boss" is dropped. The percentage is stored separately from that prose
+# and now reads 30, against the 25% the guide and the wiki both give. So one source was
+# right about the scope and wrong about the number, and the other the reverse, which is
+# the argument for recording a disagreement rather than picking a winning source.
+runic_power_cost = 3
+unlocked_by = "Necromancer_T02S01"
+parameters = [30.0]
 confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
 
 [[rune.evidence]]
 type = "community_source"
@@ -121,6 +168,7 @@ slot = "versatility"
 effect = "the first offer of active skills contains only Electric skills where possible"
 # The one record here that three unrelated readings agree on, which is why it is the
 # only 0.9 that became a 1.0 by being checked rather than by being restated.
+runic_power_cost = 0
 confidence = 1.0
 
 [[rune.evidence]]
@@ -151,6 +199,7 @@ effect = "raises the chance that Electric active skills are offered on level up"
 # could distinguish it from a coincidence. Its neighbour RuneAffinityElectric was
 # pinned first, by the same method; had the convention been irregular, this second
 # experiment is what would have shown it.
+runic_power_cost = 0
 confidence = 1.0
 
 [[rune.evidence]]
@@ -177,6 +226,7 @@ id = "RuneMasteryElectric"
 display = "Skill Mastery: Electric"
 slot = "versatility"
 effect = "select up to five Electric skills into the pool"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -190,6 +240,7 @@ id = "RuneStartWeaponSkill"
 display = "Weapon Expert"
 slot = "versatility"
 effect = "start the match with the weapon's special skill"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -197,3 +248,2314 @@ type = "community_source"
 url = "https://docs.google.com/spreadsheets/d/1eUs13Fx0I-3MRBID-DcGoxcbbm1DviNXl_RYXXxJ9OA/"
 retrieved = "2026-08-08"
 game_version = "1.5d"
+
+# Everything below is generated by tools/extract_runes.py and reviewed before it lands.
+# Regenerate it on a new game build; the diff is what the staleness rule asks for.
+#
+# These records are joined rather than read: the install holds the identifier and the
+# skill tree node that grants it, the wiki holds the display name and the soulstone
+# threshold, and the two meet because a character's tier 2, 3 and 4 nodes grant one rune
+# each against thresholds of 30,000, 60,000 and a third. That is a rule, so it is tested
+# rather than trusted. Four pairs settled by other means are asserted in the extractor
+# and it refuses to emit anything when the rule stops reproducing them, which is also
+# what would catch a patch that renumbers a tree.
+#
+# They stay at 0.9 for the same reason the older joined records do: the identifier and
+# the name never appear in one frame, so the pair is an inference and a tooltip capture
+# would still upgrade any of them.
+
+[[rune]]
+id = "RuneAddDevastatingForAllSkills"
+display = "Devastating Blow"
+slot = "tenacity"
+runic_power_cost = 4
+# Granted by Pirate's skill tree.
+unlocked_by = "Pirate_T04S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Cursed_Captain"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneAptitudeOnChaoticProc"
+display = "Chaotic Aptitude"
+slot = "tenacity"
+runic_power_cost = 1
+# Granted by DemonHunter's skill tree.
+unlocked_by = "DemonHunter_T04S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Demon_Hunter"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneBanishGuaranteesEpic"
+display = "Prophecy"
+slot = "tenacity"
+runic_power_cost = 1
+# Granted by Shaman's skill tree.
+unlocked_by = "Shaman_T02S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Shaman"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneChanceToApplyBrittleEffect"
+display = "Advanced Tactics"
+slot = "tenacity"
+runic_power_cost = 2
+# Granted by Machinist's skill tree.
+unlocked_by = "Machinist_T02S01"
+parameters = [20.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Machinist"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneChanceToCastPositionBasedSkillAfterKill"
+display = "Impaler"
+slot = "tenacity"
+runic_power_cost = 2
+# Granted by Legionnaire's skill tree.
+unlocked_by = "Legionnaire_T04S01"
+parameters = [20.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Legionnaire"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneChanceToCastPositionBasedSkillAfterKillExplosion"
+display = "Death Touch"
+slot = "tenacity"
+runic_power_cost = 2
+# Granted by Necromancer's skill tree.
+unlocked_by = "Necromancer_T03S01"
+parameters = [20.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Necromancer"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneChanceToKill"
+display = "Decapitator"
+slot = "tenacity"
+runic_power_cost = 3
+# Granted by Barbarian's skill tree.
+unlocked_by = "Barbarian_T04S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Barbarian"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneChanceToNotConsumeBuffIcyVeins"
+display = "Enduring Cold"
+slot = "tenacity"
+runic_power_cost = 1
+# Granted by Myrmidon's skill tree.
+unlocked_by = "Myrmidon_T03S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Myrmidon"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneChangeStartingSkill"
+display = "Unconventional Start"
+slot = "tenacity"
+runic_power_cost = 0
+# Granted by Sentinel's skill tree.
+unlocked_by = "Sentinel_T02S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Sentinel"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneConvertMovementIntoCriticalPotency"
+display = "Swift Execution"
+slot = "tenacity"
+runic_power_cost = 2
+# Granted by Samurai's skill tree.
+unlocked_by = "Samurai_T04S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Samurai"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneDrunkenEffect"
+display = "Pirate's Rum"
+slot = "tenacity"
+runic_power_cost = 0
+# Granted by Pirate's skill tree.
+unlocked_by = "Pirate_T02S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Cursed_Captain"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraBlockReducedDash"
+display = "War Tank"
+slot = "tenacity"
+runic_power_cost = 1
+# Granted by Legionnaire's skill tree.
+unlocked_by = "Legionnaire_T02S01"
+parameters = [50.0, 1.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Legionnaire"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraCastFrequencyBleed"
+display = "Pulse of Agony"
+slot = "tenacity"
+runic_power_cost = 2
+# Granted by Houndmaster's skill tree.
+unlocked_by = "Houndmaster_T02S01"
+parameters = [10.0, 0.5, 10.0, 25.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Hound_Master"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraCastFrequencyHealthMissing"
+display = "Adrenaline"
+slot = "tenacity"
+runic_power_cost = 3
+# Granted by Barbarian's skill tree.
+unlocked_by = "Barbarian_T03S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Barbarian"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraCastFrequencyStandingStill"
+display = "Quick Reload"
+slot = "tenacity"
+runic_power_cost = 1
+# Granted by Engineer's skill tree.
+unlocked_by = "Engineer_T03S01"
+parameters = [15.0, 3.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Engineer"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraCritChanceAgainstLowHealth"
+display = "Merciless Precision"
+slot = "tenacity"
+runic_power_cost = 3
+# Granted by Pyromancer's skill tree.
+unlocked_by = "Pyromancer_T02S01"
+parameters = [100.0, 30.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Pyromancer"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraCritPotencyReducedDamage"
+display = "Fateful Strike"
+slot = "tenacity"
+runic_power_cost = 0
+# Granted by DemonHunter's skill tree.
+unlocked_by = "DemonHunter_T02S01"
+parameters = [55.0, 15.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Demon_Hunter"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraDamageAgainstBurn"
+display = "Searing Intensity"
+slot = "tenacity"
+runic_power_cost = 3
+# Granted by Pyromancer's skill tree.
+unlocked_by = "Pyromancer_T03S01"
+parameters = [0.5, 25.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Pyromancer"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraDamageHealthLessThan"
+display = "Last Resort"
+slot = "tenacity"
+runic_power_cost = 1
+# Granted by Barbarian's skill tree.
+unlocked_by = "Barbarian_T02S01"
+parameters = [20.0, 30.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Barbarian"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraDamagePerDifferentTypeOfPowerUpCollected"
+display = "Versatile Strength"
+slot = "tenacity"
+runic_power_cost = 3
+# Granted by Beastmaster's skill tree.
+unlocked_by = "Beastmaster_T03S01"
+parameters = [0.6, 24.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Beastmaster"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraDamagePerDuplicatedTag"
+display = "Synchrony"
+slot = "tenacity"
+runic_power_cost = 2
+# Granted by Elementalist's skill tree.
+unlocked_by = "Elementalist_T02S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Elementalist"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraDamagePerLevel"
+display = "Sacrificed Growth"
+slot = "tenacity"
+runic_power_cost = 3
+# Granted by ArcaneWeaver's skill tree.
+unlocked_by = "ArcaneWeaver_T03S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Arcane_Weaver"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraDamagePerMinorSoulstone"
+display = "Amplified Power"
+slot = "tenacity"
+runic_power_cost = 3
+# Granted by Houndmaster's skill tree.
+unlocked_by = "Houndmaster_T04S01"
+parameters = [0.1, 500.0, 25.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Hound_Master"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraDamageReducedHealth"
+display = "Glass Cannon"
+slot = "tenacity"
+runic_power_cost = 2
+# Granted by Rogue's skill tree.
+unlocked_by = "Rogue_T02S01"
+parameters = [40.0, 70.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Assassin"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraDamageStandingStill"
+display = "Immovable Object"
+slot = "tenacity"
+runic_power_cost = 1
+# Granted by Sentinel's skill tree.
+unlocked_by = "Sentinel_T04S01"
+parameters = [20.0, 3.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Sentinel"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraInventoryDataDeathGuard"
+display = "Immortality"
+slot = "tenacity"
+runic_power_cost = 1
+# Granted by MonkeyKing's skill tree.
+unlocked_by = "MonkeyKing_T04S01"
+parameters = [1.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Monkey_King"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraMovementSpeedReducedPushbackResistance"
+display = "Light Feet"
+slot = "tenacity"
+runic_power_cost = 1
+# Granted by Rogue's skill tree.
+unlocked_by = "Rogue_T03S01"
+parameters = [20.0, 30.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Assassin"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraRange"
+display = "Extended Reach"
+slot = "tenacity"
+runic_power_cost = 3
+# Granted by Sentinel's skill tree.
+unlocked_by = "Sentinel_T03S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Sentinel"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraSkillSlotReducedDamage"
+display = "Improved Repertory"
+slot = "tenacity"
+runic_power_cost = 3
+# Granted by Necromancer's skill tree.
+unlocked_by = "Necromancer_T04S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Necromancer"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraStatsOnAmmunitionProc"
+display = "Armor-piercing Rounds"
+slot = "tenacity"
+runic_power_cost = 2
+# Granted by Engineer's skill tree.
+unlocked_by = "Engineer_T04S01"
+parameters = [15.0, 5.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Engineer"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraStatsOnIcyVeinsProc"
+display = "Absolute Zero"
+slot = "tenacity"
+runic_power_cost = 2
+# Granted by Myrmidon's skill tree.
+unlocked_by = "Myrmidon_T02S01"
+parameters = [15.0, 5.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Myrmidon"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraSummons"
+display = "Extra Help"
+slot = "tenacity"
+runic_power_cost = 1
+# Granted by Beastmaster's skill tree.
+unlocked_by = "Beastmaster_T04S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Beastmaster"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraVariableDamage"
+display = "Oscillating Power"
+slot = "tenacity"
+runic_power_cost = 3
+# Granted by DeathKnight's skill tree.
+unlocked_by = "DeathKnight_T03S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Death_Knight"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneFewerSkillSlotIncreasedDamage"
+display = "Focused Mind"
+slot = "tenacity"
+runic_power_cost = 3
+# Granted by MonkeyKing's skill tree.
+unlocked_by = "MonkeyKing_T02S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Monkey_King"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneGainAmmunitionOnCastSkill"
+display = "Extended Magazines"
+slot = "tenacity"
+runic_power_cost = 1
+# Granted by Engineer's skill tree.
+unlocked_by = "Engineer_T02S01"
+parameters = [10.0, 2.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Engineer"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneGainCursedPerCastAndStatsPerTentacle"
+display = "Curse of the Depths"
+slot = "tenacity"
+runic_power_cost = 3
+# Granted by Pirate's skill tree.
+unlocked_by = "Pirate_T03S01"
+parameters = [1.0, 10.0, 4.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Cursed_Captain"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneGainIcyVeinsOnFormApply"
+display = "Frozen Blood"
+slot = "tenacity"
+runic_power_cost = 1
+# Granted by Myrmidon's skill tree.
+unlocked_by = "Myrmidon_T04S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Myrmidon"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneGainProwessOnCastSkill"
+display = "Battle Proficiency"
+slot = "tenacity"
+runic_power_cost = 1
+# Granted by MonkeyKing's skill tree.
+unlocked_by = "MonkeyKing_T03S01"
+parameters = [10.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Monkey_King"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneGuaranteeActiveSkillForXLevels"
+display = "Ready for Battle"
+slot = "tenacity"
+runic_power_cost = 1
+# Granted by DeathKnight's skill tree.
+unlocked_by = "DeathKnight_T02S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Death_Knight"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneGuaranteedLegendary"
+display = "Divine Legacy"
+slot = "tenacity"
+runic_power_cost = 3
+# Granted by ArcaneWeaver's skill tree.
+unlocked_by = "ArcaneWeaver_T04S01"
+parameters = [30.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Arcane_Weaver"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneGuaranteedMinimumRarity"
+display = "Quality Standards"
+slot = "tenacity"
+runic_power_cost = 3
+# Granted by DeathKnight's skill tree.
+unlocked_by = "DeathKnight_T04S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Death_Knight"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneIncreaseAmountPrestigeGained"
+display = "Arduous Training"
+slot = "tenacity"
+runic_power_cost = 0
+# Granted by Samurai's skill tree.
+unlocked_by = "Samurai_T02S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Samurai"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneIncreaseCriticalPotencyBasedOnMaxHealth"
+display = "Savage Pact"
+slot = "tenacity"
+runic_power_cost = 2
+# Granted by Shaman's skill tree.
+unlocked_by = "Shaman_T03S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Shaman"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneIncreaseDamagePerSummonedUnit"
+display = "Harmony"
+slot = "tenacity"
+runic_power_cost = 3
+# Granted by Beastmaster's skill tree.
+unlocked_by = "Beastmaster_T02S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Beastmaster"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneIncreaseMultiplicativeDamageBuffStatusProcs"
+display = "Elemental Power"
+slot = "tenacity"
+runic_power_cost = 3
+# Granted by Machinist's skill tree.
+unlocked_by = "Machinist_T04S01"
+parameters = [200.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Machinist"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneMaterialCollector"
+display = "Efficient Extraction"
+slot = "tenacity"
+runic_power_cost = 0
+# Granted by ArcaneWeaver's skill tree.
+unlocked_by = "ArcaneWeaver_T02S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Arcane_Weaver"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneNegativeEffectsDealDamageFaster"
+display = "Elemental Flow"
+slot = "tenacity"
+runic_power_cost = 1
+# Granted by Elementalist's skill tree.
+unlocked_by = "Elementalist_T03S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Elementalist"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneRecoverHealthOnDash"
+display = "Enduring Spirit"
+slot = "tenacity"
+runic_power_cost = 1
+# Granted by Samurai's skill tree.
+unlocked_by = "Samurai_T03S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Samurai"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneReduceBuffChargeAmountRequired"
+display = "Efficiency Focus"
+slot = "tenacity"
+runic_power_cost = 1
+# Granted by Machinist's skill tree.
+unlocked_by = "Machinist_T03S01"
+parameters = [4.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Machinist"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneReduceMaxSummonIncreaseDamage"
+display = "Sacred Offering"
+slot = "tenacity"
+runic_power_cost = 2
+# Granted by Shaman's skill tree.
+unlocked_by = "Shaman_T04S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Shaman"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneRefillLockRerollPerEndlessCycle"
+display = "Endless Refill"
+slot = "tenacity"
+runic_power_cost = 0
+# Granted by Elementalist's skill tree.
+unlocked_by = "Elementalist_T04S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Elementalist"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneRegenPerKills"
+display = "Healing Flow"
+slot = "tenacity"
+runic_power_cost = 2
+# Granted by Paladin's skill tree.
+unlocked_by = "Paladin_T04S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Paladin"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneRegenWhileHealthBelow"
+display = "Unwavering Persistence"
+slot = "tenacity"
+runic_power_cost = 3
+# Granted by Paladin's skill tree.
+unlocked_by = "Paladin_T03S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Paladin"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneSetHealthToOne"
+display = "All or Nothing"
+slot = "tenacity"
+runic_power_cost = 2
+# Granted by Rogue's skill tree.
+unlocked_by = "Rogue_T04S01"
+parameters = [25.0, 25.0, 25.0, 25.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Assassin"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneSkillTypeDamageFire"
+display = "Adaptive Empowerment"
+slot = "tenacity"
+runic_power_cost = 2
+# Granted by Pyromancer's skill tree.
+unlocked_by = "Pyromancer_T04S01"
+parameters = [15.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Pyromancer"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneSoulstonesToMinerals"
+display = "Material Harvest"
+slot = "tenacity"
+runic_power_cost = 0
+# Granted by Legionnaire's skill tree.
+unlocked_by = "Legionnaire_T03S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Legionnaire"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneBanishEpicLegendary"
+display = "Commoner"
+slot = "tenacity"
+runic_power_cost = 2
+# Granted by Spellbreaker's skill tree.
+unlocked_by = "Spellbreaker_T03S01"
+parameters = [30.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Spellblade"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneChanceToApplyRandomNegativeEffect"
+display = "Misfortune's Embrace"
+slot = "tenacity"
+runic_power_cost = 2
+# Granted by Bloodmage's skill tree.
+unlocked_by = "Bloodmage_T03S01"
+parameters = [20.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Chaoswalker"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneEarlyGameStatsBonus"
+display = "Head Start"
+slot = "tenacity"
+runic_power_cost = 2
+# Granted by Spellbreaker's skill tree.
+unlocked_by = "Spellbreaker_T02S01"
+parameters = [25.0, 10.0, 25.0, 50.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Spellblade"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraRunicPowerReducedArmor"
+display = "Demonic Pact"
+slot = "tenacity"
+runic_power_cost = -2
+# Granted by DemonHunter's skill tree.
+unlocked_by = "DemonHunter_T03S01"
+parameters = [2.0, 30.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Demon_Hunter"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneIncreaseDamageButSkillAreRandom"
+display = "Gambler"
+slot = "tenacity"
+runic_power_cost = 0
+# Granted by Bloodmage's skill tree.
+unlocked_by = "Bloodmage_T02S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Chaoswalker"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneRandomDamageToAllSkills"
+display = "Overwhelming Chaos"
+slot = "tenacity"
+runic_power_cost = 1
+# Granted by Bloodmage's skill tree.
+unlocked_by = "Bloodmage_T04S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Chaoswalker"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneWeaponArsenal"
+display = "Unexpected Arsenal"
+slot = "tenacity"
+runic_power_cost = 0
+# Granted by Spellbreaker's skill tree.
+unlocked_by = "Spellbreaker_T04S01"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Spellblade"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+# The skill type families, which are the one place a naming rule is used to produce a
+# display name instead of a record reading one. It is used here and nowhere else, for
+# reasons this file argues against everywhere above, so the reasons are worth stating.
+#
+# The rule is Rune<Family><Type> to "Skill <Family>: <Type>". Three of its outputs were
+# established before it existed, two of them by equipping the rune and reading the save
+# back, and the extractor refuses to emit any of these unless it still reproduces all
+# three. The set of types is not written down either: it is taken as the suffixes all
+# three families share, so an identifier that only one family has cannot enter as a type.
+# Forty-five identifiers come out, three families of the same fifteen.
+#
+# What makes this different from the resemblance rules rejected elsewhere is that the
+# alternative is not a better source, it is no source. No wiki table lists these, no
+# skill tree node grants them, and the interface shows one label for a whole family, so
+# a record per identifier can only come from the rule or from fifteen tooltips per
+# family. They stay at 0.9 and a tooltip would still upgrade any of them.
+#
+# The prefix has to be anchored and the suffix has to be a known type, because
+# RuneCriticalMastery, RuneDashMastery, RuneMulticastMastery and RuneRerollMastery all
+# contain "Mastery" and belong to none of this. A looser rule would name them.
+
+[[rune]]
+id = "RuneAffinityArcane"
+display = "Skill Affinity: Arcane"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneAffinityBlast"
+display = "Skill Affinity: Blast"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneAffinityBomb"
+display = "Skill Affinity: Bomb"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneAffinityChaos"
+display = "Skill Affinity: Chaos"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneAffinityEarth"
+display = "Skill Affinity: Earth"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneAffinityFire"
+display = "Skill Affinity: Fire"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneAffinityHoly"
+display = "Skill Affinity: Holy"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneAffinityIce"
+display = "Skill Affinity: Ice"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneAffinityNature"
+display = "Skill Affinity: Nature"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneAffinityProjectile"
+display = "Skill Affinity: Projectile"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneAffinityShadow"
+display = "Skill Affinity: Shadow"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneAffinitySlam"
+display = "Skill Affinity: Slam"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneAffinitySwing"
+display = "Skill Affinity: Swing"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneAffinityThrust"
+display = "Skill Affinity: Thrust"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneInclinationArcane"
+display = "Skill Inclination: Arcane"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneInclinationBlast"
+display = "Skill Inclination: Blast"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneInclinationBomb"
+display = "Skill Inclination: Bomb"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneInclinationChaos"
+display = "Skill Inclination: Chaos"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneInclinationEarth"
+display = "Skill Inclination: Earth"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneInclinationFire"
+display = "Skill Inclination: Fire"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneInclinationHoly"
+display = "Skill Inclination: Holy"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneInclinationIce"
+display = "Skill Inclination: Ice"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneInclinationNature"
+display = "Skill Inclination: Nature"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneInclinationProjectile"
+display = "Skill Inclination: Projectile"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneInclinationShadow"
+display = "Skill Inclination: Shadow"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneInclinationSlam"
+display = "Skill Inclination: Slam"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneInclinationSwing"
+display = "Skill Inclination: Swing"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneInclinationThrust"
+display = "Skill Inclination: Thrust"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneMasteryArcane"
+display = "Skill Mastery: Arcane"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneMasteryBlast"
+display = "Skill Mastery: Blast"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneMasteryBomb"
+display = "Skill Mastery: Bomb"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneMasteryChaos"
+display = "Skill Mastery: Chaos"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneMasteryEarth"
+display = "Skill Mastery: Earth"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneMasteryFire"
+display = "Skill Mastery: Fire"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneMasteryHoly"
+display = "Skill Mastery: Holy"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneMasteryIce"
+display = "Skill Mastery: Ice"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneMasteryNature"
+display = "Skill Mastery: Nature"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneMasteryProjectile"
+display = "Skill Mastery: Projectile"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneMasteryShadow"
+display = "Skill Mastery: Shadow"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneMasterySlam"
+display = "Skill Mastery: Slam"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneMasterySwing"
+display = "Skill Mastery: Swing"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+[[rune]]
+id = "RuneMasteryThrust"
+display = "Skill Mastery: Thrust"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+# The achievement runes. No skill tree grants them and no naming rule reaches them, so
+# they were the last gap, and the join that closed it needed neither.
+#
+# The install names the achievement that unlocks each rune, and an achievement's own
+# name states its condition: ReachTotalElitesKilled-3000 against the wiki's "Eliminate
+# a total of 3000 elite enemies" is a match that nothing about the rune's name or its
+# effect had to supply. Sixteen pairs form that way, one to one on both sides, and the
+# extractor refuses them all unless the three it can check against records established
+# earlier still come out right.
+#
+# One is joined on the effect instead, because its condition is the single place the two
+# sources contradict each other: the game calls it boss rush cycle 1 where the wiki calls
+# it Overlord Mode cycle 3. Its effect leaves no room, "damage will be rolled twice and
+# the highest roll will be chosen" against an identifier that says it rerolls damage
+# rolls, and it is the only claimant left on either side.
+
+[[rune]]
+id = "RuneAddAllSkillsOfAllCharacters"
+display = "Omnipotent"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneDashMastery"
+display = "Dash Mastery"
+slot = "tenacity"
+runic_power_cost = 1
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneDuplicateSkills"
+display = "Singular Focus"
+slot = "tenacity"
+runic_power_cost = 4
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraDamageHealthMissing"
+display = "Recklessness"
+slot = "tenacity"
+runic_power_cost = 3
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraDamageLessArea"
+display = "Focus Fire"
+slot = "tenacity"
+runic_power_cost = 3
+parameters = [35.0, 20.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraDamageMinions"
+display = "Commanding Presence"
+slot = "tenacity"
+runic_power_cost = 3
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraDamagePerEffect"
+display = "Executioner"
+slot = "tenacity"
+runic_power_cost = 2
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraDamagePerSkillTag"
+display = "Generalist"
+slot = "tenacity"
+runic_power_cost = 3
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraDamageWithoutEffects"
+display = "Purity"
+slot = "tenacity"
+runic_power_cost = 2
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneMulticastMastery"
+display = "Multi Cast Mastery"
+slot = "tenacity"
+runic_power_cost = 2
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneRerollDamageRolls"
+display = "ControlledChaos"
+slot = "tenacity"
+runic_power_cost = 3
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneSelfTargetAreas"
+display = "Center of Attention"
+slot = "tenacity"
+runic_power_cost = 1
+parameters = [5.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneStunImmune"
+display = "Surefooted"
+slot = "tenacity"
+runic_power_cost = 1
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneSynergiesChance"
+display = "Synergetic"
+slot = "tenacity"
+runic_power_cost = 4
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"

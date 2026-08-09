@@ -15,6 +15,13 @@ dev = [
     "pytest>=8.0",
     "pip-audit>=2.7",
 ]
+# Its own group rather than dev, and never a runtime dependency: it is a third-party
+# parser for a third-party binary, used only by tools/ against a licensed install, and
+# it must not become something the advisor can import. Nothing under tests/ may need it
+# either, since tests are hermetic and no game install exists in CI.
+extract = [
+    "unitypy>=1.20",
+]
 
 [tool.ruff]
 target-version = "py312"
