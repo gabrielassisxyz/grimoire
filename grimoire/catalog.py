@@ -76,6 +76,11 @@ class CatalogEntry:
     # source that has fallen behind a patch shows up as the two disagreeing rather than
     # as one silently overwriting the other.
     parameters: tuple[float, ...] = ()
+    slot: str | None = None
+    # Signed, because one rune raises the runic power ceiling rather than spending from
+    # it and is written as a negative cost. Summing magnitudes would reject the build
+    # that rune exists to make possible.
+    runic_power_cost: int = 0
 
 
 class Catalog:
@@ -175,7 +180,16 @@ def _read_record(where: str, kind: str, record: object) -> CatalogEntry:
         evidence=_read_evidence(where, record),
         unlocked_by=_read_optional_text(where, record, "unlocked_by"),
         parameters=_read_parameters(where, record),
+        slot=_read_optional_text(where, record, "slot"),
+        runic_power_cost=_read_cost(where, record),
     )
+
+
+def _read_cost(where: str, record: Mapping[str, object]) -> int:
+    value = record.get("runic_power_cost", 0)
+    if isinstance(value, bool) or not isinstance(value, int):
+        raise CatalogError(f"{where}: runic_power_cost must be a whole number")
+    return value
 
 
 def _read_parameters(where: str, record: Mapping[str, object]) -> tuple[float, ...]:

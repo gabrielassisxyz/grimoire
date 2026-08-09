@@ -49,6 +49,7 @@ slot = "versatility"
 effect = "one extra reroll every five levels"
 # The tooltip states the display name, the effect and a runic power cost of zero in the
 # same frame, and the identifier is in the save's rune presets.
+runic_power_cost = 0
 confidence = 1.0
 
 [[rune.evidence]]
@@ -93,6 +94,7 @@ id = "RuneCriticalMastery"
 display = "Critical Mastery"
 slot = "tenacity"
 effect = "adds 25% of total crit chance to crit damage, additive"
+runic_power_cost = 2
 confidence = 0.9
 
 [[rune.evidence]]
@@ -165,6 +167,7 @@ slot = "versatility"
 effect = "the first offer of active skills contains only Electric skills where possible"
 # The one record here that three unrelated readings agree on, which is why it is the
 # only 0.9 that became a 1.0 by being checked rather than by being restated.
+runic_power_cost = 0
 confidence = 1.0
 
 [[rune.evidence]]
@@ -195,6 +198,7 @@ effect = "raises the chance that Electric active skills are offered on level up"
 # could distinguish it from a coincidence. Its neighbour RuneAffinityElectric was
 # pinned first, by the same method; had the convention been irregular, this second
 # experiment is what would have shown it.
+runic_power_cost = 0
 confidence = 1.0
 
 [[rune.evidence]]
@@ -221,6 +225,7 @@ id = "RuneMasteryElectric"
 display = "Skill Mastery: Electric"
 slot = "versatility"
 effect = "select up to five Electric skills into the pool"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -234,6 +239,7 @@ id = "RuneStartWeaponSkill"
 display = "Weapon Expert"
 slot = "versatility"
 effect = "start the match with the weapon's special skill"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1575,6 +1581,7 @@ game_version = "1.5d2"
 id = "RuneAffinityArcane"
 display = "Skill Affinity: Arcane"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1582,10 +1589,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneAffinityBlast"
 display = "Skill Affinity: Blast"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1593,10 +1606,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneAffinityBomb"
 display = "Skill Affinity: Bomb"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1604,10 +1623,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneAffinityChaos"
 display = "Skill Affinity: Chaos"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1615,10 +1640,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneAffinityEarth"
 display = "Skill Affinity: Earth"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1626,10 +1657,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneAffinityFire"
 display = "Skill Affinity: Fire"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1637,10 +1674,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneAffinityHoly"
 display = "Skill Affinity: Holy"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1648,10 +1691,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneAffinityIce"
 display = "Skill Affinity: Ice"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1659,10 +1708,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneAffinityNature"
 display = "Skill Affinity: Nature"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1670,10 +1725,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneAffinityProjectile"
 display = "Skill Affinity: Projectile"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1681,10 +1742,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneAffinityShadow"
 display = "Skill Affinity: Shadow"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1692,10 +1759,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneAffinitySlam"
 display = "Skill Affinity: Slam"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1703,10 +1776,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneAffinitySwing"
 display = "Skill Affinity: Swing"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1714,10 +1793,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneAffinityThrust"
 display = "Skill Affinity: Thrust"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1725,10 +1810,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneInclinationArcane"
 display = "Skill Inclination: Arcane"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1736,10 +1827,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneInclinationBlast"
 display = "Skill Inclination: Blast"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1747,10 +1844,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneInclinationBomb"
 display = "Skill Inclination: Bomb"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1758,10 +1861,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneInclinationChaos"
 display = "Skill Inclination: Chaos"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1769,10 +1878,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneInclinationEarth"
 display = "Skill Inclination: Earth"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1780,10 +1895,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneInclinationFire"
 display = "Skill Inclination: Fire"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1791,10 +1912,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneInclinationHoly"
 display = "Skill Inclination: Holy"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1802,10 +1929,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneInclinationIce"
 display = "Skill Inclination: Ice"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1813,10 +1946,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneInclinationNature"
 display = "Skill Inclination: Nature"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1824,10 +1963,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneInclinationProjectile"
 display = "Skill Inclination: Projectile"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1835,10 +1980,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneInclinationShadow"
 display = "Skill Inclination: Shadow"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1846,10 +1997,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneInclinationSlam"
 display = "Skill Inclination: Slam"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1857,10 +2014,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneInclinationSwing"
 display = "Skill Inclination: Swing"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1868,10 +2031,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneInclinationThrust"
 display = "Skill Inclination: Thrust"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1879,10 +2048,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneMasteryArcane"
 display = "Skill Mastery: Arcane"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1890,10 +2065,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneMasteryBlast"
 display = "Skill Mastery: Blast"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1901,10 +2082,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneMasteryBomb"
 display = "Skill Mastery: Bomb"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1912,10 +2099,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneMasteryChaos"
 display = "Skill Mastery: Chaos"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1923,10 +2116,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneMasteryEarth"
 display = "Skill Mastery: Earth"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1934,10 +2133,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneMasteryFire"
 display = "Skill Mastery: Fire"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1945,10 +2150,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneMasteryHoly"
 display = "Skill Mastery: Holy"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1956,10 +2167,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneMasteryIce"
 display = "Skill Mastery: Ice"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1967,10 +2184,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneMasteryNature"
 display = "Skill Mastery: Nature"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1978,10 +2201,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneMasteryProjectile"
 display = "Skill Mastery: Projectile"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1989,10 +2218,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneMasteryShadow"
 display = "Skill Mastery: Shadow"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2000,10 +2235,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneMasterySlam"
 display = "Skill Mastery: Slam"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2011,10 +2252,16 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneMasterySwing"
 display = "Skill Mastery: Swing"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2022,13 +2269,25 @@ type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
 
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
 [[rune]]
 id = "RuneMasteryThrust"
 display = "Skill Mastery: Thrust"
 slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 
 [[rune.evidence]]
 type = "game_asset"
 asset_path = "Soulstone Survivors_Data/resources.assets"
 build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
