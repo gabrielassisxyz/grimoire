@@ -104,13 +104,14 @@ class TestWhatTheSaveProves:
 
 class TestAgainstTheRealPack:
     def test_the_pack_splits_into_decidable_and_not(self) -> None:
-        # Sixty-six runes name a node and forty-eight do not, which is the shape the
-        # advisor has to report. The undecidable half is mostly the skill type
-        # families: they are catalogued now, but no tree grants them, so having a
-        # record and being answerable from the save are separate things.
+        # Sixty-six runes name a node and sixty-two do not, which is the shape the
+        # advisor has to report. Having a record and being answerable from the save are
+        # separate things, and the gap between them grew as the catalog filled: every
+        # rune is catalogued now, and the ones no tree grants are exactly the ones this
+        # still cannot decide.
         ownership = read_rune_ownership(load(PACK_CATALOG), [])
         assert len(ownership.not_owned) == 66
-        assert len(ownership.undecidable) == 48
+        assert len(ownership.undecidable) == 62
 
     def test_a_node_the_pack_names_is_spelled_the_way_the_save_spells_it(self) -> None:
         # The join is a string match against save data, so a node written in the

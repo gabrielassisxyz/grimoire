@@ -86,6 +86,117 @@ WIKI_TO_INSTALL = {
 }
 
 
+# The achievement runes, which no skill tree grants and no naming rule reaches. The
+# install names the achievement that unlocks each, and the achievement name encodes its
+# own condition, which is the same condition the wiki prints in prose. So the two are
+# joined on the condition rather than on the rune: "ReachTotalElitesKilled-3000" against
+# "Eliminate a total of 3000 elite enemies" is a match nothing about either rune's name
+# or effect had to supply.
+ROMAN = {"I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6}
+
+# The maps are named one way inside the game and another on the wiki. Forest is anchored
+# rather than assumed: its achievement grants Critical Mastery, whose pair was already
+# established, and the wiki puts that rune on the Whispering Grove.
+MAPS = {
+    "Forest": "Whispering Grove",
+    "Snow": "Frozen Wastelands",
+    "Dungeon": "Dungeon of Despair",
+    "Cavern": "Caves of Dhal Zhog",
+}
+
+CONDITION_FROM_ACHIEVEMENT = (
+    ("characters", r"UnlockCharacterCount-(\d+)"),
+    ("runic_power", r"UnlockRunicPower-(\d+)"),
+    ("enemies", r"ReachTotalEnemiesKilled-(\d+)"),
+    ("elites", r"ReachTotalElitesKilled-(\d+)"),
+    ("bosses", r"ReachTotalBossesKilled-(\d+)"),
+    ("level", r"ReachExperienceLevel-(\d+)"),
+    ("endless", r"CompleteEndlessCycle-(\d+)"),
+)
+
+CONDITION_FROM_WIKI = (
+    ("characters", r"Unlock a total of ([\d,]+) characters"),
+    ("runic_power", r"Unlock a total of ([\d,]+) Runic Power"),
+    ("enemies", r"a total of ([\d,]+) enemies"),
+    ("elites", r"a total of ([\d,]+) elite"),
+    ("bosses", r"a total of ([\d,]+) Lords of the Void"),
+    ("level", r"experience level ([\d,]+)"),
+    ("endless", r"Endless Mode cycle ([\d,]+)"),
+)
+
+# Joined on the effect instead, because its condition is the one place the two sources
+# disagree: the game calls it boss rush cycle 1 and the wiki calls it Overlord Mode
+# cycle 3. The effect leaves no room, "damage will be rolled twice and the highest roll
+# will be chosen" against an identifier that says it rerolls damage rolls.
+EFFECT_JOINED = {"RuneRerollDamageRolls": "ControlledChaos"}
+
+ACHIEVEMENT_ANCHORS = {
+    "RuneCriticalMastery": "Critical Mastery",
+    "RuneRerollMastery": "Reroll Mastery",
+    "RuneStartWeaponSkill": "Weapon Expert",
+}
+
+
+def achievement_condition(name: str) -> tuple | None:
+    body = name.removeprefix("Achievement-")
+    for kind, pattern in CONDITION_FROM_ACHIEVEMENT:
+        match = re.fullmatch(pattern, body)
+        if match:
+            return (kind, int(match.group(1)))
+    match = re.fullmatch(r"ReachAffixTierProgressionPerMap-(\w+)-(\d+)", body)
+    if match and match.group(1) in MAPS:
+        return ("curse", MAPS[match.group(1)], int(match.group(2)))
+    return None
+
+
+def wiki_condition(text: str) -> tuple | None:
+    plain = re.sub(r"\[|\]\(.*?\)", "", text)
+    for kind, pattern in CONDITION_FROM_WIKI:
+        match = re.search(pattern, plain)
+        if match:
+            return (kind, int(match.group(1).replace(",", "")))
+    match = re.search(r"curse tiers up to ([IVX]+) enabled on The ([\w\' ]+?)\.", plain)
+    if match:
+        return ("curse", match.group(2).strip(), ROMAN[match.group(1)])
+    return None
+
+
+def join_achievements(
+    granted: dict[str, list[str]], catalogue: dict[str, tuple[str, int, str]]
+) -> dict[str, str]:
+    """Rune identifiers against display names, joined on the unlock condition."""
+    by_condition: dict[tuple, set[str]] = {}
+    for achievement, runes in granted.items():
+        condition = achievement_condition(achievement)
+        if condition:
+            by_condition.setdefault(condition, set()).update(runes)
+    wiki_by_condition: dict[tuple, set[str]] = {}
+    for display, (_, _, unlock) in catalogue.items():
+        condition = wiki_condition(unlock)
+        if condition:
+            wiki_by_condition.setdefault(condition, set()).add(display)
+
+    pairs = dict(EFFECT_JOINED)
+    for condition, runes in by_condition.items():
+        names = wiki_by_condition.get(condition, set())
+        # Only a one-to-one condition settles a pair. Anything else is reported by its
+        # absence rather than resolved by picking, which is what a nearest match is.
+        # No condition in the current build is claimed twice, so relaxing this changes
+        # nothing today: it is a guard against a patch adding a second rune behind an
+        # existing achievement, not a rule this data exercises.
+        if len(runes) == 1 and len(names) == 1:
+            pairs[next(iter(runes))] = next(iter(names))
+
+    wrong = {
+        i: pairs.get(i)
+        for i, name in ACHIEVEMENT_ANCHORS.items()
+        if pairs.get(i) != name
+    }
+    if wrong:
+        raise SystemExit(f"the achievement join lost its anchors: {wrong}")
+    return pairs
+
+
 def read_build_id(install: pathlib.Path) -> str:
     """The build this describes, so that a later patch is a detectable difference."""
     info = (install / "build_info.txt").read_text(encoding="utf-8", errors="replace")
@@ -114,7 +225,11 @@ def read_parameters(blob: bytes) -> list[float]:
 
 def read_grants(
     assets: pathlib.Path,
-) -> tuple[dict[str, tuple[str, str, int, list[float]]], dict[str, bytes]]:
+) -> tuple[
+    dict[str, tuple[str, str, int, list[float]]],
+    dict[str, bytes],
+    dict[str, list[str]],
+]:
     """Each rune granted by a node, plus every rune record the install holds."""
     import UnityPy
 
@@ -122,6 +237,7 @@ def read_grants(
     rune_records: dict[str, bytes] = {}
     grants: dict[str, tuple[str, str, int, list[float]]] = {}
     nodes = []
+    achievements: dict[str, list[str]] = {}
     for obj in env.objects:
         if obj.type.name != "MonoBehaviour":
             continue
@@ -133,6 +249,15 @@ def read_grants(
             rune_records[name] = obj.get_raw_data()
         elif NODE_NAME.fullmatch(name or ""):
             nodes.append((name, obj.get_raw_data()))
+        elif name and name.startswith("Achievement-"):
+            granted = sorted(
+                {
+                    i.decode()
+                    for i in re.findall(rb"Rune[A-Za-z0-9]{3,60}", obj.get_raw_data())
+                }
+            )
+            if granted:
+                achievements[name] = granted
     for name, raw in nodes:
         node = NODE_NAME.fullmatch(name)
         for token in IDENTIFIER.findall(raw):
@@ -144,7 +269,7 @@ def read_grants(
                     int(node.group(2)),
                     read_parameters(rune_records.get(identifier, b"")),
                 )
-    return grants, rune_records
+    return grants, rune_records, achievements
 
 
 SKILL_TYPE_FAMILIES = ("RuneAffinity", "RuneInclination", "RuneMastery")
@@ -263,6 +388,64 @@ def check_anchors(paired: dict[str, tuple[str, int, str, str, list[float]]]) -> 
         raise SystemExit("the join no longer reproduces the established pairs")
 
 
+def read_rune_table(wiki: pathlib.Path) -> dict[str, tuple[str, int, str]]:
+    """Every rune the wiki tabulates: its section, its cost and how it unlocks."""
+    page = wiki / "runes--443.md"
+    text = page.read_text(encoding="utf-8")
+    source = re.search(r'^source_url:\s*"([^"]+)"', text, re.M)
+    if not source:
+        raise SystemExit(f"{page.name} has no source_url to cite")
+    table: dict[str, tuple[str, int, str]] = {}
+    slot = "versatility"
+    for line in text.splitlines():
+        if line.startswith("# Tenacity"):
+            slot = "tenacity"
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        if len(cells) < 5 or not cells[1] or cells[1] in ("Name", "---"):
+            continue
+        # Only the tenacity table has a cost column; versatility runes are all zero,
+        # which the page states in its own prose and a tooltip already confirmed.
+        cost = (
+            int(cells[3])
+            if slot == "tenacity" and cells[3].lstrip("-").isdigit()
+            else 0
+        )
+        table[cells[1]] = (slot, cost, cells[-2])
+    return table, source.group(1)
+
+
+def emit_achievements(
+    pairs: dict[str, str],
+    table: dict[str, tuple[str, int, str]],
+    rune_records: dict[str, bytes],
+    url: str,
+    asset_path: str,
+    build_id: str,
+) -> None:
+    for identifier, display in sorted(pairs.items()):
+        if display not in table:
+            continue
+        slot, cost, _ = table[display]
+        print("\n[[rune]]")
+        print(f'id = "{identifier}"')
+        print(f'display = "{display}"')
+        print(f'slot = "{slot}"')
+        print(f"runic_power_cost = {cost}")
+        values = read_parameters(rune_records.get(identifier, b""))
+        if values:
+            print(f"parameters = {values}")
+        print("confidence = 0.9")
+        print("\n[[rune.evidence]]")
+        print('type = "game_asset"')
+        print(f'asset_path = "{asset_path}"')
+        print(f'build_id = "{build_id}"')
+        print("\n[[rune.evidence]]")
+        print('type = "community_source"')
+        print(f'url = "{url}"')
+        print('retrieved = "2026-08-08"')
+        print('game_version = "unstated"')
+
+
 def emit_family(
     pairs: dict[str, str],
     rune_records: dict[str, bytes],
@@ -329,7 +512,7 @@ def main() -> None:
         raise SystemExit(f"no resources.assets under {data}")
 
     build_id = read_build_id(install)
-    grants, rune_records = read_grants(assets)
+    grants, rune_records, achievements = read_grants(assets)
     pages = read_wiki(wiki)
     paired, gaps = join(grants, pages)
     check_anchors(paired)
@@ -339,6 +522,13 @@ def main() -> None:
         print(f"# GAP {gap}", file=sys.stderr)
     asset_path = "Soulstone Survivors_Data/resources.assets"
     emit(paired, asset_path, build_id)
+
+    table, runes_url = read_rune_table(wiki)
+    achievement_pairs = join_achievements(achievements, table)
+    print(f"# {len(achievement_pairs)} achievement runes.", file=sys.stderr)
+    emit_achievements(
+        achievement_pairs, table, rune_records, runes_url, asset_path, build_id
+    )
 
     pairs = family_pairs(set(rune_records))
     print(f"# {len(pairs)} skill type family runes.", file=sys.stderr)

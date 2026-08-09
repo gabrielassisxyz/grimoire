@@ -2291,3 +2291,273 @@ type = "community_source"
 url = "https://soulstone-survivors.fandom.com/wiki/Runes"
 retrieved = "2026-08-08"
 game_version = "unstated"
+
+# The achievement runes. No skill tree grants them and no naming rule reaches them, so
+# they were the last gap, and the join that closed it needed neither.
+#
+# The install names the achievement that unlocks each rune, and an achievement's own
+# name states its condition: ReachTotalElitesKilled-3000 against the wiki's "Eliminate
+# a total of 3000 elite enemies" is a match that nothing about the rune's name or its
+# effect had to supply. Sixteen pairs form that way, one to one on both sides, and the
+# extractor refuses them all unless the three it can check against records established
+# earlier still come out right.
+#
+# One is joined on the effect instead, because its condition is the single place the two
+# sources contradict each other: the game calls it boss rush cycle 1 where the wiki calls
+# it Overlord Mode cycle 3. Its effect leaves no room, "damage will be rolled twice and
+# the highest roll will be chosen" against an identifier that says it rerolls damage
+# rolls, and it is the only claimant left on either side.
+
+[[rune]]
+id = "RuneAddAllSkillsOfAllCharacters"
+display = "Omnipotent"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneDashMastery"
+display = "Dash Mastery"
+slot = "tenacity"
+runic_power_cost = 1
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneDuplicateSkills"
+display = "Singular Focus"
+slot = "tenacity"
+runic_power_cost = 4
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraDamageHealthMissing"
+display = "Recklessness"
+slot = "tenacity"
+runic_power_cost = 3
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraDamageLessArea"
+display = "Focus Fire"
+slot = "tenacity"
+runic_power_cost = 3
+parameters = [35.0, 20.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraDamageMinions"
+display = "Commanding Presence"
+slot = "tenacity"
+runic_power_cost = 3
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraDamagePerEffect"
+display = "Executioner"
+slot = "tenacity"
+runic_power_cost = 2
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraDamagePerSkillTag"
+display = "Generalist"
+slot = "tenacity"
+runic_power_cost = 3
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneExtraDamageWithoutEffects"
+display = "Purity"
+slot = "tenacity"
+runic_power_cost = 2
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneMulticastMastery"
+display = "Multi Cast Mastery"
+slot = "tenacity"
+runic_power_cost = 2
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneRerollDamageRolls"
+display = "ControlledChaos"
+slot = "tenacity"
+runic_power_cost = 3
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneSelfTargetAreas"
+display = "Center of Attention"
+slot = "tenacity"
+runic_power_cost = 1
+parameters = [5.0]
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneStunImmune"
+display = "Surefooted"
+slot = "tenacity"
+runic_power_cost = 1
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneSynergiesChance"
+display = "Synergetic"
+slot = "tenacity"
+runic_power_cost = 4
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"

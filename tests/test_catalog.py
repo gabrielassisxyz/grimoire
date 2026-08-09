@@ -49,18 +49,6 @@ SAVED_RUNES = [
     "RuneSynergiesChance",
 ]
 
-# Runes this save holds that still have no record. They unlock through achievements
-# rather than through a character's tree, and unlike the skill type families they have
-# arbitrary names, so neither the tree walk nor the family rule reaches them. The list
-# was nine before the families landed.
-UNLOCKED_BY_ACHIEVEMENT = [
-    "RuneDashMastery",
-    "RuneExtraDamageHealthMissing",
-    "RuneExtraDamagePerEffect",
-    "RuneStunImmune",
-    "RuneSynergiesChance",
-]
-
 
 def write(directory: Path, kind: str, body: str) -> None:
     (directory / f"{kind}s.toml").write_text(body)
@@ -363,16 +351,14 @@ class TestThePackItself:
         wanted = [r["id"] for r in build["runes"]] + [build["meta"]["weapon"]]
         assert catalog.missing(wanted) == []
 
-    def test_the_catalog_covers_the_save_up_to_a_named_boundary(self) -> None:
-        # The identifiers this player's save carries are the advisor's real input, so
-        # they are what the catalog is measured against. Twenty of the twenty-five now
-        # resolve where ten did before. The five that do not are one boundary and not
-        # five accidents: every rune below unlocks through an achievement, which nothing
-        # here reads. Asserting
-        # the exact set rather than a count is what makes the gap a decision on record;
-        # closing it is expected to change this line.
+    def test_every_rune_this_save_has_ever_recorded_resolves(self) -> None:
+        # The identifiers this save carries are the advisor's real input, so they are
+        # what the catalog is measured against rather than a sample chosen to pass. Ten
+        # of the twenty-five resolved when this was first written, and the shortfall was
+        # asserted as a named boundary through two rounds of narrowing it. There is no
+        # boundary left to name.
         catalog = load(PACK_CATALOG)
-        assert catalog.missing(SAVED_RUNES) == UNLOCKED_BY_ACHIEVEMENT
+        assert catalog.missing(SAVED_RUNES) == []
 
     def test_a_pair_that_only_the_install_could_produce(self) -> None:
         # Neither source reaches this on its own: the identifier exists only in the
@@ -441,3 +427,26 @@ class TestThePackItself:
             }
         assert len(set(map(frozenset, families.values()))) == 1
         assert len(families["Mastery"]) == 15
+
+    def test_an_achievement_rune_joined_on_its_unlock_condition(self) -> None:
+        # Neither side suggests the other: the identifier says the rune grants immunity
+        # to stuns and the name is Surefooted. What joined them is the condition, an
+        # achievement called ReachExperienceLevel-65 against a wiki row reading "Reach
+        # experience level 65 in a single match".
+        catalog = load(PACK_CATALOG)
+        assert catalog.id_for("Surefooted") == "RuneStunImmune"
+
+    def test_the_one_achievement_rune_joined_on_its_effect_instead(self) -> None:
+        # Its condition is the single place the sources contradict each other, boss rush
+        # cycle 1 against Overlord Mode cycle 3, so the condition rule cannot reach it.
+        # The effect can: rolling damage twice and keeping the highest, against an
+        # identifier that says it rerolls damage rolls.
+        catalog = load(PACK_CATALOG)
+        assert catalog.id_for("ControlledChaos") == "RuneRerollDamageRolls"
+
+    def test_every_rune_record_carries_a_cost_and_a_slot(self) -> None:
+        # The budget check reads both off every record it is handed, and a rune missing
+        # either would be silently counted as free or as belonging to no section.
+        runes = load(PACK_CATALOG).entries_of_kind("rune")
+        assert len(runes) == 128
+        assert all(e.slot in ("tenacity", "versatility") for e in runes)
