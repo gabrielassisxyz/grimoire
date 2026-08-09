@@ -112,8 +112,10 @@ def read_parameters(blob: bytes) -> list[float]:
     return values
 
 
-def read_grants(assets: pathlib.Path) -> dict[str, tuple[str, str, int, list[float]]]:
-    """Each rune identifier against the node that grants it and its parameters."""
+def read_grants(
+    assets: pathlib.Path,
+) -> tuple[dict[str, tuple[str, str, int, list[float]]], dict[str, bytes]]:
+    """Each rune granted by a node, plus every rune record the install holds."""
     import UnityPy
 
     env = UnityPy.load(str(assets))
@@ -142,7 +144,47 @@ def read_grants(assets: pathlib.Path) -> dict[str, tuple[str, str, int, list[flo
                     int(node.group(2)),
                     read_parameters(rune_records.get(identifier, b"")),
                 )
-    return grants
+    return grants, rune_records
+
+
+SKILL_TYPE_FAMILIES = ("RuneAffinity", "RuneInclination", "RuneMastery")
+
+# Pairs established before this rule existed, two of them by equipping the rune and
+# reading the save back. They are what makes the transformation below a tested rule
+# rather than a resemblance, which this catalog refuses everywhere else.
+FAMILY_ANCHORS = {
+    "RuneAffinityElectric": "Skill Affinity: Electric",
+    "RuneInclinationElectric": "Skill Inclination: Electric",
+    "RuneMasteryElectric": "Skill Mastery: Electric",
+}
+
+
+def read_skill_types(identifiers: set[str]) -> set[str]:
+    """The skill types, taken as the suffixes all three families share.
+
+    Deriving the set instead of listing it is what keeps a stray identifier out. Only a
+    real type appears once per family, so anything present in fewer than three is not
+    one, and the three bare family names fall out the same way.
+    """
+    per_family = [
+        {i[len(f) :] for i in identifiers if i.startswith(f) and i != f}
+        for f in SKILL_TYPE_FAMILIES
+    ]
+    return set.intersection(*per_family)
+
+
+def family_pairs(identifiers: set[str]) -> dict[str, str]:
+    """Every Rune<Family><Type> against the name the interface gives it."""
+    types = read_skill_types(identifiers)
+    pairs = {}
+    for family in SKILL_TYPE_FAMILIES:
+        label = family.removeprefix("Rune")
+        for skill_type in sorted(types):
+            pairs[family + skill_type] = f"Skill {label}: {skill_type}"
+    wrong = {i: pairs[i] for i, name in FAMILY_ANCHORS.items() if pairs.get(i) != name}
+    if wrong or set(FAMILY_ANCHORS) - set(pairs):
+        raise SystemExit(f"the family rule no longer reproduces its anchors: {wrong}")
+    return pairs
 
 
 def read_wiki(wiki: pathlib.Path) -> dict[str, tuple[dict[str, tuple[str, int]], str]]:
@@ -221,6 +263,31 @@ def check_anchors(paired: dict[str, tuple[str, int, str, str, list[float]]]) -> 
         raise SystemExit("the join no longer reproduces the established pairs")
 
 
+def emit_family(
+    pairs: dict[str, str],
+    rune_records: dict[str, bytes],
+    asset_path: str,
+    build_id: str,
+) -> None:
+    """The skill type families, which no wiki table lists and no tree node grants."""
+    for identifier, display in sorted(pairs.items()):
+        print("\n[[rune]]")
+        print(f'id = "{identifier}"')
+        print(f'display = "{display}"')
+        print('slot = "versatility"')
+        values = read_parameters(rune_records.get(identifier, b""))
+        if values:
+            print(f"parameters = {values}")
+        # The identifier is read from the install and the name follows a rule the
+        # install's own regularity supports, so this is weaker than a record whose name
+        # was read somewhere. A tooltip for any of them would still upgrade it.
+        print("confidence = 0.9")
+        print("\n[[rune.evidence]]")
+        print('type = "game_asset"')
+        print(f'asset_path = "{asset_path}"')
+        print(f'build_id = "{build_id}"')
+
+
 def emit(
     paired: dict[str, tuple[str, int, str, str, list[float]]],
     asset_path: str,
@@ -262,7 +329,7 @@ def main() -> None:
         raise SystemExit(f"no resources.assets under {data}")
 
     build_id = read_build_id(install)
-    grants = read_grants(assets)
+    grants, rune_records = read_grants(assets)
     pages = read_wiki(wiki)
     paired, gaps = join(grants, pages)
     check_anchors(paired)
@@ -270,7 +337,12 @@ def main() -> None:
     print(f"# {len(paired)} runes, extracted from build {build_id}.", file=sys.stderr)
     for gap in gaps:
         print(f"# GAP {gap}", file=sys.stderr)
-    emit(paired, "Soulstone Survivors_Data/resources.assets", build_id)
+    asset_path = "Soulstone Survivors_Data/resources.assets"
+    emit(paired, asset_path, build_id)
+
+    pairs = family_pairs(set(rune_records))
+    print(f"# {len(pairs)} skill type family runes.", file=sys.stderr)
+    emit_family(pairs, rune_records, asset_path, build_id)
 
 
 if __name__ == "__main__":

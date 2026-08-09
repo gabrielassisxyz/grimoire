@@ -49,16 +49,14 @@ SAVED_RUNES = [
     "RuneSynergiesChance",
 ]
 
-# Runes this save holds that no character's skill tree grants. They unlock through
-# achievements, which the extraction does not read, so they have no record yet.
+# Runes this save holds that still have no record. They unlock through achievements
+# rather than through a character's tree, and unlike the skill type families they have
+# arbitrary names, so neither the tree walk nor the family rule reaches them. The list
+# was nine before the families landed.
 UNLOCKED_BY_ACHIEVEMENT = [
-    "RuneAffinityNature",
     "RuneDashMastery",
     "RuneExtraDamageHealthMissing",
     "RuneExtraDamagePerEffect",
-    "RuneMasteryArcane",
-    "RuneMasteryFire",
-    "RuneMasterySwing",
     "RuneStunImmune",
     "RuneSynergiesChance",
 ]
@@ -367,10 +365,10 @@ class TestThePackItself:
 
     def test_the_catalog_covers_the_save_up_to_a_named_boundary(self) -> None:
         # The identifiers this player's save carries are the advisor's real input, so
-        # they are what the catalog is measured against. Sixteen of the twenty-five now
-        # resolve where ten did before. The nine that do not are one boundary and not
-        # nine accidents: every rune below is unlocked by an achievement rather than by
-        # a character's skill tree, and the extraction only walks the trees. Asserting
+        # they are what the catalog is measured against. Twenty of the twenty-five now
+        # resolve where ten did before. The five that do not are one boundary and not
+        # five accidents: every rune below unlocks through an achievement, which nothing
+        # here reads. Asserting
         # the exact set rather than a count is what makes the gap a decision on record;
         # closing it is expected to change this line.
         catalog = load(PACK_CATALOG)
@@ -406,3 +404,40 @@ class TestThePackItself:
         entry = load(PACK_CATALOG).entry("RuneExtraCritDamageAgainstDazed")
         assert 0.5 in entry.parameters
         assert 25.0 in entry.parameters
+
+    def test_the_family_rule_still_produces_what_experiment_established(self) -> None:
+        # The three pairs the rule was checked against, two of them settled by equipping
+        # the rune and reading the save back. They are asserted here as well as in the
+        # extractor so that hand-editing the file cannot drift from the rule either.
+        catalog = load(PACK_CATALOG)
+        assert catalog.id_for("Skill Affinity: Electric") == "RuneAffinityElectric"
+        assert catalog.id_for("Skill Inclination: Electric") == (
+            "RuneInclinationElectric"
+        )
+        assert catalog.id_for("Skill Mastery: Electric") == "RuneMasteryElectric"
+
+    def test_runes_that_merely_contain_a_family_word_are_not_named_by_the_rule(
+        self,
+    ) -> None:
+        # The boundary the rule would cross if the prefix were not anchored and the
+        # suffix not restricted to a known type. Each of these ends in a family word and
+        # belongs to none of them, so a looser rule would rename them into nonsense.
+        catalog = load(PACK_CATALOG)
+        assert catalog.display_for("RuneCriticalMastery") == "Critical Mastery"
+        assert catalog.display_for("RuneRerollMastery") == "Reroll Mastery"
+
+    def test_all_three_families_carry_the_same_skill_types(self) -> None:
+        # The set of types was derived rather than written down, as the suffixes the
+        # three families share. If one family gained an identifier the others lack, it
+        # was never a skill type and this is what says so.
+        catalog = load(PACK_CATALOG)
+        families = {}
+        for family in ("Affinity", "Inclination", "Mastery"):
+            prefix = f"Rune{family}"
+            families[family] = {
+                e.id.removeprefix(prefix)
+                for e in catalog.entries_of_kind("rune")
+                if e.id.startswith(prefix) and e.display.startswith("Skill ")
+            }
+        assert len(set(map(frozenset, families.values()))) == 1
+        assert len(families["Mastery"]) == 15

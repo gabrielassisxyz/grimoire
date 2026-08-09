@@ -148,3 +148,13 @@ class TestShippedPilot:
             if r["id"] == "RuneExtraDamageWhileBossIsAlive"
         )
         assert record["effect"] == "damage +30% while a Lord of the Void is alive"
+
+    def test_a_build_with_nothing_open_on_it_claims_full_confidence(
+        self, pilot: Build
+    ) -> None:
+        # A tripwire rather than a description. Today one disagreement is open and this
+        # passes without asserting much; the moment the last one is closed it starts
+        # demanding the number be lifted with it. A build sitting at 0.9 with nothing
+        # open is indistinguishable from an honest 0.9, so nothing else would catch it.
+        if not pilot.disagreements:
+            assert pilot.confidence == 1.0

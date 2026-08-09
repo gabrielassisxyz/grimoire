@@ -44,6 +44,14 @@ Checking the published build against the release notes for the installed version
 **Every identifier in that guide still resolves.** Referential integrity, which is the strong mechanical check, passes completely: no weapon, rune, skill or power has been renamed or removed. A tool relying on it alone would report the build as healthy while recommending against numbers that are off by a factor of two and a factor of four. This is exactly the semantic case that only release notes can catch, found on the first cross-check and on the pilot itself rather than on some hypothetical later build.
 
 It also settles what the video transcripts are for. They are auto-generated captions, noisy enough that names arrive mangled, so they are useless as a source of values. What they carry is *what changed and why*, which is the same role the release notes play: a trigger and a diagnostic, never an input to the catalog.
+
+#### One of those two is closed and the other is what holds the pilot below full confidence
+
+The rune magnitude is settled. Reading the installed game gives 50% where the guide and the wiki both say 25%, so the two of them are stale together, and the same reading reproduces every number the wiki prints for twenty other runes, which is what makes it a measurement rather than a preference between sources.
+
+The skill is not, and it cannot be closed the same way, because extraction currently walks runes and nothing else. So the pilot build sits at 0.9 with exactly one open disagreement on it: `LightningBeam` applies four stacks where the guide it was encoded from describes one.
+
+**Closing it is a two-step job and the second step is easy to forget.** Extend the extraction to skills, read what the installed build stores for that skill, and then go back and lift the pilot's confidence to 1.0. The number will not lift itself, and a build left at 0.9 with nothing open on it is a worse state than the honest 0.9 it has now, because the next reader has no way to tell which of the two it is.
 2. **Versioned catalog.** Ids, aliases, effects, characters, weapons, runes and powers, each with provenance, build id and confidence. The alias half exists for the pilot; the rest does not.
 
 #### The alias layer, and why it could not be a naming convention

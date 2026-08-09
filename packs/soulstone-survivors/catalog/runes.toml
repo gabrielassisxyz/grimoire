@@ -1549,3 +1549,486 @@ type = "community_source"
 url = "https://soulstone-survivors.fandom.com/wiki/The_Spellblade"
 retrieved = "2026-08-08"
 game_version = "1.5d2"
+
+# The skill type families, which are the one place a naming rule is used to produce a
+# display name instead of a record reading one. It is used here and nowhere else, for
+# reasons this file argues against everywhere above, so the reasons are worth stating.
+#
+# The rule is Rune<Family><Type> to "Skill <Family>: <Type>". Three of its outputs were
+# established before it existed, two of them by equipping the rune and reading the save
+# back, and the extractor refuses to emit any of these unless it still reproduces all
+# three. The set of types is not written down either: it is taken as the suffixes all
+# three families share, so an identifier that only one family has cannot enter as a type.
+# Forty-five identifiers come out, three families of the same fifteen.
+#
+# What makes this different from the resemblance rules rejected elsewhere is that the
+# alternative is not a better source, it is no source. No wiki table lists these, no
+# skill tree node grants them, and the interface shows one label for a whole family, so
+# a record per identifier can only come from the rule or from fifteen tooltips per
+# family. They stay at 0.9 and a tooltip would still upgrade any of them.
+#
+# The prefix has to be anchored and the suffix has to be a known type, because
+# RuneCriticalMastery, RuneDashMastery, RuneMulticastMastery and RuneRerollMastery all
+# contain "Mastery" and belong to none of this. A looser rule would name them.
+
+[[rune]]
+id = "RuneAffinityArcane"
+display = "Skill Affinity: Arcane"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneAffinityBlast"
+display = "Skill Affinity: Blast"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneAffinityBomb"
+display = "Skill Affinity: Bomb"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneAffinityChaos"
+display = "Skill Affinity: Chaos"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneAffinityEarth"
+display = "Skill Affinity: Earth"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneAffinityFire"
+display = "Skill Affinity: Fire"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneAffinityHoly"
+display = "Skill Affinity: Holy"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneAffinityIce"
+display = "Skill Affinity: Ice"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneAffinityNature"
+display = "Skill Affinity: Nature"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneAffinityProjectile"
+display = "Skill Affinity: Projectile"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneAffinityShadow"
+display = "Skill Affinity: Shadow"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneAffinitySlam"
+display = "Skill Affinity: Slam"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneAffinitySwing"
+display = "Skill Affinity: Swing"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneAffinityThrust"
+display = "Skill Affinity: Thrust"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneInclinationArcane"
+display = "Skill Inclination: Arcane"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneInclinationBlast"
+display = "Skill Inclination: Blast"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneInclinationBomb"
+display = "Skill Inclination: Bomb"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneInclinationChaos"
+display = "Skill Inclination: Chaos"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneInclinationEarth"
+display = "Skill Inclination: Earth"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneInclinationFire"
+display = "Skill Inclination: Fire"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneInclinationHoly"
+display = "Skill Inclination: Holy"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneInclinationIce"
+display = "Skill Inclination: Ice"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneInclinationNature"
+display = "Skill Inclination: Nature"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneInclinationProjectile"
+display = "Skill Inclination: Projectile"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneInclinationShadow"
+display = "Skill Inclination: Shadow"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneInclinationSlam"
+display = "Skill Inclination: Slam"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneInclinationSwing"
+display = "Skill Inclination: Swing"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneInclinationThrust"
+display = "Skill Inclination: Thrust"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneMasteryArcane"
+display = "Skill Mastery: Arcane"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneMasteryBlast"
+display = "Skill Mastery: Blast"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneMasteryBomb"
+display = "Skill Mastery: Bomb"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneMasteryChaos"
+display = "Skill Mastery: Chaos"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneMasteryEarth"
+display = "Skill Mastery: Earth"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneMasteryFire"
+display = "Skill Mastery: Fire"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneMasteryHoly"
+display = "Skill Mastery: Holy"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneMasteryIce"
+display = "Skill Mastery: Ice"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneMasteryNature"
+display = "Skill Mastery: Nature"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneMasteryProjectile"
+display = "Skill Mastery: Projectile"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneMasteryShadow"
+display = "Skill Mastery: Shadow"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneMasterySlam"
+display = "Skill Mastery: Slam"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneMasterySwing"
+display = "Skill Mastery: Swing"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[rune]]
+id = "RuneMasteryThrust"
+display = "Skill Mastery: Thrust"
+slot = "versatility"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
