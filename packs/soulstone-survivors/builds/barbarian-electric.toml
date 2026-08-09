@@ -15,7 +15,10 @@
 game = "soulstone-survivors"
 build_id = "barbarian-electric"
 character = "Barbarian"
-weapon = "Tempest Battle Axes"
+# A reference, not a name. The guide calls this weapon Tempest Battle Axes and the save
+# calls it this; the pair is a catalog record, so it is stated once there instead of
+# being repeated wherever a build happens to mention the weapon.
+weapon = "WeaponBarbarian-03"
 verified_against = "1.5d2"
 # Confidence is about this encoding, not about the build being good. It is capped
 # below 1.0 while any entry still carries an unresolved disagreement.

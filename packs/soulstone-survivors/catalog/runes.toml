@@ -1,0 +1,72 @@
+# Rune identifiers and the names the game shows for them.
+#
+# Some pairs here are near enough to be guessable and some are not: RuneCriticalMastery
+# is "Critical Mastery", while RuneExtraCritChance is "Vulnerable Target". A resolver
+# that derived one from the other by string manipulation would be right often enough to
+# be trusted and wrong exactly where the names diverge, which is the worst arrangement
+# available.
+#
+# Two kinds of evidence appear below and they are not equal. A pair read off a tooltip
+# is the game stating both vocabularies in one frame. A pair joined through an effect
+# description is an inference: the spreadsheet gives a name and an effect, the save
+# gives an identifier that describes the same effect, and the two are matched on that
+# description. That is sound where the effect is distinctive and it is still weaker
+# than being told, so those records carry the lower confidence and are worth upgrading
+# whenever a tooltip for one of them is captured.
+#
+# Absent on purpose: Lord's Bane and Skill Inclination: Electric, both of which the
+# pilot build needs. Their identifiers are not known, and the second one is a trap
+# rather than a gap: the save's presets hold RuneAffinityElectric, and the spreadsheet
+# shows Affinity and Inclination to be different runes with different unlock conditions.
+# The resolver names them as missing, which is the correct output for a thing nobody
+# has established.
+
+[[rune]]
+id = "RuneRerollMastery"
+display = "Reroll Mastery"
+slot = "versatility"
+effect = "one extra reroll every five levels"
+# The tooltip states the display name, the effect and a runic power cost of zero in the
+# same frame, and the identifier is in the save's rune presets.
+confidence = 1.0
+evidence = { type = "game_screen", fixture = "panel_1896x2097_20260808-220751.png", window = "1896x2097", game_version = "1.5d2" }
+
+[[rune]]
+id = "RuneExtraCritChance"
+display = "Vulnerable Target"
+slot = "tenacity"
+effect = "crit chance +50%, additive"
+confidence = 0.9
+evidence = { type = "community_source", source = "spreadsheet", game_version = "1.5d" }
+
+[[rune]]
+id = "RuneCriticalMastery"
+display = "Critical Mastery"
+slot = "tenacity"
+effect = "adds 25% of total crit chance to crit damage, additive"
+confidence = 0.9
+evidence = { type = "community_source", source = "spreadsheet", game_version = "1.5d" }
+
+[[rune]]
+id = "RuneExtraCritDamageAgainstDazed"
+display = "Vulnerable Exploit"
+slot = "tenacity"
+effect = "crit damage +0.5% per stack of Dazed or Disoriented, caps at 25% at 50 stacks"
+confidence = 0.9
+evidence = { type = "community_source", source = "spreadsheet", game_version = "1.5d" }
+
+[[rune]]
+id = "RuneMasteryElectric"
+display = "Skill Mastery: Electric"
+slot = "versatility"
+effect = "select up to five Electric skills into the pool"
+confidence = 0.9
+evidence = { type = "community_source", source = "spreadsheet", game_version = "1.5d" }
+
+[[rune]]
+id = "RuneStartWeaponSkill"
+display = "Weapon Expert"
+slot = "versatility"
+effect = "start the match with the weapon's special skill"
+confidence = 0.9
+evidence = { type = "community_source", source = "spreadsheet", game_version = "1.5d" }

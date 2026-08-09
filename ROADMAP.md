@@ -4,8 +4,12 @@ What exists, what is missing, and what is deliberately out of scope. Background:
 
 ## What exists today
 
-- **The harness only.** `bin/ci` (ruff format, ruff lint, pytest, pip-audit, markdown soft-wrap, prose gate), the gitleaks and commit-message hooks with their installer, worktree isolation, and the matching GitHub Actions workflows.
+- **The harness.** `bin/ci` (ruff format, ruff lint, pytest, pip-audit, markdown soft-wrap, prose gate), the gitleaks and commit-message hooks with their installer, worktree isolation, and the matching GitHub Actions workflows.
 - **The rules that cannot be retrofitted**, written before the first line of pipeline code: where game data may come from, what may be redistributed, and what the code must refuse to do. They are in AGENTS.md because a published history cannot be cleaned afterwards.
+- **A save reader.** It resolves each domain to its latest written slot, reads the primitives, and decodes the skill tree into records. It refuses a payload that does not fit the layout rather than returning part of one.
+- **A target build and the catalog it refers to.** The pilot build is stored as identifiers, and the catalog joins those to the names the game displays. Both are partial and say which parts are missing.
+
+Nothing reads a screen yet, and there is no entrypoint. Nothing here is a running tool.
 
 ## The pilot, settled
 
@@ -40,7 +44,17 @@ Checking the published build against the release notes for the installed version
 **Every identifier in that guide still resolves.** Referential integrity, which is the strong mechanical check, passes completely: no weapon, rune, skill or power has been renamed or removed. A tool relying on it alone would report the build as healthy while recommending against numbers that are off by a factor of two and a factor of four. This is exactly the semantic case that only release notes can catch, found on the first cross-check and on the pilot itself rather than on some hypothetical later build.
 
 It also settles what the video transcripts are for. They are auto-generated captions, noisy enough that names arrive mangled, so they are useless as a source of values. What they carry is *what changed and why*, which is the same role the release notes play: a trigger and a diagnostic, never an input to the catalog.
-2. **Versioned catalog.** Ids, aliases, effects, characters, weapons, runes and powers, each with provenance, build id and confidence.
+2. **Versioned catalog.** Ids, aliases, effects, characters, weapons, runes and powers, each with provenance, build id and confidence. The alias half exists for the pilot; the rest does not.
+
+#### The alias layer, and why it could not be a naming convention
+
+The two vocabularies are joined by records rather than by a rule, and the reason is that a rule would nearly work. `RuneCriticalMastery` is "Critical Mastery" and `RuneStartWeaponSkill` is "Weapon Expert", so any transformation confident enough to handle the first is wrong about the second, and it is wrong quietly, in the direction of a plausible answer. There is no fuzzy matching and no nearest match anywhere in the resolver: a name either has a record or the lookup fails naming the name and the file that would fix it.
+
+Evidence classes are not interchangeable here and the records say which one they rest on. A pair read off a tooltip is the game stating both vocabularies in one frame. A pair joined through an effect description is an inference: a spreadsheet gives a name and an effect, the save gives an identifier describing the same effect, and the two are matched on that description. The second is sound where the effect is distinctive and it is still weaker than being told, so it carries lower confidence and is worth upgrading whenever a capture of that tooltip turns up.
+
+**The pilot's weapon resolved on an anchor rather than on the arrangement.** The blacksmith screen names one weapon at a time and shows five in a row, which gives an ordering but not the identifiers. What settles it is a reading from somewhere else entirely: the character screen had the fourth weapon selected and named it, and the save's equipped-weapon domain gives that character's weapon as the fourth identifier. Two readings that share no mechanism agree on one position, so the row order is the identifier order, and the other four follow from it.
+
+**Two of the pilot build's seven runes are still unresolved, and they are recorded as absent rather than approximated.** One of them is worse than a gap: the guide asks for Skill Inclination and the save's presets hold Affinity, which the spreadsheet shows to be a different rune with a different unlock condition and a different effect. An identifier that is present, related and wrong is exactly what a resolver built on resemblance would have accepted.
 3. **Pre-run advisor.** Read the local save for what the player has actually unlocked, then report what a target build requires and does not yet have, and which owned runes and weapons substitute. Deterministic end to end and free of any vision problem.
 4. **Structured extractor.** The multimodal model returns validated JSON constrained to known candidates. Region-based OCR and icon matching are deliberately *not* built first: the direct approach is measured against real screenshots, and OCR is introduced only where it demonstrably fails. Building it before measuring would be premature. One constraint is already known: the shared capture path caps the image by *width*, which treats a tall window generously and a wide one harshly, so two players with different window geometry get very different effective resolution on the same interface. The cap belongs on the longest edge or on total pixels, and that has to be settled before fixtures are measured against each other.
 5. **Run state.** Initial snapshot, inferred deltas, resynchronisation, and the divergence check that makes a stale state loud. What the interface actually offers is now known, and it changes the design (see below).

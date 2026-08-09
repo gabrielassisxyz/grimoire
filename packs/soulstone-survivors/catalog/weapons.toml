@@ -1,0 +1,57 @@
+# Weapon identifiers and the names the game shows for them.
+#
+# The two vocabularies do not resemble each other often enough to be joined by string
+# manipulation: the save calls this character's third weapon WeaponBarbarian-03 and the
+# interface calls it Tempest Battle Axes. A rule written from a guide names the second
+# and a save holds the first, so without this file neither can be checked against the
+# other at all.
+#
+# The mapping is positional, and the position alone would be an inference. What settles
+# it is an anchor from a source that does not share a mechanism with the blacksmith
+# screen: on the character screen the fourth weapon was the selected one, its panel
+# named it Bloodgod's Legacy, and the save's weaponpercharacters domain gives that
+# character's equipped weapon as WeaponBarbarian-04. Two unrelated readings agree on the
+# same position, so the row order is the identifier order.
+#
+# Only the pilot character is covered. The other twenty-two are absent rather than
+# guessed at, and their absence is a gap the resolver reports by name.
+
+[[weapon]]
+id = "WeaponBarbarian-01"
+display = "Barbaric Cleavers"
+character = "Barbarian"
+confidence = 0.95
+evidence = { type = "game_screen", fixture = "panel_1896x2097_20260809-004014.png", window = "1896x2097", game_version = "1.5d2" }
+
+[[weapon]]
+id = "WeaponBarbarian-02"
+display = "Skullbreaker"
+character = "Barbarian"
+confidence = 0.95
+evidence = { type = "game_screen", fixture = "panel_1896x2097_20260809-004017.png", window = "1896x2097", game_version = "1.5d2" }
+
+[[weapon]]
+id = "WeaponBarbarian-03"
+display = "Tempest Battle Axes"
+character = "Barbarian"
+# The pilot build's weapon. Higher confidence than its neighbours because the anchor
+# above pins the position next to it and the build guide names this weapon for this
+# character, which is a third reading that agrees.
+confidence = 0.97
+evidence = { type = "game_screen", fixture = "panel_1896x2097_20260809-004019.png", window = "1896x2097", game_version = "1.5d2" }
+
+[[weapon]]
+id = "WeaponBarbarian-04"
+display = "Bloodgod's Legacy"
+character = "Barbarian"
+# The anchor itself: this is the record the save's equipped-weapon domain confirms
+# directly, rather than by position.
+confidence = 1.0
+evidence = { type = "game_screen", fixture = "panel_1896x2097_20260809-004021.png", window = "1896x2097", game_version = "1.5d2" }
+
+[[weapon]]
+id = "WeaponBarbarian-05"
+display = "Blades of Damnation"
+character = "Barbarian"
+confidence = 0.95
+evidence = { type = "game_screen", fixture = "panel_1896x2097_20260809-004023.png", window = "1896x2097", game_version = "1.5d2" }
