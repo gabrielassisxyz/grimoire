@@ -13,8 +13,9 @@ from pathlib import Path
 
 import pytest
 
+from grimoire.achievements import Achievement
 from grimoire.budget import BudgetError, check_runic_power
-from grimoire.catalog import load
+from grimoire.catalog import CatalogError, load
 from grimoire.skilltree import SkillTreeNode
 
 PACK = Path(__file__).resolve().parents[1] / "packs/soulstone-survivors"
@@ -143,3 +144,108 @@ def test_a_save_claiming_more_tree_points_than_the_game_grants_is_refused(
 def test_the_capacity_node_appearing_twice_is_refused(catalog) -> None:
     with pytest.raises(BudgetError, match="appears 2 times"):
         check_runic_power(catalog, ["Cheap"], tree(5) + tree(5))
+
+
+def achievement(achievement_id: str, completed: bool) -> Achievement:
+    return Achievement(
+        achievement_id=achievement_id,
+        progress=1.0 if completed else 0.5,
+        completed=completed,
+    )
+
+
+ACHIEVEMENT_CATALOG = """
+[[achievement]]
+id = "Pays"
+display = "Pays a point"
+grants_runic_power = 1
+confidence = 0.9
+[[achievement.evidence]]
+type = "community_source"
+url = "https://example.invalid/runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[achievement]]
+id = "AlsoPays"
+display = "Also pays a point"
+grants_runic_power = 1
+confidence = 0.9
+[[achievement.evidence]]
+type = "community_source"
+url = "https://example.invalid/runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+"""
+
+
+@pytest.fixture
+def catalog_with_achievements(tmp_path: Path):
+    (tmp_path / "runes.toml").write_text(
+        record("Cheap", "tenacity", 1) + record("Dear", "tenacity", 4)
+    )
+    (tmp_path / "achievements.toml").write_text(ACHIEVEMENT_CATALOG)
+    return load(tmp_path)
+
+
+class TestCapacityOnceAchievementsAreReadable:
+    def test_a_completed_granting_achievement_raises_the_ceiling(
+        self, catalog_with_achievements
+    ) -> None:
+        verdict = check_runic_power(
+            catalog_with_achievements,
+            ["Dear", "Cheap"],
+            tree(3),
+            [achievement("Pays", True), achievement("AlsoPays", True)],
+        )
+        assert verdict.cost == 5
+        assert verdict.capacity_at_least == verdict.capacity_at_most == 5
+        assert verdict.verdict == "fits"
+
+    def test_an_unfinished_one_grants_nothing(self, catalog_with_achievements) -> None:
+        # The case this player is actually in. Progress at 0.5 is not a point, and
+        # counting it would report a build as loadable that the game will refuse.
+        verdict = check_runic_power(
+            catalog_with_achievements,
+            ["Dear", "Cheap"],
+            tree(3),
+            [achievement("Pays", True), achievement("AlsoPays", False)],
+        )
+        assert verdict.capacity_at_most == 4
+        assert verdict.verdict == "does not fit"
+
+    def test_an_achievement_with_no_record_grants_nothing(
+        self, catalog_with_achievements
+    ) -> None:
+        # Completing something the catalog does not describe is not evidence that it
+        # pays. Two hundred achievements are complete on a real profile and five of
+        # them matter, so silently crediting the rest would invent capacity.
+        verdict = check_runic_power(
+            catalog_with_achievements,
+            ["Cheap"],
+            tree(0),
+            [achievement("SomethingElse", True)],
+        )
+        assert verdict.capacity_at_most == 0
+
+    def test_passing_no_achievements_still_gives_the_bounded_answer(
+        self, catalog_with_achievements
+    ) -> None:
+        # A caller that has not read the domain gets a range and an honest refusal to
+        # decide, not a capacity that silently assumes nothing was ever completed.
+        verdict = check_runic_power(
+            catalog_with_achievements, ["Dear", "Cheap"], tree(3)
+        )
+        assert (verdict.capacity_at_least, verdict.capacity_at_most) == (3, 8)
+        assert verdict.verdict == "undecidable"
+
+
+def test_an_achievement_record_without_its_grant_is_refused(tmp_path: Path) -> None:
+    # The field says how much runic power completing it pays. Absent, it reads as zero,
+    # and zero is a claim: it would quietly drop a point the player has earned and
+    # report a loadable build as too expensive.
+    (tmp_path / "achievements.toml").write_text(
+        ACHIEVEMENT_CATALOG.replace("grants_runic_power = 1\n", "", 1)
+    )
+    with pytest.raises(CatalogError, match="has no grants_runic_power"):
+        load(tmp_path)

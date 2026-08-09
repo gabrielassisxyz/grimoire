@@ -20,6 +20,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from grimoire.achievements import Achievement
 from grimoire.catalog import Catalog
 from grimoire.skilltree import SkillTreeNode
 
@@ -72,10 +73,32 @@ def read_capacity(nodes: list[SkillTreeNode]) -> int:
     return level
 
 
+def read_achievement_capacity(catalog: Catalog, achievements: list[Achievement]) -> int:
+    """The runic power the completed achievements grant.
+
+    Completion comes from the save and the grant from the catalog, which is the whole
+    reason this is two arguments: the game decides which achievements pay a point and
+    the profile decides which of those are done, and neither source knows the other.
+    An achievement with no record grants nothing, because a catalog that does not
+    describe it is not evidence that it pays.
+    """
+    grants = {
+        e.id: e.grants_runic_power for e in catalog.entries_of_kind("achievement")
+    }
+    return sum(grants.get(a.achievement_id, 0) for a in achievements if a.completed)
+
+
 def check_runic_power(
-    catalog: Catalog, rune_ids: list[str], nodes: list[SkillTreeNode]
+    catalog: Catalog,
+    rune_ids: list[str],
+    nodes: list[SkillTreeNode],
+    achievements: list[Achievement] | None = None,
 ) -> BudgetVerdict:
-    """Whether these runes fit, or which fact is missing to say."""
+    """Whether these runes fit, or which fact is missing to say.
+
+    Achievements are optional so a caller that has not read that domain still gets the
+    bounded answer rather than a wrong one. Passing them turns the range into a number.
+    """
     duplicates = sorted({r for r in rune_ids if rune_ids.count(r) > 1})
     if duplicates:
         # A preset holds each rune once, so a repeat is a malformed build rather than a
@@ -91,8 +114,12 @@ def check_runic_power(
         if used > limit:
             reasons.append(f"{used} {slot} runes where the game allows {limit}")
 
-    at_least = read_capacity(nodes)
-    at_most = at_least + MAX_FROM_ACHIEVEMENTS
+    from_tree = read_capacity(nodes)
+    if achievements is None:
+        at_least, at_most = from_tree, from_tree + MAX_FROM_ACHIEVEMENTS
+    else:
+        exact = from_tree + read_achievement_capacity(catalog, achievements)
+        at_least = at_most = exact
 
     if cost > at_most:
         reasons.append(f"costs {cost} against a ceiling of {at_most}")
