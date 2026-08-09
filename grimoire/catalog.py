@@ -195,6 +195,16 @@ def _read_record(where: str, kind: str, record: object) -> CatalogEntry:
     for field in REQUIRED_FIELDS + REQUIRED_PER_KIND.get(kind, ()):
         if field not in record:
             raise CatalogError(f"{where} has no {field}")
+    if "unlocked_by" in record and "unlocked_by_achievement" in record:
+        # Ownership answers from the node and never looks at the achievement, so a
+        # record naming both would report a rune as missing while the achievement that
+        # granted it sits completed in the save. Whether the game has runes with two
+        # routes is unestablished, and a record that asserts one is asking for a reading
+        # nothing here implements.
+        raise CatalogError(
+            f"{where} names both unlocked_by and unlocked_by_achievement, and only one "
+            "of the two decides ownership. Keep the route the save can prove."
+        )
     return CatalogEntry(
         id=_read_text(where, record, "id"),
         display=_read_text(where, record, "display"),

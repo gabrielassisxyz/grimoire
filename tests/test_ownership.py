@@ -160,6 +160,23 @@ def test_an_unlocked_by_that_is_not_text_is_refused(tmp_path: Path) -> None:
         load(tmp_path)
 
 
+def test_a_rune_naming_both_unlock_routes_is_refused(tmp_path: Path) -> None:
+    # Ownership decides on the node and never reaches the achievement, so a record
+    # carrying both would report the rune as not owned while the achievement that
+    # granted it sits completed in the save. Refusing it at load keeps that reading
+    # from being made by whichever branch happened to run first.
+    (tmp_path / "runes.toml").write_text(
+        '[[rune]]\nid = "R"\ndisplay = "D"\nslot = "tenacity"\n'
+        "runic_power_cost = 0\n"
+        'unlocked_by = "Necromancer_T02S01"\nunlocked_by_achievement = "Something"\n'
+        "confidence = 0.9\n"
+        '[[rune.evidence]]\ntype = "game_asset"\n'
+        'asset_path = "a"\nbuild_id = "1.5d2"\n'
+    )
+    with pytest.raises(CatalogError, match="names both unlocked_by"):
+        load(tmp_path)
+
+
 def test_asking_about_a_rune_the_catalog_never_had_is_loud(catalog) -> None:
     # A misspelled identifier used to answer "undecidable", which is a real state for a
     # rune no tree grants. So a typo in a build read as a rune the save merely cannot
