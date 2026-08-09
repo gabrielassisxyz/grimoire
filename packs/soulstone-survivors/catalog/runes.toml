@@ -65,8 +65,9 @@ effect = "crit chance +50%, additive"
 runic_power_cost = 2
 # The install reaches this pair independently of the effect join that first produced it:
 # the Hound Master's tier 3 node grants this identifier, and the wiki names Vulnerable
-# Target at that tier's threshold. The wiki's own rune table says 25% rather than 50%
-# here, and it is the one contradicted: the spreadsheet and the installed build agree.
+# Target at that tier's threshold. That is the pair only. The wiki's rune table gives
+# 25% against the 50% above, so this entry now has a third source and it disagrees;
+# nothing here settles that, because the magnitude has not been read out of the install.
 confidence = 0.9
 
 [[rune.evidence]]
