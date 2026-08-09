@@ -41,6 +41,19 @@ Read off real frames of a real run. These are the facts the run-state design res
 - The level-up cards are drawn semi-transparent over live gameplay, so damage numbers and enemies pass behind and through the text. That is the extractor's hard case, and it is the normal case rather than an edge one.
 - **The character screen carries the whole pre-run input in one frame**: the character's flat bonuses, its unique skills, the set of skill types available to it, the equipped divine legacy with its modifiers, the weapon row with the selection marked, the owned and locked characters, and the material counts. The pre-run advisor's first version can therefore be checked against a single capture, before any save file is parsed.
 
+### What the save turned out to hold
+
+Found by scanning identifiers across every domain, before any record layout was decoded.
+
+- **The curse vocabulary is in the save, with canonical ids and levels.** `mapprogression` carries entries such as `HealingDampening-01` through `-05`, `EmpoweredElites-01` through `-05`, `EliteFrequency`, `ExplosiveGoblins`, `MeteorOnDeath`, `EmpoweredBosses`, `ResilientBosses`, `PillarsOfProtection`, 44 distinct in total. So the identifier list for curses needs no external source at all; only their effects do. What that domain records is progression per map rather than which curses a given run had enabled, so it names the vocabulary without pinning any particular run.
+- **Match history records the composition of runs already played.** `gamestatsmatchhistory` holds skill and rune identifiers per match, including exactly the pilot build's parts: `LightningBeam`, `PowerConductor`, `OverchargedBlast`, `OnGuard`, `PiercingShout`, `RuneAffinityElectric`, `RuneCriticalMastery`, `RuneExtraCritChance`, `RuneExtraCritDamageAgainstDazed`. Past runs are therefore a dataset rather than a memory, and decoding that one record layout is worth more than decoding any other.
+
+### The community wiki cannot be fetched, and that changes which source is primary
+
+Both automated routes are refused: a direct fetch returns 402 and the scraper is stopped by anti-bot. Content that exists only on the wiki has to arrive as screenshots taken by hand.
+
+This is less of a loss than it looks, because the ordering above already prefers the game's own screens. A screenshot of the curse selection screen is both the accessible source and the authoritative one, so for this class of content the workaround and the correct method are the same thing.
+
 **Where a fact comes from decides how far it is trusted.** The community spreadsheet is the fastest source and it is not the authority; the game's own screens are. One claim in this document was wrong for exactly that reason, taken from column alignment in a spreadsheet tab and contradicted by the character screen. The catalog's evidence classes already encode this, and the source audit should treat a spreadsheet-derived record as provisional until a screen or an asset agrees with it.
 6. **Effect engine.** A small set of proven operations. No large speculative expression language.
 7. **Ranker.** Guide-derived rules and synergies combined with the deltas the engine computes. The decision is wider than the offer, see below.
