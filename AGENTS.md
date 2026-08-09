@@ -137,5 +137,6 @@ The rules that cannot be retrofitted. Publication does not clean a history: a bl
 | Harness files vendored from the shared source must stay byte-identical AND keep their executable bit. A copy installed at 644 reports as wrong. | ci | the shared harness checker, outside this repo |
 | `ai-overlay-core` is not a dependency yet, so screen capture and the LLM client do not exist here. Do not write an import for them before the dependency is declared. | prose | none yet |
 | `bin/worktree` falls back to `master` when `refs/remotes/origin/HEAD` is missing, and a repository created with `git init` plus `remote add` never has that ref. The default branch here is `main`, so run `git remote set-head origin -a` once or every new worktree branches off a ref that does not exist. | tripwire | none, the fallback is silent |
+| A capture names itself after the hotkey that took it, not after the screen it shows, so a panel grabbed with the level-up binding lands as `levelup_*`. Rename it before a record cites it: a `game_screen` citation is only checkable if the file is still called what the record says. | tripwire | none, the name looks plausible either way |
 
 **A hurdle promoted to a gate is deleted from this table, not duplicated.** The gate is the instruction; a line here restating it only dilutes the ones still unguarded.
