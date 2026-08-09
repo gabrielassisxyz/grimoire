@@ -220,6 +220,27 @@ class TestReader:
         assert reader.read_int32() == 7
         assert reader.remaining == 0
 
+    def test_a_byte_is_read_as_its_own_value(self) -> None:
+        assert PayloadReader(payload(b"\x01")).read_byte() == 1
+
+    def test_skipping_moves_past_bytes_without_interpreting_them(self) -> None:
+        reader = PayloadReader(payload(b"\x00" * 5, text("DamageModifier"), i32(5)))
+        reader.skip(5)
+        assert reader.read_string() == "DamageModifier"
+        assert reader.read_int32() == 5
+
+    def test_skipping_past_the_end_raises_rather_than_silently_stopping(self) -> None:
+        with pytest.raises(SaveFormatError, match="cannot skip 5 bytes"):
+            PayloadReader(payload(b"\x00\x00")).skip(5)
+
+    def test_skipping_backwards_is_refused_rather_than_rewinding(self) -> None:
+        # A bounds check alone passes a negative count and moves the position back,
+        # so the same bytes are read twice and the second reading looks like a record.
+        reader = PayloadReader(payload(i32(1), i32(2)))
+        with pytest.raises(SaveFormatError, match="cannot skip backwards"):
+            reader.skip(-4)
+        assert reader.remaining == 8
+
     def test_a_truncated_int32_raises_instead_of_returning_a_short_read(self) -> None:
         with pytest.raises(SaveFormatError, match="int32 needs 4 bytes"):
             PayloadReader(payload(b"\x01\x02")).read_int32()

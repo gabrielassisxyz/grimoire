@@ -123,6 +123,30 @@ class PayloadReader:
     def remaining(self) -> int:
         return len(self._data) - self._pos
 
+    def read_byte(self) -> int:
+        if self.remaining < 1:
+            raise SaveFormatError(f"byte needed at {self._pos}, none left")
+        value = self._data[self._pos]
+        self._pos += 1
+        return value
+
+    def skip(self, count: int) -> None:
+        """Step over bytes whose meaning is not established.
+
+        Named apart from a read so a decoded field and an unread gap never look alike
+        in a caller: a gap that is silently given a name is a guess with a test around
+        it, which is the failure this project is built to avoid.
+        """
+        if count < 0:
+            # A bare bounds check passes for a negative count and rewinds instead,
+            # which reads the same bytes twice and looks like a plausible record.
+            raise SaveFormatError(f"cannot skip backwards, asked for {count}")
+        if self.remaining < count:
+            raise SaveFormatError(
+                f"cannot skip {count} bytes, {self.remaining} left at {self._pos}"
+            )
+        self._pos += count
+
     def read_int32(self) -> int:
         if self.remaining < 4:
             raise SaveFormatError(

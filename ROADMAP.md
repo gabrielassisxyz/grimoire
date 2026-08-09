@@ -76,6 +76,16 @@ Two consequences worth stating separately, because the first is a bug anyone wou
 
 That distinction is worth more than a tidier implementation. A timestamp is metadata and does not survive a copy, a restore from backup, or a move between machines, none of which change the save; a counter written by the game inside the file survives all of them. It also makes the two orderings checkable against each other, and on all twenty-three domains of one profile they picked the same slot, which is the kind of agreement between unrelated mechanisms that turns a plausible reading into a settled one.
 
+#### The skill tree carries the run's finite counters, which were expected to cost a screen read
+
+The first domain decoded as records rather than scanned for identifiers. It holds 148 nodes, each with the level invested in it: account-wide ones named plainly, and per-character ones named `<Character>_T<tier>N<node>`.
+
+Two of its contents change earlier decisions.
+
+- **`Rerolls`, `Banish`, `Lock`, `DashCount` and `DeathGuards` are in there.** Those are the finite counters that make a level-up an economic decision rather than a tactical one, and the plan had them arriving from the screen at every offer. Their starting values are in the save instead, with no vision problem and no ambiguity. The screen is still needed for what remains of each during a run, but the run no longer starts from an unknown.
+- **`SkillTreeRunicPower` is what bounds a rune preset**, so whether a target build is even loadable is decidable before the run. A build is not only a set of runes the player owns, it is a set that fits a budget, and a build encoded without its cost cannot be checked against that budget at all.
+
+**The reader refuses a payload that leaves bytes over.** That check is the whole reason to trust the layout: a record layout wrong by one field consumes the stream just as willingly and returns records that are simply the wrong ones. The leftover count is the only symptom such an error has, so it is fatal rather than logged. On the profile this was settled against, 148 records read and nothing remained.
 
 ### Three constraints the difficulty modifiers made concrete
 
