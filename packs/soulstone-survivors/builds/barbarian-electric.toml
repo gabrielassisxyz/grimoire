@@ -1,0 +1,151 @@
+# The pilot's target build.
+#
+# Encoded as catalog references rather than names, each carrying the game build it was
+# verified against, so that a later version can be checked against it mechanically.
+#
+# Values come from the community spreadsheet, not from the build guide. The guide is
+# the source for *intent* (why a piece is in the build, what to prioritise, what to
+# banish) and the spreadsheet is the source for *magnitude*. Where they disagree the
+# disagreement is recorded on the entry rather than resolved silently, because the
+# guide is demonstrably behind the installed build in at least three places.
+#
+# Nothing here is copied prose. The guide's reasoning is restated as structured rules.
+
+[meta]
+game = "soulstone-survivors"
+build_id = "barbarian-electric"
+character = "Barbarian"
+weapon = "Tempest Battle Axes"
+verified_against = "1.5d2"
+# Confidence is about this encoding, not about the build being good. It is capped
+# below 1.0 while any entry still carries an unresolved disagreement.
+confidence = 0.7
+
+[[skills]]
+id = "ThunderingSlash"
+role = "primary-damage"
+# Consumes Dazed on the target for increased damage; Dazed also raises crit chance,
+# so the same stat feeds damage twice. This is the skill the build is built to feed.
+scales_with = ["Dazed"]
+priority = "highest"
+evidence = { type = "community_source", source = "build-guide", game_version = "unstated" }
+
+[[skills]]
+id = "ThunderClap"
+role = "secondary-damage"
+# The weapon's own second skill. Builds Prowess for damage and Electrified for extra
+# projectiles, which is what makes it worth a slot rather than its direct output.
+grants = ["Prowess", "Electrified"]
+evidence = { type = "community_source", source = "build-guide", game_version = "unstated" }
+
+[[skills]]
+id = "LightningBeam"
+role = "status-applier"
+applies = ["Dazed"]
+# Many small ticks, each applying Dazed. Single-target setup for ThunderingSlash.
+# The release notes for the installed build raise this from one stack to four, so the
+# guide's weighting of it is understated by a factor the ranker must not inherit.
+disagreement = "guide predates a fourfold increase in stacks applied"
+evidence = { type = "community_source", source = "release-notes", game_version = "1.5d" }
+
+[[skills]]
+id = "PowerConductor"
+role = "status-applier"
+applies = ["Dazed"]
+# Area spread of the same status, where LightningBeam is the single-target version.
+evidence = { type = "community_source", source = "build-guide", game_version = "unstated" }
+
+[[skills]]
+id = "OverchargedBlast"
+role = "primary-damage"
+scales_with = ["Dazed"]
+grants = ["Electrified"]
+evidence = { type = "community_source", source = "build-guide", game_version = "unstated" }
+
+[[skills]]
+id = "OnGuard"
+role = "utility"
+applies = ["Exposed"]
+grants = ["Bulwark", "Form"]
+# Taken for the chain rather than for itself: five skills in this build can trigger it,
+# which is also why the Electric-Thrust chain below is treated as required.
+evidence = { type = "community_source", source = "build-guide", game_version = "unstated" }
+
+[[runes]]
+slot = "tenacity"
+id = "RuneExtraCritChance"
+display = "Vulnerable Target"
+effect = "crit chance +50%, additive"
+disagreement = "guide states 25%; the installed build and the spreadsheet both give 50%"
+evidence = { type = "community_source", source = "spreadsheet", game_version = "1.5d" }
+
+[[runes]]
+slot = "tenacity"
+id = "RuneCriticalMastery"
+display = "Critical Mastery"
+effect = "adds 25% of total crit chance to crit damage, additive"
+evidence = { type = "community_source", source = "spreadsheet", game_version = "1.5d" }
+
+[[runes]]
+slot = "tenacity"
+id = "RuneExtraCritDamageAgainstDazed"
+display = "Vulnerable Exploit"
+effect = "crit damage +0.5% per stack of Dazed or Disoriented, caps at 25% at 50 stacks"
+evidence = { type = "community_source", source = "spreadsheet", game_version = "1.5d" }
+
+[[runes]]
+slot = "tenacity"
+id = "unresolved"
+display = "Lord's Bane"
+effect = "damage +30% while any boss is alive, including titans and the cathedral final boss"
+# Two errors in one line of the guide: it gives 25% rather than 30%, and it scopes the
+# condition to Lords of the Void when the spreadsheet scopes it to any boss. A ranker
+# taking the guide at face value would both undervalue the rune and misjudge when it
+# is active.
+disagreement = "guide states 25% and restricts the condition to Lords of the Void"
+evidence = { type = "community_source", source = "spreadsheet", game_version = "1.5d" }
+
+[[runes]]
+slot = "versatility"
+id = "RuneMasteryElectric"
+display = "Skill Mastery: Electric"
+effect = "select up to five Electric skills into the pool"
+evidence = { type = "community_source", source = "spreadsheet", game_version = "1.5d" }
+
+[[runes]]
+slot = "versatility"
+id = "RuneStartWeaponSkill"
+display = "Weapon Expert"
+effect = "start the match with the weapon's special skill"
+evidence = { type = "community_source", source = "spreadsheet", game_version = "1.5d" }
+
+[[runes]]
+slot = "versatility"
+id = "unresolved"
+display = "Skill Inclination: Electric"
+effect = "Electric skills are offered more often"
+# The save's rune presets contain RuneAffinityElectric, and the spreadsheet shows
+# Affinity and Inclination to be two different runes with different unlock conditions
+# and different effects. So the internal identifier found in the save does not belong
+# to the rune the guide names, and which of the two the pilot should run is open.
+disagreement = "save presets hold RuneAffinityElectric, a different rune from this one"
+evidence = { type = "community_source", source = "spreadsheet", game_version = "1.5d" }
+
+# Editorial rules, restated from the guide's prose. These are what the ranker scores
+# against; they are judgements rather than measurements and are marked as such.
+[priorities]
+mandatory = ["crit-chance", "crit-damage"]
+high = ["movement-speed"]
+# Called necessary rather than merely good by the guide, because five skills in this
+# build can trigger OnGuard, so the chain multiplies an effect already central to it.
+required_chain = "electric-thrust"
+focus_skill = "ThunderingSlash"
+evidence = { type = "community_source", source = "build-guide", game_version = "unstated" }
+
+# Banish is the only lever that changes the distribution of later offers, so a build
+# that states what to remove is stating something no other rule can express.
+[banish]
+first = ["armor-passives", "block-passives"]
+then = ["Magnetic"]
+reason = "the build invests in neither, so their presence only dilutes the pool"
+evidence = { type = "community_source", source = "build-guide", game_version = "unstated" }
