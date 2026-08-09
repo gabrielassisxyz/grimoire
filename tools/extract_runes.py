@@ -4,7 +4,12 @@ Run offline, never from the advisor: it needs UnityPy and a licensed install, an
 writes catalog records that are reviewed before they are committed. Nothing it reads is
 ever tracked; only the normalized pairs it prints are.
 
-    uv run --group extract python tools/extract_runes.py <install-dir> <wiki-dir>
+    uv run --group extract python tools/extract_runes.py \
+        <install-dir> <wiki-dir> <wiki-retrieved-date>
+
+The retrieval date is asked for rather than assumed. It describes the dump, not the
+run, so a constant here would re-date evidence nobody re-fetched the moment this is
+run again against a newer install.
 
 The join is the whole point, so it is worth stating. The install knows identifiers and
 knows which skill tree node grants each one; it does not store display names anywhere a
@@ -96,7 +101,13 @@ WIKI_TO_INSTALL = {
 # joined on the condition rather than on the rune: "ReachTotalElitesKilled-3000" against
 # "Eliminate a total of 3000 elite enemies" is a match nothing about either rune's name
 # or effect had to supply.
-TYPE_DESCRIPTOR = b"PowerUpParameterFloat"
+# The whole serialized reference header, not a keyword near a marker: the type name,
+# its padding, an empty namespace string, then the assembly name. Matching the structure
+# means an unrelated marker cannot drift into range, and a layout change fails loudly by
+# finding nothing rather than quietly by finding the wrong four bytes.
+PARAMETER_HEADER = re.compile(
+    rb"PowerUpParameterFloat\x00{7}\x0f\x00\x00\x00Assembly-CSharp\x00"
+)
 
 PARAMETER_DECIMALS = 4
 
@@ -170,14 +181,22 @@ def wiki_condition(text: str) -> tuple | None:
 
 
 def join_achievements(
-    granted: dict[str, list[str]], catalogue: dict[str, tuple[str, int, str]]
+    granted: dict[str, list[str]],
+    catalogue: dict[str, tuple[str, int, str]],
+    named_elsewhere: set[str],
 ) -> dict[str, str]:
     """Rune identifiers against display names, joined on the unlock condition."""
     by_condition: dict[tuple, set[str]] = {}
+    unreadable = []
     for achievement, runes in granted.items():
         condition = achievement_condition(achievement)
         if condition:
             by_condition.setdefault(condition, set()).update(runes)
+        elif not all(r in EFFECT_JOINED or r in named_elsewhere for r in runes):
+            # An achievement whose runes another rule already names is not a gap. The
+            # prestige and timed-match ones grant the skill type families, which the
+            # family rule handles, and reporting them here would bury the real gaps.
+            unreadable.append(achievement)
     wiki_by_condition: dict[tuple, set[str]] = {}
     for display, (_, _, unlock) in catalogue.items():
         condition = wiki_condition(unlock)
@@ -197,6 +216,11 @@ def join_achievements(
         # existing achievement, not a rule this data exercises.
         if len(runes) == 1 and len(names) == 1:
             pairs[next(iter(runes))] = next(iter(names))
+
+    for achievement in sorted(unreadable):
+        # Every achievement that grants a rune has to be either read or reported. A new
+        # condition shape would otherwise shrink the catalog with a clean exit code.
+        print(f"# GAP no condition rule matches {achievement}", file=sys.stderr)
 
     wrong = {
         i: pairs.get(i)
@@ -226,14 +250,7 @@ def read_parameters(blob: bytes) -> list[float]:
     parameters, or none.
     """
     values = []
-    for match in re.finditer(rb"Assembly-CSharp\x00", blob):
-        # The assembly name ends several kinds of serialized reference, and only one of
-        # them is followed by a float. Requiring the type descriptor is what separates a
-        # parameter from four bytes of the next field read as one: without it the reader
-        # returned denormals for a third of the catalog, and two spurious zeros inside a
-        # record whose real parameters are 0.5 and 25.
-        if TYPE_DESCRIPTOR not in blob[max(0, match.start() - 48) : match.start()]:
-            continue
+    for match in PARAMETER_HEADER.finditer(blob):
         end = match.end()
         end += (-end) % 4
         if end + 4 <= len(blob):
@@ -301,11 +318,6 @@ def read_grants(
     return grants, rune_records, achievements
 
 
-# The day the wiki dump under local/ was taken. It travels with the dump rather than
-# with a run of this script, so re-extracting against a newer game build does not
-# silently re-date evidence that was never re-fetched.
-WIKI_RETRIEVED = "2026-08-08"
-
 SKILL_TYPE_FAMILIES = ("RuneAffinity", "RuneInclination", "RuneMastery")
 
 # Pairs established before this rule existed, two of them by equipping the rune and
@@ -329,7 +341,17 @@ def read_skill_types(identifiers: set[str]) -> set[str]:
         {i[len(f) :] for i in identifiers if i.startswith(f) and i != f}
         for f in SKILL_TYPE_FAMILIES
     ]
-    return set.intersection(*per_family)
+    shared = set.intersection(*per_family)
+    # A suffix only some families carry is either a new skill type the others have not
+    # gained yet or something that was never a type. Either way it must be looked at,
+    # because dropping it silently is how a real rune goes missing without a gap.
+    lopsided = set.union(*per_family) - shared
+    if lopsided:
+        raise SystemExit(
+            "these skill type suffixes are not present in all three families, so the "
+            f"family rule cannot name them: {', '.join(sorted(lopsided))}"
+        )
+    return shared
 
 
 def family_pairs(identifiers: set[str]) -> dict[str, str]:
@@ -425,7 +447,9 @@ def check_anchors(paired: dict[str, tuple[str, int, str, str, list[float]]]) -> 
         raise SystemExit("the join no longer reproduces the established pairs")
 
 
-def read_rune_table(wiki: pathlib.Path) -> dict[str, tuple[str, int, str]]:
+def read_rune_table(
+    wiki: pathlib.Path,
+) -> tuple[dict[str, tuple[str, int, str]], str, set[str]]:
     """Every rune the wiki tabulates: its section, its cost and how it unlocks."""
     page = wiki / "runes--443.md"
     text = page.read_text(encoding="utf-8")
@@ -433,6 +457,7 @@ def read_rune_table(wiki: pathlib.Path) -> dict[str, tuple[str, int, str]]:
     if not source:
         raise SystemExit(f"{page.name} has no source_url to cite")
     table: dict[str, tuple[str, int, str]] = {}
+    ambiguous: set[str] = set()
     slot = "versatility"
     for line in text.splitlines():
         if line.startswith("# Tenacity"):
@@ -452,40 +477,97 @@ def read_rune_table(wiki: pathlib.Path) -> dict[str, tuple[str, int, str]]:
             raise SystemExit(
                 f"{page.name}: {cells[1]!r} has cost cell {cells[3]!r}, not a number"
             )
+        if cells[1] in table and table[cells[1]] != (slot, cost, cells[-2]):
+            # The dump already holds two rows called Prophecy with different values.
+            # Keeping the last one read would make a rune's cost and unlock condition
+            # depend on where the scrape happened to put it. It is not fatal on its own,
+            # because a name nothing joins to is a name nothing reads; it becomes fatal
+            # at the point a rune claims it.
+            ambiguous.add(cells[1])
         table[cells[1]] = (slot, cost, cells[-2])
-    return table, source.group(1)
+    for display in sorted(ambiguous):
+        print(
+            f"# AMBIGUOUS {display!r} has two rows with different values",
+            file=sys.stderr,
+        )
+    return table, source.group(1), ambiguous
+
+
+def print_record(
+    identifier: str,
+    display: str,
+    slot: str,
+    cost: int,
+    values: list[float],
+    evidence: list[dict[str, str]],
+    extra: dict[str, str] | None = None,
+) -> None:
+    """The one place a record is written, so the three joins cannot drift apart.
+
+    They did drift once: the loader began requiring a runic power cost on every rune and
+    only two of the three emitters were updated, so a whole extraction printed records
+    that the same program refused to read back. Nothing caught it because each emitter
+    was correct on its own terms.
+    """
+    print("\n[[rune]]")
+    print(f'id = "{identifier}"')
+    print(f'display = "{display}"')
+    print(f'slot = "{slot}"')
+    print(f"runic_power_cost = {cost}")
+    for key, value in (extra or {}).items():
+        print(f'{key} = "{value}"')
+    if values:
+        print(f"parameters = {values}")
+    # Every pair here is an inference between two vocabularies rather than a reading of
+    # both in one place, so none of them claims more than this.
+    print("confidence = 0.9")
+    for entry in evidence:
+        print("\n[[rune.evidence]]")
+        print(f'type = "{entry["type"]}"')
+        for key, value in entry.items():
+            if key != "type":
+                print(f'{key} = "{value}"')
 
 
 def emit_achievements(
     pairs: dict[str, str],
     table: dict[str, tuple[str, int, str]],
     rune_records: dict[str, bytes],
+    ambiguous: set[str],
     url: str,
     asset_path: str,
     build_id: str,
+    retrieved: str,
 ) -> None:
     for identifier, display in sorted(pairs.items()):
+        if display in ambiguous:
+            raise SystemExit(
+                f"{identifier} joins to {display!r}, which the wiki lists twice with "
+                "different values, so its cost and unlock condition are not decidable"
+            )
         if display not in table:
+            print(
+                f"# GAP {identifier} joined to {display!r}, which the table lost",
+                file=sys.stderr,
+            )
             continue
         slot, cost, _ = table[display]
-        print("\n[[rune]]")
-        print(f'id = "{identifier}"')
-        print(f'display = "{display}"')
-        print(f'slot = "{slot}"')
-        print(f"runic_power_cost = {cost}")
-        values = read_parameters(rune_records.get(identifier, b""))
-        if values:
-            print(f"parameters = {values}")
-        print("confidence = 0.9")
-        print("\n[[rune.evidence]]")
-        print('type = "game_asset"')
-        print(f'asset_path = "{asset_path}"')
-        print(f'build_id = "{build_id}"')
-        print("\n[[rune.evidence]]")
-        print('type = "community_source"')
-        print(f'url = "{url}"')
-        print(f'retrieved = "{WIKI_RETRIEVED}"')
-        print('game_version = "unstated"')
+        print_record(
+            identifier,
+            display,
+            slot,
+            cost,
+            read_parameters(rune_records.get(identifier, b"")),
+            [
+                {"type": "game_asset", "asset_path": asset_path, "build_id": build_id},
+                {
+                    "type": "community_source",
+                    "url": url,
+                    "retrieved": retrieved,
+                    "game_version": "unstated",
+                },
+            ],
+        )
 
 
 def emit_family(
@@ -493,64 +575,59 @@ def emit_family(
     rune_records: dict[str, bytes],
     asset_path: str,
     build_id: str,
+    retrieved: str,
 ) -> None:
     """The skill type families, which no wiki table lists and no tree node grants."""
+    del retrieved  # no community source states these names, only the rule does
     for identifier, display in sorted(pairs.items()):
-        print("\n[[rune]]")
-        print(f'id = "{identifier}"')
-        print(f'display = "{display}"')
-        print('slot = "versatility"')
-        values = read_parameters(rune_records.get(identifier, b""))
-        if values:
-            print(f"parameters = {values}")
-        # The identifier is read from the install and the name follows a rule the
-        # install's own regularity supports, so this is weaker than a record whose name
-        # was read somewhere. A tooltip for any of them would still upgrade it.
-        print("confidence = 0.9")
-        print("\n[[rune.evidence]]")
-        print('type = "game_asset"')
-        print(f'asset_path = "{asset_path}"')
-        print(f'build_id = "{build_id}"')
+        # Versatility costs nothing, which the wiki states in prose and a tooltip
+        # confirmed.
+        print_record(
+            identifier,
+            display,
+            "versatility",
+            0,
+            read_parameters(rune_records.get(identifier, b"")),
+            [{"type": "game_asset", "asset_path": asset_path, "build_id": build_id}],
+        )
 
 
 def emit(
     paired: dict[str, tuple[str, int, str, str, list[float]]],
     asset_path: str,
     build_id: str,
+    retrieved: str,
 ) -> None:
     for identifier, (display, cost, node, url, values) in sorted(paired.items()):
-        print("\n[[rune]]")
-        print(f'id = "{identifier}"')
-        print(f'display = "{display}"')
-        print('slot = "tenacity"')
-        print(f"runic_power_cost = {cost}")
-        # The node is what makes ownership readable: the save records a node the
-        # player has bought, so a rune whose node is present is a rune they hold.
-        print(f'unlocked_by = "{node}"')
-        if values:
-            print(f"parameters = {values}")
-        # The identifier is read from the install and the name from the wiki, so the
-        # pair is only as strong as the correspondence joining them.
-        print("confidence = 0.9")
-        print("\n[[rune.evidence]]")
-        print('type = "game_asset"')
-        print(f'asset_path = "{asset_path}"')
-        print(f'build_id = "{build_id}"')
-        print("\n[[rune.evidence]]")
-        print('type = "community_source"')
-        print(f'url = "{url}"')
-        print(f'retrieved = "{WIKI_RETRIEVED}"')
-        # Not the install's build id. The wiki does not state the version it describes,
-        # and copying the installed one here would make a stale page cite itself as
-        # current on every future extraction.
-        print('game_version = "unstated"')
+        print_record(
+            identifier,
+            display,
+            "tenacity",
+            cost,
+            values,
+            [
+                {"type": "game_asset", "asset_path": asset_path, "build_id": build_id},
+                {
+                    "type": "community_source",
+                    "url": url,
+                    "retrieved": retrieved,
+                    "game_version": "unstated",
+                },
+            ],
+            # The node is what makes ownership readable: the save records a node the
+            # player has bought, so a rune whose node is present is a rune they hold.
+            extra={"unlocked_by": node},
+        )
 
 
 def main() -> None:
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 4:
         raise SystemExit(__doc__)
     install = pathlib.Path(sys.argv[1])
     wiki = pathlib.Path(sys.argv[2])
+    retrieved = sys.argv[3]
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", retrieved):
+        raise SystemExit(f"retrieval date {retrieved!r} is not YYYY-MM-DD")
     data = install / "Soulstone Survivors_Data"
     assets = data / "resources.assets"
     if not assets.exists():
@@ -566,18 +643,26 @@ def main() -> None:
     for gap in gaps:
         print(f"# GAP {gap}", file=sys.stderr)
     asset_path = "Soulstone Survivors_Data/resources.assets"
-    emit(paired, asset_path, build_id)
+    emit(paired, asset_path, build_id, retrieved)
 
-    table, runes_url = read_rune_table(wiki)
-    achievement_pairs = join_achievements(achievements, table)
+    table, runes_url, ambiguous = read_rune_table(wiki)
+    family = family_pairs(set(rune_records))
+    achievement_pairs = join_achievements(achievements, table, set(family))
     print(f"# {len(achievement_pairs)} achievement runes.", file=sys.stderr)
     emit_achievements(
-        achievement_pairs, table, rune_records, runes_url, asset_path, build_id
+        achievement_pairs,
+        table,
+        rune_records,
+        ambiguous,
+        runes_url,
+        asset_path,
+        build_id,
+        retrieved,
     )
 
-    pairs = family_pairs(set(rune_records))
+    pairs = family
     print(f"# {len(pairs)} skill type family runes.", file=sys.stderr)
-    emit_family(pairs, rune_records, asset_path, build_id)
+    emit_family(pairs, rune_records, asset_path, build_id, retrieved)
 
 
 if __name__ == "__main__":

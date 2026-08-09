@@ -70,10 +70,11 @@ runic_power_cost = 2
 #
 # It also settles the magnitude, which two community sources put at 25% against the
 # spreadsheet's 50%. The game stores 50. The parameter was not identified by sitting
-# near this record: the same rule was applied to every rune, and for twenty of them it
-# reproduces every number the wiki prints, so the field is established before this one
-# is read. The five it contradicts are all runes the game has since rebalanced, and one
-# of those moved down, so this is a stale wiki rather than a scaling error.
+# near this record: the same rule was applied to every rune, and for twenty-one of them
+# it reproduces every number the wiki prints, so the field is established before this one
+# is read. The six it contradicts are all runes the game has since rebalanced, and they
+# move in both directions, Fateful Strike down from 60 and 20 to 55 and 15 while Focus
+# Fire went up from 30 and 15 to 35 and 20. That is a stale wiki, not a scaling error.
 unlocked_by = "Houndmaster_T03S01"
 parameters = [50.0]
 confidence = 0.9

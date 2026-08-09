@@ -20,6 +20,7 @@ by someone who was not there.
 
 from __future__ import annotations
 
+import math
 import tomllib
 from collections.abc import Mapping
 from dataclasses import dataclass
@@ -213,6 +214,11 @@ def _read_parameters(where: str, record: Mapping[str, object]) -> tuple[float, .
     for value in values:
         if isinstance(value, bool) or not isinstance(value, int | float):
             raise CatalogError(f"{where}: parameter {value!r} is not a number")
+        # TOML has nan and inf and they are floats, so the check above admits them.
+        # A non-finite parameter is not a magnitude the effect engine can use; it is
+        # a number-shaped hole that would propagate through arithmetic unnoticed.
+        if not math.isfinite(value):
+            raise CatalogError(f"{where}: parameter {value!r} is not a finite number")
     return tuple(float(v) for v in values)
 
 

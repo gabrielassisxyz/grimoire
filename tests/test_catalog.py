@@ -474,3 +474,15 @@ class TestThePackItself:
         write(tmp_path, "rune", RUNE.replace('"tenacity"', '"tenacoty"'))
         with pytest.raises(CatalogError, match="tenacoty"):
             load(tmp_path)
+
+    def test_a_parameter_that_is_not_finite_is_refused(self, tmp_path: Path) -> None:
+        # TOML has nan and inf and both are floats, so a type check alone admits them.
+        # A non-finite magnitude is a number-shaped hole that would travel through the
+        # effect engine without ever looking wrong.
+        write(
+            tmp_path,
+            "rune",
+            RUNE.replace("confidence", "parameters = [nan]\nconfidence"),
+        )
+        with pytest.raises(CatalogError, match="not a finite number"):
+            load(tmp_path)

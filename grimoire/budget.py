@@ -28,8 +28,12 @@ from grimoire.skilltree import SkillTreeNode
 # node still being spelled this way after a patch.
 RUNIC_POWER_NODE = "SkillTreeRunicPower"
 
-# Achievements contribute up to five more. The exact figure needs the achievement
-# domain, which is not decoded, so it bounds the answer instead of settling it.
+# What each half can contribute at most. The wiki gives five from the skill tree and
+# five from achievements, for a ceiling of ten.
+MAX_FROM_SKILL_TREE = 5
+
+# The achievement half cannot be read at all yet, so it bounds the answer instead of
+# settling it.
 MAX_FROM_ACHIEVEMENTS = 5
 
 SLOTS = {"tenacity": 4, "versatility": 3}
@@ -50,10 +54,22 @@ class BudgetVerdict:
 
 def read_capacity(nodes: list[SkillTreeNode]) -> int:
     """The runic power the skill tree grants, which is the half the save states."""
-    for node in nodes:
-        if node.node_id == RUNIC_POWER_NODE:
-            return node.level
-    return 0
+    levels = [n.level for n in nodes if n.node_id == RUNIC_POWER_NODE]
+    if not levels:
+        return 0
+    # A save is a file on disk that anyone can edit, and this number decides whether a
+    # build is loadable. A level the game cannot grant, or the node appearing twice,
+    # means the reading is wrong or the file is not what it claims, and either way a
+    # verdict computed from it would be confident and baseless.
+    if len(levels) > 1:
+        raise BudgetError(f"{RUNIC_POWER_NODE} appears {len(levels)} times in the save")
+    level = levels[0]
+    if not 0 <= level <= MAX_FROM_SKILL_TREE:
+        raise BudgetError(
+            f"{RUNIC_POWER_NODE} is at level {level}, outside the 0 to "
+            f"{MAX_FROM_SKILL_TREE} the game grants"
+        )
+    return level
 
 
 def check_runic_power(

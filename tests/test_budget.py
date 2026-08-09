@@ -128,3 +128,18 @@ def test_a_rune_listed_twice_is_refused_rather_than_priced(catalog) -> None:
     # two copies of Pact would grant four points the player does not have.
     with pytest.raises(BudgetError, match="Pact"):
         check_runic_power(catalog, ["Dear", "Pact", "Pact"], tree(5))
+
+
+def test_a_save_claiming_more_tree_points_than_the_game_grants_is_refused(
+    catalog,
+) -> None:
+    # A save is a file anyone can edit and this number decides whether a build loads.
+    # At level ten the pilot build reported "fits" against a capacity of fifteen, which
+    # no player can have, and nothing in the output revealed where that came from.
+    with pytest.raises(BudgetError, match="outside the 0 to 5"):
+        check_runic_power(catalog, ["Cheap"], tree(10))
+
+
+def test_the_capacity_node_appearing_twice_is_refused(catalog) -> None:
+    with pytest.raises(BudgetError, match="appears 2 times"):
+        check_runic_power(catalog, ["Cheap"], tree(5) + tree(5))
