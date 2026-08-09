@@ -8,6 +8,7 @@ loadable.
 
 from __future__ import annotations
 
+import tomllib
 from pathlib import Path
 
 import pytest
@@ -119,3 +120,19 @@ class TestShippedPilot:
     ) -> None:
         if pilot.has_unresolved_references:
             assert pilot.confidence < 1.0
+
+    def test_the_boss_rune_is_scoped_the_way_the_game_scopes_it(self) -> None:
+        # A regression, and the correction ran against the source this entry was taken
+        # from. The spreadsheet widened the condition to any boss and the build carried
+        # that; the installed game says "whenever a Lord of the Void is alive". Scope
+        # decides when the rune is live, so the wider reading had the ranker counting
+        # its damage through titans and the cathedral fight, where it contributes
+        # nothing.
+        record = next(
+            r
+            for r in tomllib.loads((PACK / "barbarian-electric.toml").read_text())[
+                "runes"
+            ]
+            if r["id"] == "RuneExtraDamageWhileBossIsAlive"
+        )
+        assert record["effect"] == "damage +30% while a Lord of the Void is alive"

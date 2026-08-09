@@ -79,7 +79,10 @@ slot = "tenacity"
 id = "RuneExtraCritChance"
 display = "Vulnerable Target"
 effect = "crit chance +50%, additive"
-disagreement = "guide states 25%; the installed build and the spreadsheet both give 50%"
+# The wiki has since become a third source here and it sides with the guide, so the
+# split is two against one rather than one against one. Neither side is a reading of
+# the installed game, which is the only thing that would end it.
+disagreement = "guide and wiki state 25% where the spreadsheet gives 50%"
 evidence = { type = "community_source", source = "spreadsheet", game_version = "1.5d" }
 
 [[runes]]
@@ -100,12 +103,21 @@ evidence = { type = "community_source", source = "spreadsheet", game_version = "
 slot = "tenacity"
 id = "RuneExtraDamageWhileBossIsAlive"
 display = "Lord's Bane"
-effect = "damage +30% while any boss is alive, including titans and the cathedral final boss"
-# Two errors in one line of the guide: it gives 25% rather than 30%, and it scopes the
-# condition to Lords of the Void when the spreadsheet scopes it to any boss. A ranker
-# taking the guide at face value would both undervalue the rune and misjudge when it
-# is active.
-disagreement = "guide states 25% and restricts the condition to Lords of the Void"
+effect = "damage +30% while a Lord of the Void is alive"
+# The condition read "any boss, including titans and the cathedral final boss" here,
+# from the spreadsheet, and this file called the guide wrong for scoping it to Lords of
+# the Void. The guide was right. The installed game states the rune in its own words,
+# "whenever a Lord of the Void is alive", so the scope is settled against the source
+# this entry was taken from and the correction runs the other way.
+#
+# It mattered more than a wording fix. The scope is what decides when the rune is live,
+# so a ranker holding the wider reading would have counted its damage through every
+# titan and the cathedral fight, where it does nothing at all.
+#
+# The magnitude is still open and is now the only thing this entry disagrees about.
+# Two community sources say 25% against the spreadsheet's 30%, and the install has not
+# been read for it yet.
+disagreement = "guide and wiki state 25% where the spreadsheet gives 30%"
 evidence = { type = "community_source", source = "spreadsheet", game_version = "1.5d" }
 
 [[runes]]

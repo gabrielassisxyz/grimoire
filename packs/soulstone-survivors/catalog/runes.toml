@@ -119,7 +119,7 @@ game_version = "1.5d"
 id = "RuneExtraDamageWhileBossIsAlive"
 display = "Lord's Bane"
 slot = "tenacity"
-effect = "damage +30% while any boss is alive, including titans and the cathedral final boss"
+effect = "damage +30% while a Lord of the Void is alive"
 # Joined on the effect, and that join is unique in both directions rather than merely
 # plausible. Of the 73 tenacity runes the spreadsheet lists, two mention a boss at all,
 # and the other is Decapitator, an instant kill whose own candidate identifier
@@ -129,9 +129,10 @@ effect = "damage +30% while any boss is alive, including titans and the cathedra
 # The install has since confirmed the pair by a route that does not use the effect at
 # all: the Necromancer's tier 2 node grants this identifier and the wiki names Lord's
 # Bane at that tier's threshold. The install also settles the scope the two sources
-# argued over, in the game's own words, "whenever a Lord of the Void is alive". The
-# spreadsheet's "any boss, including titans and the cathedral final boss" is wrong, and
-# the effect line above still carries it.
+# argued over, in the game's own words, "whenever a Lord of the Void is alive", so the
+# effect above now says that and the spreadsheet's "any boss, including titans and the
+# cathedral final boss" is dropped. The magnitude is untouched by this: the game states
+# the condition in prose and the percentage as a parameter, which has not been read.
 runic_power_cost = 3
 unlocked_by = "Necromancer_T02S01"
 confidence = 0.9
