@@ -29,6 +29,12 @@ Still unset: the target mode and difficulty. This is not cosmetic, since debuff 
 7. **Ranker.** Guide-derived rules and synergies combined with the deltas the engine computes.
 8. **Overlay surface.** Recommendation, confidence and deltas.
 
+## Later, and gated on the engine rather than on effort
+
+- **Build synthesis.** Composing a target build for a character, weapon and objective by searching the catalog, instead of scoring against a build copied from a guide. The gate is not ambition, it is the effect engine: ranking three offered powers against a *known* target is strictly easier than inventing the target, so a system that cannot do the first has no business attempting the second. Encoded guide builds are the calibration harness for the thing that would eventually replace them.
+- **The validation this makes available**, written down now because it costs nothing today and is easy to forget: point the synthesiser at a character and weapon whose published build is already encoded, and see whether it reproduces that build. Agreement is evidence the engine models the game. Disagreement is informative either way, since it means the engine is wrong or the guide is, and finding out which is worth more than either answer alone.
+- **The editorial layer generalises before it synthesises.** Guides share structure: which stats a crit build wants, how the synergy chains constrain type combinations, when survivability outranks damage. Extracting the rules the guides follow, rather than the builds they produce, is the intermediate step, and the sources that teach build construction are worth more here than any individual build.
+
 ## Not started, and blocked on something else
 
 - **Depending on `ai-overlay-core`** for screen capture, the LLM client and proxy settings. The dependency is not declared while that package is unpublished: a lockfile pointing at an unpublished git source breaks every clone, CI included. Until then this repo has no runtime dependencies and no entrypoint.
