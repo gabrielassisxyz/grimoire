@@ -269,10 +269,15 @@ class TestThePackItself:
         catalog = load(PACK_CATALOG)
         assert catalog.id_for("Tempest Battle Axes") == "WeaponBarbarian-03"
 
-    def test_the_runes_the_pilot_still_lacks_are_reported_as_gaps(self) -> None:
-        # These two are absent on purpose, and a later commit that resolves them
-        # should have to change this test deliberately rather than pass it by accident.
+    def test_the_boss_damage_rune_resolves(self) -> None:
         catalog = load(PACK_CATALOG)
-        for name in ("Lord's Bane", "Skill Inclination: Electric"):
-            with pytest.raises(CatalogError):
-                catalog.id_for(name)
+        assert catalog.id_for("Lord's Bane") == "RuneExtraDamageWhileBossIsAlive"
+
+    def test_the_rune_the_pilot_still_lacks_is_reported_as_a_gap(self) -> None:
+        # Absent on purpose. The save holds RuneAffinityElectric and nothing decides
+        # whether that is this rune or the neighbouring one the interface spells
+        # almost the same way, so a later commit resolving it should have to change
+        # this test deliberately rather than pass it by accident.
+        catalog = load(PACK_CATALOG)
+        with pytest.raises(CatalogError):
+            catalog.id_for("Skill Inclination: Electric")

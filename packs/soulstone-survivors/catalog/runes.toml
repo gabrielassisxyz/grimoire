@@ -14,12 +14,18 @@
 # than being told, so those records carry the lower confidence and are worth upgrading
 # whenever a tooltip for one of them is captured.
 #
-# Absent on purpose: Lord's Bane and Skill Inclination: Electric, both of which the
-# pilot build needs. Their identifiers are not known, and the second one is a trap
-# rather than a gap: the save's presets hold RuneAffinityElectric, and the spreadsheet
-# shows Affinity and Inclination to be different runes with different unlock conditions.
-# The resolver names them as missing, which is the correct output for a thing nobody
-# has established.
+# Absent on purpose: "Skill Inclination: Electric", which the pilot build needs.
+#
+# What is known about that gap is worth writing down, because the obvious answer is a
+# trap. No identifier containing "Inclination" exists in any slot of any domain of the
+# save, while RuneAffinityElectric does, and it sits in a versatility slot of the preset
+# that otherwise matches the pilot build. The spreadsheet and the wiki agree that Skill
+# Affinity and Skill Inclination are two different runes with two different unlock
+# conditions, prestige 30 and prestige 60 on the same character. So either the internal
+# name for the rune the interface calls Inclination is RuneAffinityElectric, and it is
+# Affinity that has never been written to this save, or the reverse holds. Nothing
+# available decides it, and taking the reading that matches the spelling is exactly the
+# resemblance rule this file exists to refuse. The resolver names it as missing.
 
 [[rune]]
 id = "RuneRerollMastery"
@@ -67,6 +73,24 @@ id = "RuneExtraCritDamageAgainstDazed"
 display = "Vulnerable Exploit"
 slot = "tenacity"
 effect = "crit damage +0.5% per stack of Dazed or Disoriented, caps at 25% at 50 stacks"
+confidence = 0.9
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://docs.google.com/spreadsheets/d/1eUs13Fx0I-3MRBID-DcGoxcbbm1DviNXl_RYXXxJ9OA/"
+retrieved = "2026-08-08"
+game_version = "1.5d"
+
+[[rune]]
+id = "RuneExtraDamageWhileBossIsAlive"
+display = "Lord's Bane"
+slot = "tenacity"
+effect = "damage +30% while any boss is alive, including titans and the cathedral final boss"
+# Joined on the effect, and that join is unique in both directions rather than merely
+# plausible. Of the 73 tenacity runes the spreadsheet lists, two mention a boss at all,
+# and the other is Decapitator, an instant kill whose own candidate identifier
+# (RuneChanceToKill) is present in the save separately. Of every rune identifier the
+# save holds, exactly one names a boss. Neither side has a second claimant.
 confidence = 0.9
 
 [[rune.evidence]]

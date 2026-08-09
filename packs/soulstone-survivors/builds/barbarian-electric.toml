@@ -98,7 +98,7 @@ evidence = { type = "community_source", source = "spreadsheet", game_version = "
 
 [[runes]]
 slot = "tenacity"
-id = "unresolved"
+id = "RuneExtraDamageWhileBossIsAlive"
 display = "Lord's Bane"
 effect = "damage +30% while any boss is alive, including titans and the cathedral final boss"
 # Two errors in one line of the guide: it gives 25% rather than 30%, and it scopes the
