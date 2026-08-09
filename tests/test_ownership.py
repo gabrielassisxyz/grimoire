@@ -148,6 +148,18 @@ class TestAgainstTheRealPack:
         entry = load(PACK_CATALOG).entry("RuneExtraDamageWhileBossIsAlive")
         assert entry.unlocked_by == "Necromancer_T02S01"
 
+    def test_no_rune_is_joined_to_an_achievement_the_game_has_superseded(self) -> None:
+        # A superseded achievement object survives in the install and the save never
+        # writes its id, so a rune joined to one is undecidable for every player who
+        # ever lives. It reads as a limit of the save rather than as the join having
+        # picked the wrong one of two objects, which is why it went unnoticed.
+        joined = [
+            entry.unlocked_by_achievement
+            for entry in load(PACK_CATALOG).entries_of_kind("rune")
+            if entry.unlocked_by_achievement
+        ]
+        assert [i for i in joined if i.endswith("old")] == []
+
 
 def test_an_unlocked_by_that_is_not_text_is_refused(tmp_path: Path) -> None:
     (tmp_path / "runes.toml").write_text(

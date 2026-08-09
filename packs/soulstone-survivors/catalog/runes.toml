@@ -2613,7 +2613,7 @@ id = "RuneSynergiesChance"
 display = "Synergetic"
 slot = "tenacity"
 runic_power_cost = 4
-unlocked_by_achievement = "CompleteEndlessCycle3old"
+unlocked_by_achievement = "CompleteEndlessCycle3"
 confidence = 0.9
 
 [[rune.evidence]]

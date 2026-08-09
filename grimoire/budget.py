@@ -115,8 +115,8 @@ def read_achievement_capacity(
         # Two independent claims about the same ceiling, and a disagreement means one of
         # them is wrong. Continuing would pick whichever the arithmetic happened to use.
         raise BudgetError(
-            f"the catalog grants {total} runic power across {len(grants)} achievements, "
-            f"more than the {MAX_FROM_ACHIEVEMENTS} the game awards through them"
+            f"the catalog grants {total} runic power across {len(grants)} "
+            f"achievements, more than the {MAX_FROM_ACHIEVEMENTS} the game awards"
         )
 
     completion = {a.achievement_id: a.completed for a in achievements}

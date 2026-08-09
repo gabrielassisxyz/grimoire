@@ -318,7 +318,7 @@ def read_grants(
     grants: dict[str, tuple[str, str, int, list[float]]] = {}
     nodes = []
     achievements: dict[str, list[str]] = {}
-    unlocked_by_achievement: dict[str, str] = {}
+    claimants: dict[str, set[str]] = {}
     for obj in env.objects:
         if obj.type.name != "MonoBehaviour":
             continue
@@ -340,7 +340,7 @@ def read_grants(
             if granted:
                 achievements[name] = granted
                 for rune in granted:
-                    unlocked_by_achievement.setdefault(rune, save_achievement_id(name))
+                    claimants.setdefault(rune, set()).add(name)
     for name, raw in nodes:
         node = NODE_NAME.fullmatch(name)
         for token in IDENTIFIER.findall(raw):
@@ -352,7 +352,33 @@ def read_grants(
                     int(node.group(2)),
                     read_parameters(rune_records.get(identifier, b"")),
                 )
-    return grants, rune_records, achievements, unlocked_by_achievement
+    return grants, rune_records, achievements, resolve_claimants(claimants)
+
+
+# An achievement the game has replaced keeps its object in the install under this
+# suffix. The save never writes the superseded id, so a rune joined to one can only ever
+# read as undecidable, whatever the player has actually done.
+SUPERSEDED_SUFFIX = "-old"
+
+
+def resolve_claimants(claimants: dict[str, set[str]]) -> dict[str, str]:
+    """One live achievement per rune, or a failure naming the rune and its claimants.
+
+    Taking the first claimant made the join depend on where in a 912 MB file each object
+    happened to land, since UnityPy yields objects in file order. RuneSynergiesChance is
+    claimed by CompleteEndlessCycle-3 and by its superseded twin, the twin was reached
+    first, and the rune was reported as not owned by a player who has it equipped.
+    """
+    resolved = {}
+    for rune, claiming in sorted(claimants.items()):
+        live = sorted(c for c in claiming if not c.endswith(SUPERSEDED_SUFFIX))
+        if len(live) != 1:
+            raise SystemExit(
+                f"{rune} is granted by {live or sorted(claiming)}, and ownership needs "
+                "exactly one live achievement to ask the save about"
+            )
+        resolved[rune] = save_achievement_id(live[0])
+    return resolved
 
 
 SKILL_TYPE_FAMILIES = ("RuneAffinity", "RuneInclination", "RuneMastery")

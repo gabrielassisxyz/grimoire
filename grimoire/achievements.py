@@ -13,9 +13,10 @@ lists its fields in the order the payload writes them: ``achievements``,
 with its progress and, once complete, when.
 
 ``completedToNotify`` is a queue the game drains as it shows the popup, so it carries a
-completion for exactly the one write that follows earning it. Reading it as a permanently
-empty tail made the reader refuse a good save for the span between earning an achievement
-and being told about it, which is the span this tool is most worth consulting in.
+completion for exactly the one write that follows earning it. Reading it as a
+permanently empty tail made the reader refuse a good save for the span between earning
+an achievement and being told about it, which is the span this tool is most worth
+consulting in.
 
 ``completedToView`` is what the completed records are checked against, and that check is
 worth more than the field's name suggests: a layout wrong by one field consumes the
