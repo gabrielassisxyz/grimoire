@@ -13,6 +13,11 @@
 # character's equipped weapon as WeaponBarbarian-04. Two unrelated readings agree on the
 # same position, so the row order is the identifier order.
 #
+# That save reading is stated here in prose and not in the evidence of the record it
+# supports, because none of the four classes describes reading the player's own save.
+# It is the strongest single piece of evidence in this pack and the only one a reader
+# cannot get at mechanically, which is an argument for a class that covers it.
+#
 # Only the pilot character is covered. The other twenty-two are absent rather than
 # guessed at, and their absence is a gap the resolver reports by name.
 
@@ -21,14 +26,24 @@ id = "WeaponBarbarian-01"
 display = "Barbaric Cleavers"
 character = "Barbarian"
 confidence = 0.95
-evidence = { type = "game_screen", fixture = "panel_1896x2097_20260809-004014.png", window = "1896x2097", game_version = "1.5d2" }
+
+[[weapon.evidence]]
+type = "game_screen"
+fixture = "panel_1896x2097_20260809-004014.png"
+window = "1896x2097"
+build_id = "1.5d2"
 
 [[weapon]]
 id = "WeaponBarbarian-02"
 display = "Skullbreaker"
 character = "Barbarian"
 confidence = 0.95
-evidence = { type = "game_screen", fixture = "panel_1896x2097_20260809-004017.png", window = "1896x2097", game_version = "1.5d2" }
+
+[[weapon.evidence]]
+type = "game_screen"
+fixture = "panel_1896x2097_20260809-004017.png"
+window = "1896x2097"
+build_id = "1.5d2"
 
 [[weapon]]
 id = "WeaponBarbarian-03"
@@ -38,7 +53,12 @@ character = "Barbarian"
 # above pins the position next to it and the build guide names this weapon for this
 # character, which is a third reading that agrees.
 confidence = 0.97
-evidence = { type = "game_screen", fixture = "panel_1896x2097_20260809-004019.png", window = "1896x2097", game_version = "1.5d2" }
+
+[[weapon.evidence]]
+type = "game_screen"
+fixture = "panel_1896x2097_20260809-004019.png"
+window = "1896x2097"
+build_id = "1.5d2"
 
 [[weapon]]
 id = "WeaponBarbarian-04"
@@ -47,11 +67,21 @@ character = "Barbarian"
 # The anchor itself: this is the record the save's equipped-weapon domain confirms
 # directly, rather than by position.
 confidence = 1.0
-evidence = { type = "game_screen", fixture = "panel_1896x2097_20260809-004021.png", window = "1896x2097", game_version = "1.5d2" }
+
+[[weapon.evidence]]
+type = "game_screen"
+fixture = "panel_1896x2097_20260809-004021.png"
+window = "1896x2097"
+build_id = "1.5d2"
 
 [[weapon]]
 id = "WeaponBarbarian-05"
 display = "Blades of Damnation"
 character = "Barbarian"
 confidence = 0.95
-evidence = { type = "game_screen", fixture = "panel_1896x2097_20260809-004023.png", window = "1896x2097", game_version = "1.5d2" }
+
+[[weapon.evidence]]
+type = "game_screen"
+fixture = "panel_1896x2097_20260809-004023.png"
+window = "1896x2097"
+build_id = "1.5d2"

@@ -11,11 +11,17 @@ precisely where the names diverge.
 So there is no fuzzy matching here and no nearest match. A name either has a record or
 it does not, and not having one is an answer the caller can act on: the failure names
 the missing thing and the file that would fix it.
+
+A record's evidence is a list rather than a single entry, because a pair can rest on
+two independent readings and that is exactly what separates a record worth trusting
+from one worth re-checking. Each entry states the fields its class needs to be checked
+by someone who was not there.
 """
 
 from __future__ import annotations
 
 import tomllib
+from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -26,11 +32,26 @@ KINDS = ("weapon", "rune")
 
 REQUIRED_FIELDS = ("id", "display", "confidence", "evidence")
 
-EVIDENCE_TYPES = ("game_asset", "game_screen", "community_source", "measured")
+# What each class of evidence must state for a stranger to be able to check it. These
+# are the project's own provenance rules moved from prose into the loader: a rule that
+# lives only in a document is a rule that is already half broken by the time anyone
+# notices, and provenance is the one thing publication cannot repair afterwards.
+EVIDENCE_FIELDS: dict[str, tuple[str, ...]] = {
+    "game_asset": ("asset_path", "build_id"),
+    "game_screen": ("fixture", "window", "build_id"),
+    "community_source": ("url", "retrieved", "game_version"),
+    "measured": ("procedure", "before", "after"),
+}
 
 
 class CatalogError(Exception):
     """A catalog file is unusable, or a reference into it does not resolve."""
+
+
+@dataclass(frozen=True)
+class Evidence:
+    type: str
+    detail: Mapping[str, str]
 
 
 @dataclass(frozen=True)
@@ -39,7 +60,7 @@ class CatalogEntry:
     display: str
     kind: str
     confidence: float
-    evidence_type: str
+    evidence: tuple[Evidence, ...]
 
 
 class Catalog:
@@ -66,7 +87,8 @@ class Catalog:
 
         The kind is optional and is checked rather than used to search, since a name
         that resolves to the wrong kind is a mistake in the caller worth reporting
-        instead of a lookup worth narrowing.
+        instead of a lookup worth narrowing. A displayed name is unique across every
+        kind, which the loader enforces, so there is nothing for a kind to narrow.
         """
         found = self._by_display.get(display)
         if found is None:
@@ -112,36 +134,90 @@ def _read_file(path: Path, kind: str) -> list[CatalogEntry]:
     except tomllib.TOMLDecodeError as err:
         raise CatalogError(f"{path.name} is not valid TOML: {err}") from err
 
-    entries = []
-    for index, record in enumerate(raw.get(kind, [])):
-        for field in REQUIRED_FIELDS:
-            if field not in record:
-                raise CatalogError(f"{path.name}: {kind}[{index}] has no {field}")
-        evidence_type = record["evidence"].get("type")
-        if evidence_type not in EVIDENCE_TYPES:
-            # An unrecognised class cannot be weighed against the others later, which
-            # is the only reason a record carries its evidence in the first place.
-            raise CatalogError(
-                f"{path.name}: {kind}[{index}] has evidence type "
-                f"{evidence_type!r}, not one of {', '.join(EVIDENCE_TYPES)}"
-            )
-        entries.append(
-            CatalogEntry(
-                id=record["id"],
-                display=record["display"],
-                kind=kind,
-                confidence=float(record["confidence"]),
-                evidence_type=evidence_type,
-            )
+    records = raw.get(kind, [])
+    if not isinstance(records, list):
+        raise CatalogError(f"{path.name}: {kind} must be a table array, [[{kind}]]")
+    return [
+        _read_record(f"{path.name}: {kind}[{index}]", kind, record)
+        for index, record in enumerate(records)
+    ]
+
+
+def _read_record(where: str, kind: str, record: object) -> CatalogEntry:
+    if not isinstance(record, dict):
+        raise CatalogError(f"{where} is not a table")
+    for field in REQUIRED_FIELDS:
+        if field not in record:
+            raise CatalogError(f"{where} has no {field}")
+    return CatalogEntry(
+        id=_read_text(where, record, "id"),
+        display=_read_text(where, record, "display"),
+        kind=kind,
+        confidence=_read_confidence(where, record),
+        evidence=_read_evidence(where, record),
+    )
+
+
+def _read_text(where: str, record: Mapping[str, object], field: str) -> str:
+    value = record[field]
+    if not isinstance(value, str) or not value:
+        raise CatalogError(f"{where}: {field} must be a non-empty string")
+    return value
+
+
+def _read_confidence(where: str, record: Mapping[str, object]) -> float:
+    value = record["confidence"]
+    # A bool is an int in Python, so confidence = true would otherwise read as 1.0,
+    # which is the highest claim the schema can make and the least deliberate one.
+    if isinstance(value, bool) or not isinstance(value, int | float):
+        raise CatalogError(f"{where}: confidence must be a number, got {value!r}")
+    if not 0.0 <= value <= 1.0:
+        raise CatalogError(f"{where}: confidence {value} is outside 0.0 to 1.0")
+    return float(value)
+
+
+def _read_evidence(where: str, record: Mapping[str, object]) -> tuple[Evidence, ...]:
+    listed = record["evidence"]
+    if not isinstance(listed, list) or not listed:
+        raise CatalogError(f"{where}: evidence must be a non-empty array of tables")
+    return tuple(
+        _read_one_evidence(f"{where} evidence[{index}]", entry)
+        for index, entry in enumerate(listed)
+    )
+
+
+def _read_one_evidence(where: str, entry: object) -> Evidence:
+    if not isinstance(entry, dict):
+        raise CatalogError(f"{where} is not a table")
+    evidence_type = entry.get("type")
+    if evidence_type not in EVIDENCE_FIELDS:
+        # An unrecognised class cannot be weighed against the others later, which is
+        # the only reason a record carries its evidence in the first place.
+        raise CatalogError(
+            f"{where} has type {evidence_type!r}, not one of "
+            f"{', '.join(EVIDENCE_FIELDS)}"
         )
-    return entries
+    detail = {key: value for key, value in entry.items() if key != "type"}
+    for key, value in detail.items():
+        # Everything is spelled as a string, including dates and build ids, so that an
+        # unquoted date or a version that looks numeric cannot change type under the
+        # reader depending on how it happened to be written.
+        if not isinstance(value, str) or not value:
+            raise CatalogError(f"{where}: {key} must be a non-empty string")
+    absent = [f for f in EVIDENCE_FIELDS[evidence_type] if f not in detail]
+    if absent:
+        raise CatalogError(
+            f"{where} is {evidence_type} and states no {', no '.join(absent)}"
+        )
+    return Evidence(type=evidence_type, detail=detail)
 
 
 def _refuse_duplicates(entries: list[CatalogEntry], directory: Path) -> None:
     """Two records claiming one name is a contradiction, not a preference.
 
     Whichever the loader kept would be arbitrary, and the one it dropped would go on
-    being cited in a build that now resolves to something else.
+    being cited in a build that now resolves to something else. Names collide across
+    kinds as readily as within one, so the check spans the whole catalog.
     """
     for attribute in ("id", "display"):
         seen: dict[str, CatalogEntry] = {}

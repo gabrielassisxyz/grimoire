@@ -29,7 +29,12 @@ effect = "one extra reroll every five levels"
 # The tooltip states the display name, the effect and a runic power cost of zero in the
 # same frame, and the identifier is in the save's rune presets.
 confidence = 1.0
-evidence = { type = "game_screen", fixture = "panel_1896x2097_20260808-220751.png", window = "1896x2097", game_version = "1.5d2" }
+
+[[rune.evidence]]
+type = "game_screen"
+fixture = "panel_1896x2097_20260808-220751.png"
+window = "1896x2097"
+build_id = "1.5d2"
 
 [[rune]]
 id = "RuneExtraCritChance"
@@ -37,7 +42,12 @@ display = "Vulnerable Target"
 slot = "tenacity"
 effect = "crit chance +50%, additive"
 confidence = 0.9
-evidence = { type = "community_source", source = "spreadsheet", game_version = "1.5d" }
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://docs.google.com/spreadsheets/d/1eUs13Fx0I-3MRBID-DcGoxcbbm1DviNXl_RYXXxJ9OA/"
+retrieved = "2026-08-08"
+game_version = "1.5d"
 
 [[rune]]
 id = "RuneCriticalMastery"
@@ -45,7 +55,12 @@ display = "Critical Mastery"
 slot = "tenacity"
 effect = "adds 25% of total crit chance to crit damage, additive"
 confidence = 0.9
-evidence = { type = "community_source", source = "spreadsheet", game_version = "1.5d" }
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://docs.google.com/spreadsheets/d/1eUs13Fx0I-3MRBID-DcGoxcbbm1DviNXl_RYXXxJ9OA/"
+retrieved = "2026-08-08"
+game_version = "1.5d"
 
 [[rune]]
 id = "RuneExtraCritDamageAgainstDazed"
@@ -53,7 +68,12 @@ display = "Vulnerable Exploit"
 slot = "tenacity"
 effect = "crit damage +0.5% per stack of Dazed or Disoriented, caps at 25% at 50 stacks"
 confidence = 0.9
-evidence = { type = "community_source", source = "spreadsheet", game_version = "1.5d" }
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://docs.google.com/spreadsheets/d/1eUs13Fx0I-3MRBID-DcGoxcbbm1DviNXl_RYXXxJ9OA/"
+retrieved = "2026-08-08"
+game_version = "1.5d"
 
 [[rune]]
 id = "RuneMasteryElectric"
@@ -61,7 +81,12 @@ display = "Skill Mastery: Electric"
 slot = "versatility"
 effect = "select up to five Electric skills into the pool"
 confidence = 0.9
-evidence = { type = "community_source", source = "spreadsheet", game_version = "1.5d" }
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://docs.google.com/spreadsheets/d/1eUs13Fx0I-3MRBID-DcGoxcbbm1DviNXl_RYXXxJ9OA/"
+retrieved = "2026-08-08"
+game_version = "1.5d"
 
 [[rune]]
 id = "RuneStartWeaponSkill"
@@ -69,4 +94,9 @@ display = "Weapon Expert"
 slot = "versatility"
 effect = "start the match with the weapon's special skill"
 confidence = 0.9
-evidence = { type = "community_source", source = "spreadsheet", game_version = "1.5d" }
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://docs.google.com/spreadsheets/d/1eUs13Fx0I-3MRBID-DcGoxcbbm1DviNXl_RYXXxJ9OA/"
+retrieved = "2026-08-08"
+game_version = "1.5d"
