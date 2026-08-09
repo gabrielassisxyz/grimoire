@@ -108,6 +108,21 @@ class TestWhatMakesTheLayoutTrustworthy:
         with pytest.raises(SaveFormatError, match="notification queue"):
             read_achievements(payload([], [], ["Unexpected"]))
 
+    def test_an_achievement_recorded_twice_is_refused(self) -> None:
+        # Set comparison cannot see this: the two records agree with a list naming the
+        # achievement once. What sees it is the runic power total, where the grant is
+        # counted twice and a build is reported as fitting a ceiling it does not fit.
+        data = payload(
+            [record("Twice", 1.0, DONE_AT), record("Twice", 1.0, DONE_AT)], ["Twice"]
+        )
+        with pytest.raises(SaveFormatError, match="progress records names"):
+            read_achievements(data)
+
+    def test_a_completed_id_listed_twice_is_refused(self) -> None:
+        data = payload([record("Once", 1.0, DONE_AT)], ["Once", "Once"])
+        with pytest.raises(SaveFormatError, match="completedToView names"):
+            read_achievements(data)
+
     def test_a_missing_collection_marker_is_refused(self) -> None:
         data = bytearray(payload([record("A", 1.0, DONE_AT)], ["A"]))
         data[5] = 2

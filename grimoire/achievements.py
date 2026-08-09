@@ -32,6 +32,7 @@ back into "how many enemies left" without a source for what the target is.
 
 from __future__ import annotations
 
+from collections import Counter
 from dataclasses import dataclass
 
 from grimoire.savegame import PayloadReader, SaveFormatError
@@ -61,9 +62,14 @@ def read_achievements(data: bytes) -> list[Achievement]:
     reader = PayloadReader(data)
     reader.read_int32()  # write counter, see savegame.read_write_counter
     achievements = _read_progress(reader)
+    _refuse_repeats("the progress records", [a.achievement_id for a in achievements])
     completed = {a.achievement_id for a in achievements if a.completed}
-    _check_against_completed_list(completed, _read_string_collection(reader))
-    _check_notification_queue(completed, _read_string_collection(reader))
+    _check_against_completed_list(
+        completed, _read_string_collection(reader, "completedToView")
+    )
+    _check_notification_queue(
+        completed, _read_string_collection(reader, "completedToNotify")
+    )
 
     if reader.remaining:
         raise SaveFormatError(
@@ -96,9 +102,28 @@ def _read_progress(reader: PayloadReader) -> list[Achievement]:
     return achievements
 
 
-def _read_string_collection(reader: PayloadReader) -> list[str]:
-    count = _read_collection_header(reader, "string list")
-    return [reader.read_string() for _ in range(count)]
+def _read_string_collection(reader: PayloadReader, what: str) -> list[str]:
+    count = _read_collection_header(reader, what)
+    entries = [reader.read_string() for _ in range(count)]
+    _refuse_repeats(what, entries)
+    return entries
+
+
+def _refuse_repeats(what: str, identifiers: list[str]) -> None:
+    """Each collection names an achievement once, and a repeat is not a profile.
+
+    The checks below compare sets, which cannot see a repeat: two identical completed
+    records agree perfectly with a list that names the achievement once. What the repeat
+    reaches is the runic power total, where a grant counted twice is a build reported as
+    fitting a ceiling it does not fit.
+    """
+    counted = Counter(identifiers)
+    repeated = sorted(i for i, times in counted.items() if times > 1)
+    if repeated:
+        raise SaveFormatError(
+            f"achievements: {what} names {repeated[:3]} more than once, so this is not "
+            "one entry per achievement"
+        )
 
 
 def _read_collection_header(reader: PayloadReader, what: str) -> int:
