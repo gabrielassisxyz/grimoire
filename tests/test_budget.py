@@ -77,7 +77,7 @@ class TestTheThreeAnswers:
         verdict = check_runic_power(catalog, ["Dear", "Cheap", "Dearer"], tree(5))
         assert verdict.cost == 9
         assert verdict.verdict == "undecidable"
-        assert "achievement domain is not decoded" in " ".join(verdict.reasons)
+        assert "has not been read" in " ".join(verdict.reasons)
 
 
 class TestWhatSettlesRegardlessOfCapacity:
@@ -214,7 +214,7 @@ class TestCapacityOnceAchievementsAreReadable:
         assert verdict.capacity_at_most == 4
         assert verdict.verdict == "does not fit"
 
-    def test_an_achievement_with_no_record_grants_nothing(
+    def test_an_achievement_the_catalog_does_not_describe_grants_nothing(
         self, catalog_with_achievements
     ) -> None:
         # Completing something the catalog does not describe is not evidence that it
@@ -226,7 +226,40 @@ class TestCapacityOnceAchievementsAreReadable:
             tree(0),
             [achievement("SomethingElse", True)],
         )
-        assert verdict.capacity_at_most == 0
+        assert verdict.capacity_at_least == 0
+
+    def test_a_granting_achievement_the_save_omits_is_not_counted_as_unearned(
+        self, catalog_with_achievements
+    ) -> None:
+        # The distinction ownership already draws, applied to capacity. A save writes a
+        # record once there is progress to write, so no record means unasked, and
+        # scoring it zero yields an exact ceiling resting on a fact nobody read. Here
+        # the save answers for one of the two granting achievements and is silent about
+        # the other, so the ceiling stays open by exactly that one point.
+        verdict = check_runic_power(
+            catalog_with_achievements,
+            ["Dear", "Cheap"],
+            tree(3),
+            [achievement("Pays", True)],
+        )
+        assert (verdict.capacity_at_least, verdict.capacity_at_most) == (4, 5)
+        assert verdict.verdict == "undecidable"
+        assert "no record of AlsoPays" in " ".join(verdict.reasons)
+
+    def test_a_catalog_granting_more_than_the_game_awards_is_refused(
+        self, tmp_path: Path
+    ) -> None:
+        # Two independent statements of one ceiling: the constant this module carries
+        # and the sum of what the catalog claims. Letting them disagree would make the
+        # answer depend on which of the two a given branch happened to reach.
+        (tmp_path / "runes.toml").write_text(record("Cheap", "tenacity", 1))
+        (tmp_path / "achievements.toml").write_text(
+            ACHIEVEMENT_CATALOG.replace(
+                "grants_runic_power = 1", "grants_runic_power = 3"
+            )
+        )
+        with pytest.raises(BudgetError, match="more than the 5"):
+            check_runic_power(load(tmp_path), ["Cheap"], tree(0), [])
 
     def test_passing_no_achievements_still_gives_the_bounded_answer(
         self, catalog_with_achievements
