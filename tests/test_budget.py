@@ -13,7 +13,7 @@ from pathlib import Path
 
 import pytest
 
-from grimoire.budget import check_runic_power
+from grimoire.budget import BudgetError, check_runic_power
 from grimoire.catalog import load
 from grimoire.skilltree import SkillTreeNode
 
@@ -34,6 +34,9 @@ def catalog(tmp_path: Path):
     (tmp_path / "runes.toml").write_text(
         record("Cheap", "tenacity", 1)
         + record("Dear", "tenacity", 4)
+        + record("Dearer", "tenacity", 4)
+        + record("Dearest", "tenacity", 4)
+        + record("Priciest", "tenacity", 4)
         + record("Free", "versatility", 0)
         + record("AlsoFree", "versatility", 0)
         + record("StillFree", "versatility", 0)
@@ -61,7 +64,8 @@ class TestTheThreeAnswers:
     def test_a_build_above_the_ceiling_does_not_fit(self, catalog) -> None:
         # Four at four is sixteen against a ceiling of ten, so no achievement total
         # could rescue it and the answer needs nothing the save has not got.
-        verdict = check_runic_power(catalog, ["Dear"] * 4, tree(5))
+        runes = ["Dear", "Dearer", "Dearest", "Priciest"]
+        verdict = check_runic_power(catalog, runes, tree(5))
         assert verdict.verdict == "does not fit"
 
     def test_a_build_between_the_two_is_undecidable_rather_than_assumed(
@@ -69,7 +73,7 @@ class TestTheThreeAnswers:
     ) -> None:
         # The answer the module exists for. Seven fits if achievements have granted at
         # least two, and the save cannot say, so neither can this.
-        verdict = check_runic_power(catalog, ["Dear", "Cheap", "Dear"], tree(5))
+        verdict = check_runic_power(catalog, ["Dear", "Cheap", "Dearer"], tree(5))
         assert verdict.cost == 9
         assert verdict.verdict == "undecidable"
         assert "achievement domain is not decoded" in " ".join(verdict.reasons)
@@ -87,9 +91,8 @@ class TestWhatSettlesRegardlessOfCapacity:
     def test_a_slot_overflow_outranks_an_undecidable_capacity(self, catalog) -> None:
         # Both problems at once. The slot count is decidable and the capacity is not,
         # so the decidable failure has to win rather than being softened into a maybe.
-        verdict = check_runic_power(
-            catalog, ["Dear", "Dear", "Cheap", "A", "B"], tree(5)
-        )
+        runes = ["Dear", "Dearer", "Cheap", "A", "B"]
+        verdict = check_runic_power(catalog, runes, tree(5))
         assert verdict.verdict == "does not fit"
 
     def test_too_many_versatility_runes_does_not_fit(self, catalog) -> None:
@@ -117,3 +120,11 @@ def test_the_pilot_build_sits_exactly_on_the_ceiling() -> None:
     assert verdict.cost == 10
     assert verdict.capacity_at_most == 10
     assert verdict.verdict == "undecidable"
+
+
+def test_a_rune_listed_twice_is_refused_rather_than_priced(catalog) -> None:
+    # A preset holds each rune once. Pricing a repeat anyway is wrong in the direction
+    # of fitting, because the only rune worth repeating is the one with a negative cost:
+    # two copies of Pact would grant four points the player does not have.
+    with pytest.raises(BudgetError, match="Pact"):
+        check_runic_power(catalog, ["Dear", "Pact", "Pact"], tree(5))

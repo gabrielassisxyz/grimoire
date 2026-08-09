@@ -37,6 +37,10 @@ WIKI_ROW = re.compile(
 # by elimination rather than by its value.
 TIER_THRESHOLD = {2: "30000", 3: "60000"}
 
+# The only tier whose threshold is matched by elimination. Naming it stops a tier this
+# has never seen from silently inheriting that treatment and taking the leftover row.
+REMAINDER_TIER = 4
+
 # Pairs settled by tooltip or by experiment before this script existed. They are the
 # test: a join that stops reproducing them is wrong, whatever else it produces.
 ANCHORS = {
@@ -92,6 +96,10 @@ WIKI_TO_INSTALL = {
 # joined on the condition rather than on the rune: "ReachTotalElitesKilled-3000" against
 # "Eliminate a total of 3000 elite enemies" is a match nothing about either rune's name
 # or effect had to supply.
+TYPE_DESCRIPTOR = b"PowerUpParameterFloat"
+
+PARAMETER_DECIMALS = 4
+
 ROMAN = {"I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6}
 
 # The maps are named one way inside the game and another on the wiki. Forest is anchored
@@ -176,7 +184,10 @@ def join_achievements(
         if condition:
             wiki_by_condition.setdefault(condition, set()).add(display)
 
-    pairs = dict(EFFECT_JOINED)
+    granted_runes = {rune for runes in granted.values() for rune in runes}
+    # Seeded, not asserted: a rune this build no longer has must not be emitted with
+    # game_asset evidence for a build it is absent from.
+    pairs = {i: n for i, n in EFFECT_JOINED.items() if i in granted_runes}
     for condition, runes in by_condition.items():
         names = wiki_by_condition.get(condition, set())
         # Only a one-to-one condition settles a pair. Anything else is reported by its
@@ -216,10 +227,28 @@ def read_parameters(blob: bytes) -> list[float]:
     """
     values = []
     for match in re.finditer(rb"Assembly-CSharp\x00", blob):
+        # The assembly name ends several kinds of serialized reference, and only one of
+        # them is followed by a float. Requiring the type descriptor is what separates a
+        # parameter from four bytes of the next field read as one: without it the reader
+        # returned denormals for a third of the catalog, and two spurious zeros inside a
+        # record whose real parameters are 0.5 and 25.
+        if TYPE_DESCRIPTOR not in blob[max(0, match.start() - 48) : match.start()]:
+            continue
         end = match.end()
         end += (-end) % 4
         if end + 4 <= len(blob):
-            values.append(round(struct.unpack_from("<f", blob, end)[0], 4))
+            exact = struct.unpack_from("<f", blob, end)[0]
+            shown = round(exact, PARAMETER_DECIMALS)
+            # Rounding is for a readable record, never for a value. Every parameter in
+            # the current build survives it exactly; one that would not is a number the
+            # game stores more precisely than this can write, and approximating it
+            # silently is the failure the effect engine rules forbid.
+            if struct.unpack("<f", struct.pack("<f", shown))[0] != exact:
+                raise SystemExit(
+                    f"parameter {exact!r} does not survive rounding to "
+                    f"{PARAMETER_DECIMALS} places"
+                )
+            values.append(shown)
     return values
 
 
@@ -271,6 +300,11 @@ def read_grants(
                 )
     return grants, rune_records, achievements
 
+
+# The day the wiki dump under local/ was taken. It travels with the dump rather than
+# with a run of this script, so re-extracting against a newer game build does not
+# silently re-date evidence that was never re-fetched.
+WIKI_RETRIEVED = "2026-08-08"
 
 SKILL_TYPE_FAMILIES = ("RuneAffinity", "RuneInclination", "RuneMastery")
 
@@ -355,6 +389,9 @@ def join(
         rows, url = page
         if tier in TIER_THRESHOLD:
             threshold = TIER_THRESHOLD[tier]
+        elif tier != REMAINDER_TIER:
+            gaps.append(f"{identifier}: {character} tier {tier} has no known threshold")
+            continue
         else:
             remaining = set(rows) - set(TIER_THRESHOLD.values())
             if len(remaining) != 1:
@@ -405,11 +442,16 @@ def read_rune_table(wiki: pathlib.Path) -> dict[str, tuple[str, int, str]]:
             continue
         # Only the tenacity table has a cost column; versatility runes are all zero,
         # which the page states in its own prose and a tooltip already confirmed.
-        cost = (
-            int(cells[3])
-            if slot == "tenacity" and cells[3].lstrip("-").isdigit()
-            else 0
-        )
+        if slot != "tenacity":
+            # The versatility table has no cost column and the page states in prose
+            # that every rune in it is free, which a tooltip also confirmed.
+            cost = 0
+        elif cells[3].lstrip("-").isdigit():
+            cost = int(cells[3])
+        else:
+            raise SystemExit(
+                f"{page.name}: {cells[1]!r} has cost cell {cells[3]!r}, not a number"
+            )
         table[cells[1]] = (slot, cost, cells[-2])
     return table, source.group(1)
 
@@ -442,7 +484,7 @@ def emit_achievements(
         print("\n[[rune.evidence]]")
         print('type = "community_source"')
         print(f'url = "{url}"')
-        print('retrieved = "2026-08-08"')
+        print(f'retrieved = "{WIKI_RETRIEVED}"')
         print('game_version = "unstated"')
 
 
@@ -497,8 +539,11 @@ def emit(
         print("\n[[rune.evidence]]")
         print('type = "community_source"')
         print(f'url = "{url}"')
-        print('retrieved = "2026-08-08"')
-        print(f'game_version = "{build_id}"')
+        print(f'retrieved = "{WIKI_RETRIEVED}"')
+        # Not the install's build id. The wiki does not state the version it describes,
+        # and copying the installed one here would make a stale page cite itself as
+        # current on every future extraction.
+        print('game_version = "unstated"')
 
 
 def main() -> None:

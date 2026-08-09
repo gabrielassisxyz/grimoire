@@ -32,6 +32,13 @@ KINDS = ("weapon", "rune")
 
 REQUIRED_FIELDS = ("id", "display", "confidence", "evidence")
 
+# Fields a kind cannot do without, beyond the ones every record carries. A rune with no
+# cost would be counted as free by the budget check and a rune with no slot as belonging
+# to no section, and both read as an answer rather than as a gap.
+REQUIRED_PER_KIND = {"rune": ("slot", "runic_power_cost")}
+
+SLOTS = ("tenacity", "versatility")
+
 # What each class of evidence must state for a stranger to be able to check it. These
 # are the project's own provenance rules moved from prose into the loader: a rule that
 # lives only in a document is a rule that is already half broken by the time anyone
@@ -169,7 +176,7 @@ def _read_file(path: Path, kind: str) -> list[CatalogEntry]:
 def _read_record(where: str, kind: str, record: object) -> CatalogEntry:
     if not isinstance(record, dict):
         raise CatalogError(f"{where} is not a table")
-    for field in REQUIRED_FIELDS:
+    for field in REQUIRED_FIELDS + REQUIRED_PER_KIND.get(kind, ()):
         if field not in record:
             raise CatalogError(f"{where} has no {field}")
     return CatalogEntry(
@@ -180,9 +187,16 @@ def _read_record(where: str, kind: str, record: object) -> CatalogEntry:
         evidence=_read_evidence(where, record),
         unlocked_by=_read_optional_text(where, record, "unlocked_by"),
         parameters=_read_parameters(where, record),
-        slot=_read_optional_text(where, record, "slot"),
+        slot=_read_slot(where, record),
         runic_power_cost=_read_cost(where, record),
     )
+
+
+def _read_slot(where: str, record: Mapping[str, object]) -> str | None:
+    slot = _read_optional_text(where, record, "slot")
+    if slot is not None and slot not in SLOTS:
+        raise CatalogError(f"{where}: slot {slot!r} is not one of {', '.join(SLOTS)}")
+    return slot
 
 
 def _read_cost(where: str, record: Mapping[str, object]) -> int:

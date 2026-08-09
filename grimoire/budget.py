@@ -35,6 +35,10 @@ MAX_FROM_ACHIEVEMENTS = 5
 SLOTS = {"tenacity": 4, "versatility": 3}
 
 
+class BudgetError(Exception):
+    """A set of runes that is not a build, so pricing it would answer nothing."""
+
+
 @dataclass(frozen=True)
 class BudgetVerdict:
     cost: int
@@ -56,6 +60,12 @@ def check_runic_power(
     catalog: Catalog, rune_ids: list[str], nodes: list[SkillTreeNode]
 ) -> BudgetVerdict:
     """Whether these runes fit, or which fact is missing to say."""
+    duplicates = sorted({r for r in rune_ids if rune_ids.count(r) > 1})
+    if duplicates:
+        # A preset holds each rune once, so a repeat is a malformed build rather than a
+        # composition to price. Summing it anyway would be quietly wrong in the
+        # direction of fitting, since the one rune worth repeating has a negative cost.
+        raise BudgetError(f"these runes appear more than once: {', '.join(duplicates)}")
     entries = [catalog.entry(rune_id) for rune_id in rune_ids]
     cost = sum(e.runic_power_cost for e in entries)
 

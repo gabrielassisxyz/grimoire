@@ -13,7 +13,7 @@ from pathlib import Path
 import pytest
 
 from grimoire.catalog import CatalogError, load
-from grimoire.ownership import read_rune_ownership
+from grimoire.ownership import OwnershipError, read_rune_ownership
 from grimoire.skilltree import SkillTreeNode
 
 PACK_CATALOG = Path(__file__).resolve().parents[1] / "packs/soulstone-survivors/catalog"
@@ -22,6 +22,8 @@ RUNES_WITH_A_NODE = """
 [[rune]]
 id = "RuneExtraCritChance"
 display = "Vulnerable Target"
+slot = "tenacity"
+runic_power_cost = 2
 unlocked_by = "Houndmaster_T03S01"
 confidence = 0.9
 [[rune.evidence]]
@@ -32,6 +34,8 @@ build_id = "1.5d2"
 [[rune]]
 id = "RuneExtraDamageWhileBossIsAlive"
 display = "Lord's Bane"
+slot = "tenacity"
+runic_power_cost = 3
 unlocked_by = "Necromancer_T02S01"
 confidence = 0.9
 [[rune.evidence]]
@@ -42,6 +46,8 @@ build_id = "1.5d2"
 [[rune]]
 id = "RuneMasteryFire"
 display = "Skill Mastery: Fire"
+slot = "versatility"
+runic_power_cost = 0
 confidence = 0.9
 [[rune.evidence]]
 type = "community_source"
@@ -123,9 +129,20 @@ class TestAgainstTheRealPack:
 
 def test_an_unlocked_by_that_is_not_text_is_refused(tmp_path: Path) -> None:
     (tmp_path / "runes.toml").write_text(
-        '[[rune]]\nid = "R"\ndisplay = "D"\nunlocked_by = 7\nconfidence = 0.9\n'
+        '[[rune]]\nid = "R"\ndisplay = "D"\nslot = "tenacity"\n'
+        "runic_power_cost = 0\nunlocked_by = 7\nconfidence = 0.9\n"
         '[[rune.evidence]]\ntype = "game_asset"\n'
         'asset_path = "a"\nbuild_id = "1.5d2"\n'
     )
     with pytest.raises(CatalogError, match="unlocked_by must be a non-empty string"):
         load(tmp_path)
+
+
+def test_asking_about_a_rune_the_catalog_never_had_is_loud(catalog) -> None:
+    # A misspelled identifier used to answer "undecidable", which is a real state for a
+    # rune no tree grants. So a typo in a build read as a rune the save merely cannot
+    # see, and the two are the opposite of each other: one is a gap in the catalog and
+    # the other is a limit of the save.
+    ownership = read_rune_ownership(catalog, bought("Houndmaster_T03S01"))
+    with pytest.raises(OwnershipError, match="RuneMasteryElectirc"):
+        ownership.describe("RuneMasteryElectirc")

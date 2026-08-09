@@ -71,6 +71,8 @@ RUNE = """
 [[rune]]
 id = "RuneExtraCritChance"
 display = "Vulnerable Target"
+slot = "tenacity"
+runic_power_cost = 2
 confidence = 0.9
 
 [[rune.evidence]]
@@ -192,8 +194,8 @@ class TestRefusal:
     def test_a_record_without_evidence_is_refused(self, tmp_path: Path) -> None:
         write(
             tmp_path,
-            "rune",
-            '[[rune]]\nid = "X"\ndisplay = "Y"\nconfidence = 1.0\n',
+            "weapon",
+            '[[weapon]]\nid = "X"\ndisplay = "Y"\nconfidence = 1.0\n',
         )
         with pytest.raises(CatalogError, match="has no evidence"):
             load(tmp_path)
@@ -201,8 +203,8 @@ class TestRefusal:
     def test_an_empty_evidence_list_is_refused(self, tmp_path: Path) -> None:
         write(
             tmp_path,
-            "rune",
-            '[[rune]]\nid = "X"\ndisplay = "Y"\nconfidence = 1.0\nevidence = []\n',
+            "weapon",
+            '[[weapon]]\nid = "X"\ndisplay = "Y"\nconfidence = 1.0\nevidence = []\n',
         )
         with pytest.raises(CatalogError, match="non-empty array"):
             load(tmp_path)
@@ -212,9 +214,9 @@ class TestRefusal:
         # the only reason the field exists.
         write(
             tmp_path,
-            "rune",
-            '[[rune]]\nid = "X"\ndisplay = "Y"\nconfidence = 1.0\n'
-            '[[rune.evidence]]\ntype = "someone said so"\n',
+            "weapon",
+            '[[weapon]]\nid = "X"\ndisplay = "Y"\nconfidence = 1.0\n'
+            '[[weapon.evidence]]\ntype = "someone said so"\n',
         )
         with pytest.raises(CatalogError, match="not one of"):
             load(tmp_path)
@@ -227,9 +229,9 @@ class TestRefusal:
         # prevent. Enforcing it here rather than in a document is the point.
         write(
             tmp_path,
-            "rune",
-            '[[rune]]\nid = "X"\ndisplay = "Y"\nconfidence = 1.0\n'
-            '[[rune.evidence]]\ntype = "community_source"\ngame_version = "1.5d"\n',
+            "weapon",
+            '[[weapon]]\nid = "X"\ndisplay = "Y"\nconfidence = 1.0\n'
+            '[[weapon.evidence]]\ntype = "community_source"\ngame_version = "1.5d"\n',
         )
         with pytest.raises(CatalogError, match="states no url, no retrieved"):
             load(tmp_path)
@@ -242,9 +244,9 @@ class TestRefusal:
         # payload is what a later reader would be trying to compare against.
         write(
             tmp_path,
-            "rune",
-            '[[rune]]\nid = "X"\ndisplay = "Y"\nconfidence = 1.0\n'
-            '[[rune.evidence]]\ntype = "save_file"\n'
+            "weapon",
+            '[[weapon]]\nid = "X"\ndisplay = "Y"\nconfidence = 1.0\n'
+            '[[weapon.evidence]]\ntype = "save_file"\n'
             'domain = "runespresets"\nbuild_id = "1.5d2"\n',
         )
         with pytest.raises(CatalogError, match="states no slot, no write_counter"):
@@ -257,8 +259,8 @@ class TestRefusal:
         # than fail somewhere deeper with a Python type error.
         write(
             tmp_path,
-            "rune",
-            '[[rune]]\nid = "X"\ndisplay = "Y"\nconfidence = 1.0\n'
+            "weapon",
+            '[[weapon]]\nid = "X"\ndisplay = "Y"\nconfidence = 1.0\n'
             'evidence = { type = "measured" }\n',
         )
         with pytest.raises(CatalogError, match="array of tables"):
@@ -267,9 +269,9 @@ class TestRefusal:
     def test_a_confidence_that_is_not_a_number_is_refused(self, tmp_path: Path) -> None:
         write(
             tmp_path,
-            "rune",
-            '[[rune]]\nid = "X"\ndisplay = "Y"\nconfidence = "high"\n'
-            '[[rune.evidence]]\ntype = "game_asset"\n'
+            "weapon",
+            '[[weapon]]\nid = "X"\ndisplay = "Y"\nconfidence = "high"\n'
+            '[[weapon.evidence]]\ntype = "game_asset"\n'
             'asset_path = "a"\nbuild_id = "b"\n',
         )
         with pytest.raises(CatalogError, match="confidence must be a number"):
@@ -278,9 +280,9 @@ class TestRefusal:
     def test_a_confidence_outside_the_scale_is_refused(self, tmp_path: Path) -> None:
         write(
             tmp_path,
-            "rune",
-            '[[rune]]\nid = "X"\ndisplay = "Y"\nconfidence = 4\n'
-            '[[rune.evidence]]\ntype = "game_asset"\n'
+            "weapon",
+            '[[weapon]]\nid = "X"\ndisplay = "Y"\nconfidence = 4\n'
+            '[[weapon.evidence]]\ntype = "game_asset"\n'
             'asset_path = "a"\nbuild_id = "b"\n',
         )
         with pytest.raises(CatalogError, match="outside 0.0 to 1.0"):
@@ -384,12 +386,12 @@ class TestThePackItself:
 
     def test_a_record_whose_parameters_reproduce_its_own_prose(self) -> None:
         # The control for the reading above. This record's effect was written from the
-        # spreadsheet, before any extraction, and the parameters the install stores are
-        # the same two numbers in the same order. A wrongly identified field would not
-        # land on both.
+        # spreadsheet, before any extraction existed, and reads "0.5% per stack, caps at
+        # 25%". The install stores exactly those two numbers in that order. Asserted as
+        # a sequence rather than as membership, because a field that landed on both
+        # values in the wrong order would not be the field this claims to have found.
         entry = load(PACK_CATALOG).entry("RuneExtraCritDamageAgainstDazed")
-        assert 0.5 in entry.parameters
-        assert 25.0 in entry.parameters
+        assert entry.parameters == (0.5, 25.0)
 
     def test_the_family_rule_still_produces_what_experiment_established(self) -> None:
         # The three pairs the rule was checked against, two of them settled by equipping
@@ -450,3 +452,25 @@ class TestThePackItself:
         runes = load(PACK_CATALOG).entries_of_kind("rune")
         assert len(runes) == 128
         assert all(e.slot in ("tenacity", "versatility") for e in runes)
+
+    def test_a_rune_without_a_cost_is_refused(self, tmp_path: Path) -> None:
+        # It would otherwise load as free. The budget check reads the field off every
+        # record it is handed, so a missing one is not a gap it can report, it is a
+        # wrong total that looks like a right one.
+        write(tmp_path, "rune", RUNE.replace("runic_power_cost = 2\n", ""))
+        with pytest.raises(CatalogError, match="has no runic_power_cost"):
+            load(tmp_path)
+
+    def test_a_rune_without_a_slot_is_refused(self, tmp_path: Path) -> None:
+        write(tmp_path, "rune", RUNE.replace('slot = "tenacity"\n', ""))
+        with pytest.raises(CatalogError, match="has no slot"):
+            load(tmp_path)
+
+    def test_a_slot_that_is_not_a_section_of_the_game_is_refused(
+        self, tmp_path: Path
+    ) -> None:
+        # A misspelling would leave the rune counted against no section at all, so a
+        # build could hold five tenacity runes and pass the slot limit.
+        write(tmp_path, "rune", RUNE.replace('"tenacity"', '"tenacoty"'))
+        with pytest.raises(CatalogError, match="tenacoty"):
+            load(tmp_path)

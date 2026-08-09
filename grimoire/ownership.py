@@ -22,6 +22,10 @@ from grimoire.catalog import Catalog
 from grimoire.skilltree import SkillTreeNode
 
 
+class OwnershipError(Exception):
+    """A rune was asked about that the catalog never described."""
+
+
 @dataclass(frozen=True)
 class RuneOwnership:
     owned: tuple[str, ...]
@@ -33,7 +37,16 @@ class RuneOwnership:
             return "owned"
         if identifier in self.not_owned:
             return "not owned"
-        return "undecidable"
+        if identifier in self.undecidable:
+            return "undecidable"
+        # Not a third state. An identifier that is in none of the three was never in
+        # the catalog, and answering "undecidable" for it would dress a catalog miss as
+        # a known limit of the save, which is the one confusion this class exists to
+        # prevent. A typo in a build would read as a rune the tool merely cannot see.
+        raise OwnershipError(
+            f"no rune record for {identifier!r}, so its ownership was never "
+            "considered. Add one to packs/<game>/catalog/runes.toml with its evidence."
+        )
 
 
 def read_rune_ownership(catalog: Catalog, nodes: list[SkillTreeNode]) -> RuneOwnership:
