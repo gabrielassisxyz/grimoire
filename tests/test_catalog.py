@@ -200,6 +200,22 @@ class TestRefusal:
         with pytest.raises(CatalogError, match="states no url, no retrieved"):
             load(tmp_path)
 
+    def test_a_save_reading_without_the_write_it_came_from_is_refused(
+        self, tmp_path: Path
+    ) -> None:
+        # A domain has ten slots that the game writes round, so naming the domain
+        # without the write counter cites a position rather than a payload, and the
+        # payload is what a later reader would be trying to compare against.
+        write(
+            tmp_path,
+            "rune",
+            '[[rune]]\nid = "X"\ndisplay = "Y"\nconfidence = 1.0\n'
+            '[[rune.evidence]]\ntype = "save_file"\n'
+            'domain = "runespresets"\nbuild_id = "1.5d2"\n',
+        )
+        with pytest.raises(CatalogError, match="states no slot, no write_counter"):
+            load(tmp_path)
+
     def test_evidence_written_as_a_single_table_is_refused(
         self, tmp_path: Path
     ) -> None:

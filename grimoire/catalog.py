@@ -39,6 +39,10 @@ REQUIRED_FIELDS = ("id", "display", "confidence", "evidence")
 EVIDENCE_FIELDS: dict[str, tuple[str, ...]] = {
     "game_asset": ("asset_path", "build_id"),
     "game_screen": ("fixture", "window", "build_id"),
+    # A save reading names the write it came from, not just the file: the ten slots of
+    # a domain are a ring the game writes round, so a slot alone identifies a position
+    # that has since been overwritten, while the counter identifies the payload.
+    "save_file": ("domain", "slot", "write_counter", "build_id"),
     "community_source": ("url", "retrieved", "game_version"),
     "measured": ("procedure", "before", "after"),
 }
