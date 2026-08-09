@@ -119,6 +119,15 @@ Two of its contents change earlier decisions.
 
 **The reader refuses a payload that leaves bytes over.** That check is the whole reason to trust the layout: a record layout wrong by one field consumes the stream just as willingly and returns records that are simply the wrong ones. The leftover count is the only symptom such an error has, so it is fatal rather than logged. On the profile this was settled against, 148 records read and nothing remained.
 
+#### One undecoded domain now holds back two separate answers
+
+`achievementprogression` is the next record layout worth decoding, and it is worth stating why, because the reason is not that achievements are interesting.
+
+- **Ownership stops at the tree.** A rune granted by a skill tree node is decidable: the node is in the save or it is not. Sixty-six of the catalogued runes name such a node and sixty-two do not, because they unlock through an achievement instead, and for those the save currently proves nothing either way. The install already names the achievement behind each one, so the missing half is purely the completion state.
+- **Runic power capacity is a range rather than a number.** Five points come from a skill tree node that reads directly; up to five more come from achievements. So a build costing between those bounds gets a third answer, neither fitting nor failing, which names the gap honestly and is still not an answer. The pilot build lands exactly there: it costs ten against a ceiling of ten, so whether it is loadable at all depends entirely on the half that cannot be read.
+
+Decoding one domain replaces both non-answers at once. What is known: 22691 bytes at the newest slot, 629 identifiers in shapes like `PrestigeBarbarian10`, `UnlockArcaneWeaver` and `UnlockRunicPower5`, and no record layout. The skill tree reader is the worked example to follow, including its refusal to accept a payload with bytes left over.
+
 ### Three constraints the difficulty modifiers made concrete
 
 Reading the community wiki's page on the mode settled several things at once, and each one generalises past curses.
