@@ -6,12 +6,24 @@ tree says nothing about those. Runic power capacity is a range for the same reas
 half of it granted by achievements, so a build between the bounds gets no verdict.
 Both need this file and nothing else.
 
-Three collections, written back to back. The first holds one record per achievement with
-its progress and, once complete, when. The second lists the completed ones by name. That
-is redundant with the first and is exactly why it is worth reading: the two must agree,
-and a layout wrong by one field will not produce two views that happen to match. The
-third is empty in every profile seen so far, and what it would hold is unknown, so it is
-read and required to be empty rather than skipped.
+Three collections, written back to back, and the install names all three. The type
+``PlayerProfileAchievementProgression`` in ``il2cpp_data/Metadata/global-metadata.dat``
+lists its fields in the order the payload writes them: ``achievements``,
+``completedToView``, ``completedToNotify``. The first holds one record per achievement
+with its progress and, once complete, when.
+
+``completedToNotify`` is a queue the game drains as it shows the popup, so it carries a
+completion for exactly the one write that follows earning it. Reading it as a permanently
+empty tail made the reader refuse a good save for the span between earning an achievement
+and being told about it, which is the span this tool is most worth consulting in.
+
+``completedToView`` is what the completed records are checked against, and that check is
+worth more than the field's name suggests: a layout wrong by one field consumes the
+stream just as willingly and yields plausible records, but it will not also yield a
+second list that agrees with them. The name says queue while the data says mirror,
+holding every completion including long-earned ones across ten consecutive writes. Which
+it is has not been settled, so equality is required and a profile where it ever drains
+will say so rather than pass quietly.
 
 Progress is a fraction rather than a count. An achievement at 0.727686 is at that share
 of its target, so the target itself is not in the save and the number cannot be turned
@@ -49,15 +61,10 @@ def read_achievements(data: bytes) -> list[Achievement]:
     reader = PayloadReader(data)
     reader.read_int32()  # write counter, see savegame.read_write_counter
     achievements = _read_progress(reader)
-    _check_against_completed_list(achievements, _read_string_collection(reader))
+    completed = {a.achievement_id for a in achievements if a.completed}
+    _check_against_completed_list(completed, _read_string_collection(reader))
+    _check_notification_queue(completed, _read_string_collection(reader))
 
-    trailing = _read_string_collection(reader)
-    if trailing:
-        raise SaveFormatError(
-            f"achievements: the third collection held {len(trailing)} entries where "
-            "every profile read so far has it empty, so its meaning is unestablished "
-            "and reading past it would be guessing"
-        )
     if reader.remaining:
         raise SaveFormatError(
             f"achievements: {reader.remaining} bytes remain after three collections, "
@@ -107,22 +114,35 @@ def _read_collection_header(reader: PayloadReader, what: str) -> int:
     return count
 
 
-def _check_against_completed_list(
-    achievements: list[Achievement], completed: list[str]
-) -> None:
-    """The file states its completed set twice, so the two are made to agree.
+def _check_against_completed_list(completed: set[str], to_view: list[str]) -> None:
+    """``completedToView`` is made to agree with the records, which earns the layout.
 
-    This is the check that earns trust in the layout. A record layout wrong by one
-    field consumes the stream just as willingly and yields plausible records; it would
-    not also yield a second list that matches them.
+    See the module docstring for why equality is required of a field whose name says
+    queue.
     """
-    from_records = {a.achievement_id for a in achievements if a.completed}
-    from_list = set(completed)
-    if from_records != from_list:
-        only_records = sorted(from_records - from_list)[:3]
-        only_list = sorted(from_list - from_records)[:3]
+    listed = set(to_view)
+    if completed != listed:
+        only_records = sorted(completed - listed)[:3]
+        only_list = sorted(listed - completed)[:3]
         raise SaveFormatError(
             "achievements: the completed set read from the records does not match the "
             f"one the file lists separately. In records only: {only_records}. In the "
             f"list only: {only_list}"
+        )
+
+
+def _check_notification_queue(completed: set[str], to_notify: list[str]) -> None:
+    """``completedToNotify``: the completions the game has not shown a popup for yet.
+
+    Nothing consumes it, so it is read for what it can falsify rather than for what it
+    holds. A queued achievement the records do not have as complete means the stream has
+    drifted, which is what requiring this collection to be empty used to catch before
+    the field had a name.
+    """
+    unknown = sorted(set(to_notify) - completed)
+    if unknown:
+        raise SaveFormatError(
+            f"achievements: the notification queue holds {unknown[:3]}, which the "
+            "records do not have as complete, so the three collections are not "
+            "describing one profile"
         )

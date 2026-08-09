@@ -91,10 +91,21 @@ class TestWhatMakesTheLayoutTrustworthy:
         with pytest.raises(SaveFormatError, match="bytes remain"):
             read_achievements(payload([], []) + b"\x00\x00")
 
-    def test_a_third_collection_with_entries_stops_the_read(self) -> None:
-        # It is empty in every profile seen, so anything in it means the shape is not
-        # what this understands, and carrying on would be reading past an unknown.
-        with pytest.raises(SaveFormatError, match="third collection"):
+    def test_an_achievement_awaiting_its_popup_does_not_stop_the_read(self) -> None:
+        # completedToNotify carries a completion for the single write between earning
+        # it and the game announcing it. Refusing the save there refuses it at the one
+        # moment the answer has just changed.
+        data = payload(
+            [record("JustEarned", 1.0, DONE_AT)], ["JustEarned"], ["JustEarned"]
+        )
+        assert read_achievements(data)[0].completed is True
+
+    def test_a_queued_notification_for_an_unfinished_achievement_is_refused(
+        self,
+    ) -> None:
+        # The queue is drawn from the completed set, so an entry outside it means the
+        # stream has drifted rather than that the player earned something.
+        with pytest.raises(SaveFormatError, match="notification queue"):
             read_achievements(payload([], [], ["Unexpected"]))
 
     def test_a_missing_collection_marker_is_refused(self) -> None:
