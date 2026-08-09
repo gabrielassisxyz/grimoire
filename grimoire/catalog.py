@@ -83,6 +83,11 @@ class CatalogEntry:
     # bought, so a record naming its node can be answered, and a record without one can
     # only be reported as unknown. Optional because most kinds have no such node.
     unlocked_by: str | None = None
+    # The achievement a rune unlocks through, spelled the way the save spells it rather
+    # than the way the install does, because the save is what this is matched against.
+    # The two vocabularies overlap without being the same set, so the value here is a
+    # translation the extractor documents and a save was used to falsify.
+    unlocked_by_achievement: str | None = None
     # The numeric parameters the installed game stores for this record, in its own
     # order. Kept apart from the prose effect on purpose: the prose comes from whichever
     # source described the rune and the numbers are read from the build itself, so a
@@ -197,6 +202,9 @@ def _read_record(where: str, kind: str, record: object) -> CatalogEntry:
         confidence=_read_confidence(where, record),
         evidence=_read_evidence(where, record),
         unlocked_by=_read_optional_text(where, record, "unlocked_by"),
+        unlocked_by_achievement=_read_optional_text(
+            where, record, "unlocked_by_achievement"
+        ),
         parameters=_read_parameters(where, record),
         slot=_read_slot(where, record),
         runic_power_cost=_read_whole_number(where, record, "runic_power_cost"),

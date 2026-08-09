@@ -156,6 +156,39 @@ ACHIEVEMENT_ANCHORS = {
 }
 
 
+# An achievement is named one way in the install and another in the save, and the two
+# name spaces overlap without being the same set: the install has
+# ReachExperienceLevel-65 where the save's ReachExperienceLevel series runs 5, 25, 100
+# and up, a different achievement about a different thing. So these rules are a
+# translation to be checked, not a convention to be trusted, and what checks them is a
+# save: every rune the player has actually equipped must have its translated achievement
+# complete. Thirteen runes were testable that way and none contradicted it.
+SAVE_ACHIEVEMENT_RULES = (
+    (
+        re.compile(r"ReachPrestigeLevelWithCharacter-(\w+)-(\d+)"),
+        "Prestige{0}{1}",
+    ),
+    (
+        re.compile(r"CompleteMatchInLessThanTimeWithCharacter-(\d+)-(\w+)"),
+        "CompleteMatchInLessThanTime{0}{1}",
+    ),
+    (
+        re.compile(r"ReachAffixTierProgressionPerMap-(\w+)-(\d+)"),
+        "CompleteAffixTierSurvivors{0}{1}",
+    ),
+)
+
+
+def save_achievement_id(name: str) -> str:
+    """What the save calls the achievement this install object names."""
+    body = name.removeprefix("Achievement-")
+    for pattern, template in SAVE_ACHIEVEMENT_RULES:
+        match = pattern.fullmatch(body)
+        if match:
+            return template.format(*match.groups())
+    return body.replace("-", "")
+
+
 def achievement_condition(name: str) -> tuple | None:
     body = name.removeprefix("Achievement-")
     for kind, pattern in CONDITION_FROM_ACHIEVEMENT:
@@ -275,6 +308,7 @@ def read_grants(
     dict[str, tuple[str, str, int, list[float]]],
     dict[str, bytes],
     dict[str, list[str]],
+    dict[str, str],
 ]:
     """Each rune granted by a node, plus every rune record the install holds."""
     import UnityPy
@@ -284,6 +318,7 @@ def read_grants(
     grants: dict[str, tuple[str, str, int, list[float]]] = {}
     nodes = []
     achievements: dict[str, list[str]] = {}
+    unlocked_by_achievement: dict[str, str] = {}
     for obj in env.objects:
         if obj.type.name != "MonoBehaviour":
             continue
@@ -304,6 +339,8 @@ def read_grants(
             )
             if granted:
                 achievements[name] = granted
+                for rune in granted:
+                    unlocked_by_achievement.setdefault(rune, save_achievement_id(name))
     for name, raw in nodes:
         node = NODE_NAME.fullmatch(name)
         for token in IDENTIFIER.findall(raw):
@@ -315,7 +352,7 @@ def read_grants(
                     int(node.group(2)),
                     read_parameters(rune_records.get(identifier, b"")),
                 )
-    return grants, rune_records, achievements
+    return grants, rune_records, achievements, unlocked_by_achievement
 
 
 SKILL_TYPE_FAMILIES = ("RuneAffinity", "RuneInclination", "RuneMastery")
@@ -533,6 +570,7 @@ def emit_achievements(
     pairs: dict[str, str],
     table: dict[str, tuple[str, int, str]],
     rune_records: dict[str, bytes],
+    by_achievement: dict[str, str],
     ambiguous: set[str],
     url: str,
     asset_path: str,
@@ -567,12 +605,20 @@ def emit_achievements(
                     "game_version": "unstated",
                 },
             ],
+            extra=_unlock(by_achievement, identifier),
         )
+
+
+def _unlock(by_achievement: dict[str, str], identifier: str) -> dict[str, str]:
+    """The achievement a rune unlocks through, where the install names one."""
+    found = by_achievement.get(identifier)
+    return {"unlocked_by_achievement": found} if found else {}
 
 
 def emit_family(
     pairs: dict[str, str],
     rune_records: dict[str, bytes],
+    by_achievement: dict[str, str],
     asset_path: str,
     build_id: str,
     retrieved: str,
@@ -589,6 +635,7 @@ def emit_family(
             0,
             read_parameters(rune_records.get(identifier, b"")),
             [{"type": "game_asset", "asset_path": asset_path, "build_id": build_id}],
+            extra=_unlock(by_achievement, identifier),
         )
 
 
@@ -634,7 +681,7 @@ def main() -> None:
         raise SystemExit(f"no resources.assets under {data}")
 
     build_id = read_build_id(install)
-    grants, rune_records, achievements = read_grants(assets)
+    grants, rune_records, achievements, by_achievement = read_grants(assets)
     pages = read_wiki(wiki)
     paired, gaps = join(grants, pages)
     check_anchors(paired)
@@ -653,6 +700,7 @@ def main() -> None:
         achievement_pairs,
         table,
         rune_records,
+        by_achievement,
         ambiguous,
         runes_url,
         asset_path,
@@ -662,7 +710,7 @@ def main() -> None:
 
     pairs = family
     print(f"# {len(pairs)} skill type family runes.", file=sys.stderr)
-    emit_family(pairs, rune_records, asset_path, build_id, retrieved)
+    emit_family(pairs, rune_records, by_achievement, asset_path, build_id, retrieved)
 
 
 if __name__ == "__main__":

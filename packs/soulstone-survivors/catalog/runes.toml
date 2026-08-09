@@ -50,6 +50,7 @@ effect = "one extra reroll every five levels"
 # The tooltip states the display name, the effect and a runic power cost of zero in the
 # same frame, and the identifier is in the save's rune presets.
 runic_power_cost = 0
+unlocked_by_achievement = "ReachTotalBossesKilled500"
 confidence = 1.0
 
 [[rune.evidence]]
@@ -96,6 +97,7 @@ display = "Critical Mastery"
 slot = "tenacity"
 effect = "adds 25% of total crit chance to crit damage, additive"
 runic_power_cost = 2
+unlocked_by_achievement = "CompleteAffixTierSurvivorsForest3"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -169,6 +171,7 @@ effect = "the first offer of active skills contains only Electric skills where p
 # The one record here that three unrelated readings agree on, which is why it is the
 # only 0.9 that became a 1.0 by being checked rather than by being restated.
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeElementalist30"
 confidence = 1.0
 
 [[rune.evidence]]
@@ -200,6 +203,7 @@ effect = "raises the chance that Electric active skills are offered on level up"
 # pinned first, by the same method; had the convention been irregular, this second
 # experiment is what would have shown it.
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeElementalist60"
 confidence = 1.0
 
 [[rune.evidence]]
@@ -227,6 +231,7 @@ display = "Skill Mastery: Electric"
 slot = "versatility"
 effect = "select up to five Electric skills into the pool"
 runic_power_cost = 0
+unlocked_by_achievement = "CompleteMatchInLessThanTime12Elementalist"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -241,6 +246,7 @@ display = "Weapon Expert"
 slot = "versatility"
 effect = "start the match with the weapon's special skill"
 runic_power_cost = 0
+unlocked_by_achievement = "ReachExperienceLevel70"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1571,6 +1577,11 @@ game_version = "unstated"
 # a record per identifier can only come from the rule or from fifteen tooltips per
 # family. They stay at 0.9 and a tooltip would still upgrade any of them.
 #
+# The derived set has since been read back off the game's own dialogs and matches: the
+# same fifteen types, in all three families. That reading also settled a disagreement
+# the extraction had with an earlier, partial transcription of those dialogs, which was
+# missing Slam. The rule was right and the note taken from the screen was incomplete.
+#
 # The prefix has to be anchored and the suffix has to be a known type, because
 # RuneCriticalMastery, RuneDashMastery, RuneMulticastMastery and RuneRerollMastery all
 # contain "Mastery" and belong to none of this. A looser rule would name them.
@@ -1580,6 +1591,7 @@ id = "RuneAffinityArcane"
 display = "Skill Affinity: Arcane"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeArcaneWeaver30"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1597,6 +1609,7 @@ id = "RuneAffinityBlast"
 display = "Skill Affinity: Blast"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeHoundMaster30"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1614,6 +1627,7 @@ id = "RuneAffinityBomb"
 display = "Skill Affinity: Bomb"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeRogue30"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1631,6 +1645,7 @@ id = "RuneAffinityChaos"
 display = "Skill Affinity: Chaos"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeBloodmage30"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1648,6 +1663,7 @@ id = "RuneAffinityEarth"
 display = "Skill Affinity: Earth"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeMonkeyKing30"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1665,6 +1681,7 @@ id = "RuneAffinityFire"
 display = "Skill Affinity: Fire"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigePyromancer30"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1682,6 +1699,7 @@ id = "RuneAffinityHoly"
 display = "Skill Affinity: Holy"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigePaladin30"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1699,6 +1717,7 @@ id = "RuneAffinityIce"
 display = "Skill Affinity: Ice"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeDeathKnight30"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1716,6 +1735,7 @@ id = "RuneAffinityNature"
 display = "Skill Affinity: Nature"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeBeastmaster30"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1733,6 +1753,7 @@ id = "RuneAffinityProjectile"
 display = "Skill Affinity: Projectile"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeSentinel30"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1750,6 +1771,7 @@ id = "RuneAffinityShadow"
 display = "Skill Affinity: Shadow"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeNecromancer30"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1767,6 +1789,7 @@ id = "RuneAffinitySlam"
 display = "Skill Affinity: Slam"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeBarbarian30"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1784,6 +1807,7 @@ id = "RuneAffinitySwing"
 display = "Skill Affinity: Swing"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeSpellbreaker30"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1801,6 +1825,7 @@ id = "RuneAffinityThrust"
 display = "Skill Affinity: Thrust"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeLegionnaire30"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1818,6 +1843,7 @@ id = "RuneInclinationArcane"
 display = "Skill Inclination: Arcane"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeArcaneWeaver60"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1835,6 +1861,7 @@ id = "RuneInclinationBlast"
 display = "Skill Inclination: Blast"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeHoundMaster60"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1852,6 +1879,7 @@ id = "RuneInclinationBomb"
 display = "Skill Inclination: Bomb"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeRogue60"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1869,6 +1897,7 @@ id = "RuneInclinationChaos"
 display = "Skill Inclination: Chaos"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeBloodmage60"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1886,6 +1915,7 @@ id = "RuneInclinationEarth"
 display = "Skill Inclination: Earth"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeMonkeyKing60"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1903,6 +1933,7 @@ id = "RuneInclinationFire"
 display = "Skill Inclination: Fire"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigePyromancer60"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1920,6 +1951,7 @@ id = "RuneInclinationHoly"
 display = "Skill Inclination: Holy"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigePaladin60"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1937,6 +1969,7 @@ id = "RuneInclinationIce"
 display = "Skill Inclination: Ice"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeDeathKnight60"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1954,6 +1987,7 @@ id = "RuneInclinationNature"
 display = "Skill Inclination: Nature"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeBeastmaster60"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1971,6 +2005,7 @@ id = "RuneInclinationProjectile"
 display = "Skill Inclination: Projectile"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeSentinel60"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -1988,6 +2023,7 @@ id = "RuneInclinationShadow"
 display = "Skill Inclination: Shadow"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeNecromancer60"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2005,6 +2041,7 @@ id = "RuneInclinationSlam"
 display = "Skill Inclination: Slam"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeBarbarian60"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2022,6 +2059,7 @@ id = "RuneInclinationSwing"
 display = "Skill Inclination: Swing"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeSpellbreaker60"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2039,6 +2077,7 @@ id = "RuneInclinationThrust"
 display = "Skill Inclination: Thrust"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "PrestigeLegionnaire60"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2056,6 +2095,7 @@ id = "RuneMasteryArcane"
 display = "Skill Mastery: Arcane"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "CompleteMatchInLessThanTime12ArcaneWeaver"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2073,6 +2113,7 @@ id = "RuneMasteryBlast"
 display = "Skill Mastery: Blast"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "CompleteMatchInLessThanTime12HoundMaster"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2090,6 +2131,7 @@ id = "RuneMasteryBomb"
 display = "Skill Mastery: Bomb"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "CompleteMatchInLessThanTime12Rogue"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2107,6 +2149,7 @@ id = "RuneMasteryChaos"
 display = "Skill Mastery: Chaos"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "CompleteMatchInLessThanTime12Bloodmage"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2124,6 +2167,7 @@ id = "RuneMasteryEarth"
 display = "Skill Mastery: Earth"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "CompleteMatchInLessThanTime12MonkeyKing"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2141,6 +2185,7 @@ id = "RuneMasteryFire"
 display = "Skill Mastery: Fire"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "CompleteMatchInLessThanTime12Pyromancer"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2158,6 +2203,7 @@ id = "RuneMasteryHoly"
 display = "Skill Mastery: Holy"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "CompleteMatchInLessThanTime12Paladin"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2175,6 +2221,7 @@ id = "RuneMasteryIce"
 display = "Skill Mastery: Ice"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "CompleteMatchInLessThanTime12DeathKnight"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2192,6 +2239,7 @@ id = "RuneMasteryNature"
 display = "Skill Mastery: Nature"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "CompleteMatchInLessThanTime12Beastmaster"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2209,6 +2257,7 @@ id = "RuneMasteryProjectile"
 display = "Skill Mastery: Projectile"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "CompleteMatchInLessThanTime12Sentinel"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2226,6 +2275,7 @@ id = "RuneMasteryShadow"
 display = "Skill Mastery: Shadow"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "CompleteMatchInLessThanTime12Necromancer"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2243,6 +2293,7 @@ id = "RuneMasterySlam"
 display = "Skill Mastery: Slam"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "CompleteMatchInLessThanTime12Barbarian"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2260,6 +2311,7 @@ id = "RuneMasterySwing"
 display = "Skill Mastery: Swing"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "CompleteMatchInLessThanTime12Spellbreaker"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2277,6 +2329,7 @@ id = "RuneMasteryThrust"
 display = "Skill Mastery: Thrust"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "CompleteMatchInLessThanTime12Legionnaire"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2311,6 +2364,7 @@ id = "RuneAddAllSkillsOfAllCharacters"
 display = "Omnipotent"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "UnlockRunicPower5"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2329,6 +2383,7 @@ id = "RuneDashMastery"
 display = "Dash Mastery"
 slot = "tenacity"
 runic_power_cost = 1
+unlocked_by_achievement = "CompleteAffixTierSurvivorsSnow2"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2347,6 +2402,7 @@ id = "RuneDuplicateSkills"
 display = "Singular Focus"
 slot = "tenacity"
 runic_power_cost = 4
+unlocked_by_achievement = "CompleteAffixTierSurvivorsCavern6"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2365,6 +2421,7 @@ id = "RuneExtraDamageHealthMissing"
 display = "Recklessness"
 slot = "tenacity"
 runic_power_cost = 3
+unlocked_by_achievement = "ReachTotalElitesKilled3000"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2384,6 +2441,7 @@ display = "Focus Fire"
 slot = "tenacity"
 runic_power_cost = 3
 parameters = [35.0, 20.0]
+unlocked_by_achievement = "ReachTotalElitesKilled2000"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2402,6 +2460,7 @@ id = "RuneExtraDamageMinions"
 display = "Commanding Presence"
 slot = "tenacity"
 runic_power_cost = 3
+unlocked_by_achievement = "ReachTotalEnemiesKilled300000"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2420,6 +2479,7 @@ id = "RuneExtraDamagePerEffect"
 display = "Executioner"
 slot = "tenacity"
 runic_power_cost = 2
+unlocked_by_achievement = "CompleteAffixTierSurvivorsDungeon4"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2438,6 +2498,7 @@ id = "RuneExtraDamagePerSkillTag"
 display = "Generalist"
 slot = "tenacity"
 runic_power_cost = 3
+unlocked_by_achievement = "ReachTotalBossesKilled400"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2456,6 +2517,7 @@ id = "RuneExtraDamageWithoutEffects"
 display = "Purity"
 slot = "tenacity"
 runic_power_cost = 2
+unlocked_by_achievement = "ReachTotalEnemiesKilled200000"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2474,6 +2536,7 @@ id = "RuneMulticastMastery"
 display = "Multi Cast Mastery"
 slot = "tenacity"
 runic_power_cost = 2
+unlocked_by_achievement = "CompleteAffixTierSurvivorsCavern4"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2492,6 +2555,7 @@ id = "RuneRerollDamageRolls"
 display = "ControlledChaos"
 slot = "tenacity"
 runic_power_cost = 3
+unlocked_by_achievement = "CompleteBossRushCycle1"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2511,6 +2575,7 @@ display = "Center of Attention"
 slot = "tenacity"
 runic_power_cost = 1
 parameters = [5.0]
+unlocked_by_achievement = "UnlockCharacterCount8"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2529,6 +2594,7 @@ id = "RuneStunImmune"
 display = "Surefooted"
 slot = "tenacity"
 runic_power_cost = 1
+unlocked_by_achievement = "ReachExperienceLevel65"
 confidence = 0.9
 
 [[rune.evidence]]
@@ -2547,6 +2613,7 @@ id = "RuneSynergiesChance"
 display = "Synergetic"
 slot = "tenacity"
 runic_power_cost = 4
+unlocked_by_achievement = "CompleteEndlessCycle3old"
 confidence = 0.9
 
 [[rune.evidence]]

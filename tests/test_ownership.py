@@ -12,6 +12,7 @@ from pathlib import Path
 
 import pytest
 
+from grimoire.achievements import Achievement
 from grimoire.catalog import CatalogError, load
 from grimoire.ownership import OwnershipError, read_rune_ownership
 from grimoire.skilltree import SkillTreeNode
@@ -48,12 +49,24 @@ id = "RuneMasteryFire"
 display = "Skill Mastery: Fire"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "CompleteMatchInLessThanTime12Pyromancer"
 confidence = 0.9
 [[rune.evidence]]
 type = "community_source"
 url = "https://soulstone-survivors.fandom.com/wiki/Runes"
 retrieved = "2026-08-08"
-game_version = "1.5d2"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneNamesNothing"
+display = "Names nothing"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "a"
+build_id = "1.5d2"
 """
 
 
@@ -65,6 +78,14 @@ def catalog(tmp_path: Path):
 
 def bought(*node_ids: str) -> list[SkillTreeNode]:
     return [SkillTreeNode(node_id=n, level=1) for n in node_ids]
+
+
+def recorded(**completion: bool) -> list[Achievement]:
+    """Achievements the save knows about, each done or not."""
+    return [
+        Achievement(achievement_id=k, progress=1.0 if v else 0.4, completed=v)
+        for k, v in completion.items()
+    ]
 
 
 class TestWhatTheSaveProves:
@@ -104,6 +125,7 @@ class TestWhatTheSaveProves:
             "RuneExtraCritChance",
             "RuneExtraDamageWhileBossIsAlive",
             "RuneMasteryFire",
+            "RuneNamesNothing",
         ]
         assert len(set(total)) == len(total)
 
@@ -146,3 +168,43 @@ def test_asking_about_a_rune_the_catalog_never_had_is_loud(catalog) -> None:
     ownership = read_rune_ownership(catalog, bought("Houndmaster_T03S01"))
     with pytest.raises(OwnershipError, match="RuneMasteryElectirc"):
         ownership.describe("RuneMasteryElectirc")
+
+
+class TestWhatTheAchievementsProve:
+    def test_a_rune_whose_achievement_is_complete_is_owned(self, catalog) -> None:
+        ownership = read_rune_ownership(
+            catalog,
+            bought(),
+            recorded(CompleteMatchInLessThanTime12Pyromancer=True),
+        )
+        assert ownership.describe("RuneMasteryFire") == "owned"
+
+    def test_a_rune_whose_achievement_is_unfinished_is_not_owned(self, catalog) -> None:
+        ownership = read_rune_ownership(
+            catalog,
+            bought(),
+            recorded(CompleteMatchInLessThanTime12Pyromancer=False),
+        )
+        assert ownership.describe("RuneMasteryFire") == "not owned"
+
+    def test_an_achievement_the_save_never_mentions_is_undecidable(
+        self, catalog
+    ) -> None:
+        # Absence is not incompletion, and reading it as one reported three runes this
+        # player has equipped as runes they do not own. The install names achievements
+        # the save has no record of at all, so this is the common case rather than a
+        # defensive one.
+        ownership = read_rune_ownership(catalog, bought(), recorded(SomethingElse=True))
+        assert ownership.describe("RuneMasteryFire") == "undecidable"
+
+    def test_without_the_achievement_domain_those_runes_stay_undecidable(
+        self, catalog
+    ) -> None:
+        # A caller that has not opened that file gets an honest unknown, not sixty-two
+        # runes reported as missing on the strength of evidence nobody read.
+        ownership = read_rune_ownership(catalog, bought())
+        assert ownership.describe("RuneMasteryFire") == "undecidable"
+
+    def test_a_rune_naming_neither_is_a_gap_in_the_catalog(self, catalog) -> None:
+        ownership = read_rune_ownership(catalog, bought(), recorded(Anything=True))
+        assert ownership.describe("RuneNamesNothing") == "undecidable"
