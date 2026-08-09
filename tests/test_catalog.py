@@ -7,13 +7,16 @@ the loader. The pack's real files are checked separately, by loading them.
 
 from __future__ import annotations
 
+import tomllib
 from pathlib import Path
 
 import pytest
 
 from grimoire.catalog import CatalogError, load
 
-PACK_CATALOG = Path(__file__).resolve().parents[1] / "packs/soulstone-survivors/catalog"
+PACK = Path(__file__).resolve().parents[1] / "packs/soulstone-survivors"
+PACK_CATALOG = PACK / "catalog"
+PILOT_BUILD = PACK / "builds/barbarian-electric.toml"
 
 
 def write(directory: Path, kind: str, body: str) -> None:
@@ -300,11 +303,19 @@ class TestThePackItself:
         assert "measured" in {e.type for e in entry.evidence}
         assert entry.confidence == 1.0
 
-    def test_the_rune_the_pilot_still_lacks_is_reported_as_a_gap(self) -> None:
-        # Absent on purpose, and now absent for a settled reason: the identifier that
-        # looked like this rune was proven to belong to its neighbour, so this one has
-        # an identifier nothing has observed. A later commit resolving it should have
-        # to change this test deliberately rather than pass it by accident.
+    def test_the_two_runes_of_the_pair_resolve_to_different_identifiers(self) -> None:
+        # The pair the pack exists to keep apart. A resolver that ever collapsed them
+        # would answer plausibly and send the advisor after the wrong rune.
         catalog = load(PACK_CATALOG)
-        with pytest.raises(CatalogError):
-            catalog.id_for("Skill Inclination: Electric")
+        assert catalog.id_for("Skill Affinity: Electric") == "RuneAffinityElectric"
+        assert catalog.id_for("Skill Inclination: Electric") == (
+            "RuneInclinationElectric"
+        )
+
+    def test_every_reference_the_pilot_build_makes_resolves(self) -> None:
+        # The whole point of the catalog, asserted against the build as shipped: if a
+        # reference stops resolving, this says so before anything downstream does.
+        catalog = load(PACK_CATALOG)
+        build = tomllib.loads(PILOT_BUILD.read_text())
+        wanted = [r["id"] for r in build["runes"]] + [build["meta"]["weapon"]]
+        assert catalog.missing(wanted) == []

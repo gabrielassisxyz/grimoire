@@ -23,18 +23,24 @@
 # qualified name the wiki and the spreadsheet use is, and that is what the records below
 # carry.
 #
-# Absent on purpose: "Skill Inclination: Electric", which the pilot build needs. The
-# player owns it, so this is a catalog gap and not an ownership one.
+# Nothing the pilot build refers to is missing from this file any more, and the last
+# two entries are worth reading as a pair, because between them they are the argument
+# for how this catalog is built.
 #
-# It was worth an experiment rather than a guess, and the experiment overturned the
-# reading that looked safe. No identifier containing "Inclination" appears in any slot
-# of any domain of the save, while RuneAffinityElectric does and sits in the versatility
-# slot the pilot build wants. Either the interface's Inclination was written as
-# RuneAffinityElectric, or Inclination had simply never been written to this save. The
-# spelling favoured the second, which is exactly the reason not to trust it. Equipping
-# Skill Affinity with the Electric type into an empty preset settled it: the save gained
-# that one identifier, so it belongs to Affinity, and the rune the build asks for has an
-# identifier nothing here has yet observed.
+# The save held RuneAffinityElectric and no identifier containing "Inclination", while
+# the build asked for Skill Inclination: Electric. Two readings fitted equally: the
+# interface's Inclination was written as RuneAffinityElectric, or Inclination had simply
+# never been written to this save. The spelling favoured the second, and the spelling is
+# exactly what cannot be trusted here, since the same file records RuneStartWeaponSkill
+# for a rune the interface calls Weapon Expert.
+#
+# Two experiments settled it instead. Equipping Skill Affinity with the Electric type
+# into an empty preset added RuneAffinityElectric, so that identifier is Affinity's.
+# Adding Skill Inclination with the Electric type to the same preset added
+# RuneInclinationElectric, the first occurrence of that string anywhere in the save.
+# The convention turned out to be regular, which is a fact now rather than a hope: the
+# reading a resemblance rule would have produced is right here, and the only reason to
+# believe it is that neither experiment came out the other way.
 
 [[rune]]
 id = "RuneRerollMastery"
@@ -128,6 +134,36 @@ build_id = "1.5d2"
 type = "game_screen"
 fixture = "panel_1896x2097_20260809-135427.png"
 window = "1896x2097"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/The_Elementalist"
+retrieved = "2026-08-08"
+game_version = "1.5d"
+
+[[rune]]
+id = "RuneInclinationElectric"
+display = "Skill Inclination: Electric"
+slot = "versatility"
+effect = "raises the chance that Electric active skills are offered on level up"
+# The identifier a spelling rule would have produced, arrived at the one way that
+# could distinguish it from a coincidence. Its neighbour RuneAffinityElectric was
+# pinned first, by the same method; had the convention been irregular, this second
+# experiment is what would have shown it.
+confidence = 1.0
+
+[[rune.evidence]]
+type = "measured"
+procedure = "with Skill Affinity: Electric already the only rune in a preset, add Skill Inclination with the Electric type, return to the main menu, and read runespresets again"
+before = "the preset of character 18 held one rune, RuneAffinityElectric; 24 distinct rune identifiers existed anywhere in the save, none containing Inclination"
+after = "that preset holds two, the second being RuneInclinationElectric; it is the only new identifier in the save, and the only other difference between the payloads is the write counter"
+build_id = "1.5d2"
+
+[[rune.evidence]]
+type = "game_screen"
+fixture = "panel_1895x2097_20260809-140602.png"
+window = "1895x2097"
 build_id = "1.5d2"
 
 [[rune.evidence]]

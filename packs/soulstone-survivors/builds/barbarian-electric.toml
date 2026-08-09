@@ -124,14 +124,12 @@ evidence = { type = "community_source", source = "spreadsheet", game_version = "
 
 [[runes]]
 slot = "versatility"
-id = "unresolved"
+id = "RuneInclinationElectric"
 display = "Skill Inclination: Electric"
 effect = "Electric skills are offered more often"
-# The save's rune presets contain RuneAffinityElectric, and the spreadsheet shows
-# Affinity and Inclination to be two different runes with different unlock conditions
-# and different effects. So the internal identifier found in the save does not belong
-# to the rune the guide names, and which of the two the pilot should run is open.
-disagreement = "save presets hold RuneAffinityElectric, a different rune from this one"
+# Distinct from Skill Affinity: Electric, which the save also holds and which the
+# player also owns. The two were told apart by experiment rather than by their names;
+# the catalog record carries that reasoning.
 evidence = { type = "community_source", source = "spreadsheet", game_version = "1.5d" }
 
 # Editorial rules, restated from the guide's prose. These are what the ranker scores
