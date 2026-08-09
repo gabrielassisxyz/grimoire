@@ -63,6 +63,20 @@ Found by scanning identifiers across every domain, before any record layout was 
 - **The curse vocabulary is in the save, with canonical ids and levels.** `mapprogression` carries entries such as `HealingDampening-01` through `-05`, `EmpoweredElites-01` through `-05`, `EliteFrequency`, `ExplosiveGoblins`, `MeteorOnDeath`, `EmpoweredBosses`, `ResilientBosses`, `PillarsOfProtection`, 44 distinct in total. So the identifier list for curses needs no external source at all; only their effects do. What that domain records is progression per map rather than which curses a given run had enabled, so it names the vocabulary without pinning any particular run.
 - **Match history records the composition of runs already played.** `gamestatsmatchhistory` holds skill and rune identifiers per match, including exactly the pilot build's parts: `LightningBeam`, `PowerConductor`, `OverchargedBlast`, `OnGuard`, `PiercingShout`, `RuneAffinityElectric`, `RuneCriticalMastery`, `RuneExtraCritChance`, `RuneExtraCritDamageAgainstDazed`. Past runs are therefore a dataset rather than a memory, and decoding that one record layout is worth more than decoding any other.
 
+#### The ten files a domain has are a rotation, and the unsuffixed one is rarely current
+
+Each domain is written as `playerProfile-0-<domain>.savgs` alongside `-1` through `-9`, which reads like a current file with nine backups and is not. The game writes the ten in a ring, so the newest state is in whichever name it happened to reach last, and the unsuffixed one is simply position zero.
+
+The evidence is a domain caught mid-rotation. Ordering `unlockedweapons` by modification time gives 31 unlocked weapons, 31, then **31 under the unsuffixed name**, then 32, 33, 34, 35, 35, 36, and **37 under `-7`**: one clean monotone sequence with the unsuffixed file sitting in the middle of it, a day and a half behind. Read that file and the player owns two weapons for the pilot character; read the newest and they own all five, which is what the character screen shows.
+
+Two consequences worth stating separately, because the first is a bug anyone would write and the second changes what the reader can promise.
+
+- **A reading of the save is a reading per domain, never per directory.** Domains are written only when they change, so on one real profile the newest slot differed for almost every domain: nine distinct rotation numbers across twenty-three domains, with exactly one landing on zero. Any code that opens the unsuffixed name is reporting the player's progression as it stood at an arbitrary earlier moment, and nothing about the answer looks wrong.
+- **Which slot is latest is decided by a counter inside the payload, not by the file's timestamp.** The integer every domain writes just after its format tag counts how many times that domain has been written: read one domain across all ten slots and the values are ten consecutive integers, 20 to 29 for unlocked weapons, 504 to 513 for the skill tree. It was nearly mistaken for a schema version, which it resembles in every way except the one that matters.
+
+That distinction is worth more than a tidier implementation. A timestamp is metadata and does not survive a copy, a restore from backup, or a move between machines, none of which change the save; a counter written by the game inside the file survives all of them. It also makes the two orderings checkable against each other, and on all twenty-three domains of one profile they picked the same slot, which is the kind of agreement between unrelated mechanisms that turns a plausible reading into a settled one.
+
+
 ### Three constraints the difficulty modifiers made concrete
 
 Reading the community wiki's page on the mode settled several things at once, and each one generalises past curses.

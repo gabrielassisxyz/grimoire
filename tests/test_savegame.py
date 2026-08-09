@@ -13,6 +13,7 @@ currencies payload whose decoded values matched the counts the game displays on 
 from __future__ import annotations
 
 import gzip
+import os
 import struct
 from pathlib import Path
 
@@ -23,8 +24,10 @@ from grimoire.savegame import (
     SaveFormatError,
     decompress,
     discover,
+    newest_per_domain,
     parse_name,
     read_identifiers,
+    read_write_counter,
 )
 
 TAG = b"\x00"
@@ -47,23 +50,33 @@ def text(value: str) -> bytes:
 
 
 class TestName:
-    def test_live_file_has_no_backup_number(self) -> None:
+    def test_the_unsuffixed_name_is_rotation_zero(self) -> None:
         parsed = parse_name(Path("playerProfile-0-currencies.savgs"))
         assert parsed is not None
-        assert (parsed.slot, parsed.domain, parsed.backup) == (0, "currencies", None)
-        assert parsed.is_live
+        assert (parsed.profile, parsed.domain, parsed.rotation) == (0, "currencies", 0)
 
-    def test_backup_number_is_separated_from_the_domain(self) -> None:
+    def test_rotation_number_is_separated_from_the_domain(self) -> None:
         parsed = parse_name(Path("playerProfile-0-currencies-3.savgs"))
         assert parsed is not None
-        assert (parsed.domain, parsed.backup) == ("currencies", 3)
-        assert not parsed.is_live
+        assert (parsed.domain, parsed.rotation) == ("currencies", 3)
 
-    def test_a_domain_containing_no_digits_is_not_mistaken_for_a_backup(self) -> None:
+    def test_a_domain_containing_no_digits_is_not_mistaken_for_a_rotation(self) -> None:
         parsed = parse_name(Path("playerProfile-0-gamestatsmatchhistory.savgs"))
         assert parsed is not None
         assert parsed.domain == "gamestatsmatchhistory"
-        assert parsed.backup is None
+        assert parsed.rotation == 0
+
+    def test_a_hyphenated_domain_is_put_back_together(self) -> None:
+        # The name is split on hyphens to find the rotation number, so a domain that
+        # contains one has to survive being rejoined rather than arriving truncated.
+        parsed = parse_name(Path("playerProfile-0-map-progression-4.savgs"))
+        assert parsed is not None
+        assert (parsed.domain, parsed.rotation) == ("map-progression", 4)
+
+    def test_the_profile_number_is_kept(self) -> None:
+        parsed = parse_name(Path("playerProfile-2-currencies.savgs"))
+        assert parsed is not None
+        assert parsed.profile == 2
 
     @pytest.mark.parametrize(
         "name",
@@ -81,7 +94,7 @@ class TestName:
 
 
 class TestDiscover:
-    def test_live_file_sorts_before_its_backups(self, tmp_path: Path) -> None:
+    def test_a_domain_is_ordered_by_rotation(self, tmp_path: Path) -> None:
         for name in (
             "playerProfile-0-currencies-2.savgs",
             "playerProfile-0-currencies.savgs",
@@ -89,13 +102,89 @@ class TestDiscover:
             "unrelated.txt",
         ):
             (tmp_path / name).write_bytes(b"")
-        found = discover(tmp_path)
-        assert [f.backup for f in found] == [None, 1, 2]
+        assert [f.rotation for f in discover(tmp_path)] == [0, 1, 2]
 
     def test_an_empty_directory_yields_nothing_rather_than_failing(
         self, tmp_path: Path
     ) -> None:
         assert discover(tmp_path) == []
+
+
+class TestNewestPerDomain:
+    def write(
+        self, tmp_path: Path, name: str, counter: int, mtime: float = 0.0
+    ) -> None:
+        """A save whose header says which write produced it."""
+        path = tmp_path / name
+        path.write_bytes(gzip.compress(payload(i32(counter))))
+        if mtime:
+            os.utime(path, (mtime, mtime))
+
+    def test_a_numbered_slot_wins_when_it_holds_the_later_write(
+        self, tmp_path: Path
+    ) -> None:
+        # The case that made this function exist: on a real profile the unsuffixed
+        # file held 31 unlocked weapons and a numbered slot held 37, because the ten
+        # names are a ring the game writes round rather than a file and its backups.
+        self.write(tmp_path, "playerProfile-0-unlockedweapons.savgs", 20)
+        self.write(tmp_path, "playerProfile-0-unlockedweapons-7.savgs", 27)
+        self.write(tmp_path, "playerProfile-0-unlockedweapons-8.savgs", 22)
+        newest = newest_per_domain(discover(tmp_path), profile=0)
+        assert newest["unlockedweapons"].rotation == 7
+
+    def test_the_unsuffixed_file_wins_when_it_holds_the_later_write(
+        self, tmp_path: Path
+    ) -> None:
+        self.write(tmp_path, "playerProfile-0-currencies.savgs", 51)
+        self.write(tmp_path, "playerProfile-0-currencies-4.savgs", 44)
+        newest = newest_per_domain(discover(tmp_path), profile=0)
+        assert newest["currencies"].rotation == 0
+
+    def test_the_counter_decides_even_when_timestamps_say_otherwise(
+        self, tmp_path: Path
+    ) -> None:
+        # A copy or a restore rewrites modification times and leaves the payload
+        # alone, so the two can disagree and only one of them is evidence.
+        self.write(tmp_path, "playerProfile-0-currencies.savgs", 51, mtime=1000.0)
+        self.write(tmp_path, "playerProfile-0-currencies-4.savgs", 44, mtime=9000.0)
+        assert (
+            newest_per_domain(discover(tmp_path), profile=0)["currencies"].rotation == 0
+        )
+
+    def test_each_domain_is_resolved_on_its_own(self, tmp_path: Path) -> None:
+        # Domains are written independently, so the newest slot differs between them
+        # and picking one number for the whole directory would be wrong for most.
+        self.write(tmp_path, "playerProfile-0-currencies.savgs", 90)
+        self.write(tmp_path, "playerProfile-0-currencies-1.savgs", 10)
+        self.write(tmp_path, "playerProfile-0-skilltree.savgs", 10)
+        self.write(tmp_path, "playerProfile-0-skilltree-1.savgs", 90)
+        newest = newest_per_domain(discover(tmp_path), profile=0)
+        assert newest["currencies"].rotation == 0
+        assert newest["skilltree"].rotation == 1
+
+    def test_one_profile_never_answers_for_another(self, tmp_path: Path) -> None:
+        # Both profiles have the same domains, and the higher counter belongs to the
+        # one that was not asked for. Merging them would report a stranger's save.
+        self.write(tmp_path, "playerProfile-0-currencies.savgs", 12)
+        self.write(tmp_path, "playerProfile-1-currencies.savgs", 99)
+        newest = newest_per_domain(discover(tmp_path), profile=0)
+        assert newest["currencies"].path.name == "playerProfile-0-currencies.savgs"
+
+    def test_a_profile_with_no_files_resolves_to_nothing(self, tmp_path: Path) -> None:
+        self.write(tmp_path, "playerProfile-0-currencies.savgs", 12)
+        assert newest_per_domain(discover(tmp_path), profile=3) == {}
+
+    def test_an_exact_counter_tie_resolves_the_same_way_every_time(
+        self, tmp_path: Path
+    ) -> None:
+        self.write(tmp_path, "playerProfile-0-currencies-2.savgs", 70)
+        self.write(tmp_path, "playerProfile-0-currencies-5.savgs", 70)
+        assert (
+            newest_per_domain(discover(tmp_path), profile=0)["currencies"].rotation == 5
+        )
+
+    def test_nothing_in_yields_nothing_out(self) -> None:
+        assert newest_per_domain([], profile=0) == {}
 
 
 class TestReader:
@@ -159,6 +248,18 @@ class TestDecompress:
         path.write_bytes(b"not gzip at all")
         with pytest.raises(SaveFormatError, match="playerProfile-0-currencies.savgs"):
             decompress(path)
+
+
+class TestWriteCounter:
+    def test_the_header_integer_is_read_apart_from_the_records(self) -> None:
+        # Six currencies follow it, which is exactly what the game's header bar shows.
+        counts = (148272, 115, 101, 82, 98, 58)
+        data = payload(i32(651), *(i32(n) for n in counts))
+        assert read_write_counter(data) == 651
+        reader = PayloadReader(data)
+        reader.read_int32()
+        assert tuple(reader.read_int32() for _ in counts) == counts
+        assert reader.remaining == 0
 
 
 class TestIdentifiers:
