@@ -28,7 +28,18 @@ The reasoning behind that number, since it is the kind of choice that looks arbi
 
 ## Missing, in rough order
 
-1. **Source audit.** Compare the community sources against each other and against the installed build; produce a report of gaps and disagreements before trusting any of them. Licence position per source is settled here too, before ingestion rather than after.
+1. **Source audit.** Compare the community sources against each other and against the installed build; produce a report of gaps and disagreements before trusting any of them. Licence position per source is settled here too, before ingestion rather than after. It has begun, and its first result is below.
+
+#### The pilot's own guide is already stale, in the way that is hardest to see
+
+Checking the published build against the release notes for the installed version found two changes that matter, and both of them are invisible to any structural check.
+
+- A rune the build depends on for critical hit chance had that value doubled. The guide states the old number in prose, gives it as the reason for taking the rune, and is now wrong about the magnitude while remaining right about the choice.
+- The skill the build uses to apply its central status effect now applies four stacks where it applied one. The whole build is organised around stacking that effect so two other skills scale off it, so this is not a marginal adjustment to a minor component; it is a fourfold change to the loop the build exists to run.
+
+**Every identifier in that guide still resolves.** Referential integrity, which is the strong mechanical check, passes completely: no weapon, rune, skill or power has been renamed or removed. A tool relying on it alone would report the build as healthy while recommending against numbers that are off by a factor of two and a factor of four. This is exactly the semantic case that only release notes can catch, found on the first cross-check and on the pilot itself rather than on some hypothetical later build.
+
+It also settles what the video transcripts are for. They are auto-generated captions, noisy enough that names arrive mangled, so they are useless as a source of values. What they carry is *what changed and why*, which is the same role the release notes play: a trigger and a diagnostic, never an input to the catalog.
 2. **Versioned catalog.** Ids, aliases, effects, characters, weapons, runes and powers, each with provenance, build id and confidence.
 3. **Pre-run advisor.** Read the local save for what the player has actually unlocked, then report what a target build requires and does not yet have, and which owned runes and weapons substitute. Deterministic end to end and free of any vision problem.
 4. **Structured extractor.** The multimodal model returns validated JSON constrained to known candidates. Region-based OCR and icon matching are deliberately *not* built first: the direct approach is measured against real screenshots, and OCR is introduced only where it demonstrably fails. Building it before measuring would be premature. One constraint is already known: the shared capture path caps the image by *width*, which treats a tall window generously and a wide one harshly, so two players with different window geometry get very different effective resolution on the same interface. The cap belongs on the longest edge or on total pixels, and that has to be settled before fixtures are measured against each other.
