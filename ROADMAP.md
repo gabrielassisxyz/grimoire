@@ -7,21 +7,27 @@ What exists, what is missing, and what is deliberately out of scope. Background:
 - **The harness only.** `bin/ci` (ruff format, ruff lint, pytest, pip-audit, markdown soft-wrap, prose gate), the gitleaks and commit-message hooks with their installer, worktree isolation, and the matching GitHub Actions workflows.
 - **The rules that cannot be retrofitted**, written before the first line of pipeline code: where game data may come from, what may be redistributed, and what the code must refuse to do. They are in AGENTS.md because a published history cannot be cleaned afterwards.
 
-## Decisions still open
+## The pilot, settled
 
-- **The pilot.** Which game, character, weapon and rune set, mode and difficulty, and which screen the first slice reads. Nothing downstream can be specified until this is chosen, because the ingestion path differs per game: packaged engine assets for one candidate, a community wiki and spreadsheet for the other.
-- **How the state of a run is tracked.** Three candidates, in increasing cost and decreasing robustness: explicit confirmation of each choice through a local event log, visual inference with periodic resynchronisation from the stats panel, or instrumentation of the game. Explicit confirmation is the cheapest to build and the most reliable; instrumentation is fragile across patches and expands the security surface considerably.
-- **What "best" means.** Scoring against a target build taken from a guide, or maximising a universal mathematical metric. The second requires modelling damage, procs, area, uptime, status effects, chains, summons and enemies, which is a later goal rather than a first cut.
+The first pack targets **Soulstone Survivors**, so the ingestion path is community sources with the installed build used for validation, not asset extraction.
+
+- **Pilot build:** Barbarian, the Electric variant of a published character guide. Weapon `Tempest Battle Axes`; active skills `Thundering Slash`, `Thunder Clap`, `Lightning Beam`, `Power Conductor`, `Overcharged Blast`, `On Guard`; tenacity runes `Vulnerable Target`, `Critical Mastery`, `Vulnerable Exploit`, `Lord's Bane`; versatility runes `Skill Mastery: Electric`, `Weapon Expert`, `Skill Inclination: Electric`. Note that the character's native type is Slam, so the pilot deliberately exercises an off-type build, which is the case where a naive recommendation is most likely to be wrong.
+- **First screen read:** the level-up power offer, and only that. Active skill choice and replacement come later. Each screen is a separate extraction contract, and adding the second before the first works doubles the failure surface without doubling what is learned.
+- **What "best" means:** score against the target build taken from the guide, combined with the deltas the engine computes. A universal mathematical metric would require modelling damage, procs, area, uptime, status effects, chains, summons and enemies, and is a later goal rather than a first cut.
+- **Run state:** visual inference with resynchronisation from the stats panel. Confirming every choice by hand is reliable but costs an interaction at every level-up, which is the wrong trade for a tool meant to reduce friction. The risk this accepts is that a missed or misread choice corrupts every later recommendation silently, so inference is paired with a divergence check: predicted stats are compared against the observed panel, and a mismatch beyond tolerance marks the state stale and refuses rather than continuing. That converts the silent failure into a loud one.
+
+Still unset: the target mode and difficulty. This is not cosmetic, since debuff soft caps differ by an order of magnitude between normal enemies and titans or event bosses, which changes the arithmetic behind a recommendation.
 
 ## Missing, in rough order
 
-1. **Source audit.** Compare the community sources against the installed build; produce a report of gaps and disagreements before trusting either.
+1. **Source audit.** Compare the community sources against each other and against the installed build; produce a report of gaps and disagreements before trusting any of them. Licence position per source is settled here too, before ingestion rather than after.
 2. **Versioned catalog.** Ids, aliases, effects, characters, weapons, runes and powers, each with provenance, build id and confidence.
-3. **Structured extractor.** The multimodal model returns validated JSON constrained to known candidates. Region-based OCR and icon matching are deliberately *not* built first: the direct approach is measured against real screenshots, and OCR is introduced only where it demonstrably fails. Building it before measuring would be premature.
-4. **Run state.** Initial snapshot plus an event log of choices, plus a resynchronisation path.
-5. **Effect engine.** A small set of proven operations. No large speculative expression language.
-6. **Ranker.** Guide-derived rules and synergies combined with the deltas the engine computes.
-7. **Overlay surface.** Recommendation, confidence, deltas, and confirmation of the choice actually made.
+3. **Pre-run advisor.** Read the local save for what the player has actually unlocked, then report what a target build requires and does not yet have, and which owned runes and weapons substitute. Deterministic end to end and free of any vision problem.
+4. **Structured extractor.** The multimodal model returns validated JSON constrained to known candidates. Region-based OCR and icon matching are deliberately *not* built first: the direct approach is measured against real screenshots, and OCR is introduced only where it demonstrably fails. Building it before measuring would be premature.
+5. **Run state.** Initial snapshot, inferred deltas, resynchronisation, and the divergence check that makes a stale state loud.
+6. **Effect engine.** A small set of proven operations. No large speculative expression language.
+7. **Ranker.** Guide-derived rules and synergies combined with the deltas the engine computes.
+8. **Overlay surface.** Recommendation, confidence and deltas.
 
 ## Not started, and blocked on something else
 
@@ -29,7 +35,7 @@ What exists, what is missing, and what is deliberately out of scope. Background:
 
 ## Deliberately out of scope
 
-- **Circumventing protection of any kind.** No decryption of protected archives, no executable patching, no process injection, no memory reading. A protected source is a closed source.
+- **Circumventing protection of any kind.** No decryption of protected archives, no executable patching, no process injection, no memory reading. A protected source is a closed source. Reading the player's own save file from disk is a different thing and is in scope: it is their data, it is unprotected, and the tool only ever reads it.
 - **Redistributing third-party content.** The tracked catalog holds normalized facts with provenance. Raw scrapes, verbatim prose, extracted assets, mapping files and save data stay out of the repository.
 - **One repository per game.** The framework is game-agnostic with per-game packs.
 - **A universal damage model** before a single pilot works end to end.

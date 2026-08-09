@@ -18,7 +18,8 @@
 
 - **Current scope:** nothing is implemented. The repo carries its harness and the rules that must hold from the first commit, chiefly the data-provenance ones, because those are the constraints that cannot be retrofitted onto a published history.
 - The target is a **game-agnostic framework with per-game packs**, not one repo per game. That is a present need and not speculation: two games are already in play with incompatible ingestion paths, one whose data comes from packaged engine assets and one whose data comes from a community wiki and spreadsheet. The catalog layer is pluggable from the start for that reason alone.
-- The first implemented pack is deliberately narrow: one character, one weapon and rune set, one objective, one screen. Breadth comes after that slice proves the whole chain end to end.
+- The first implemented pack is deliberately narrow: one character, one weapon and rune set, one objective, one screen. Breadth comes after that slice proves the whole chain end to end. The pilot is pinned in [ROADMAP.md](ROADMAP.md); do not widen it there without a present need.
+- **Two surfaces, not one.** Before a run, read the player's own save for what is unlocked and report what a target build still needs. During a run, read the offered choice from the screen and rank it. They share the catalog and nothing else: the first has no vision problem and no time pressure, the second has both.
 - Don't expand beyond it without a present need. If a change drifts past it, STOP and flag it.
 
 <!-- BEGIN universal-principles v3 -->
@@ -67,7 +68,7 @@ The rules that cannot be retrofitted. Publication does not clean a history: a bl
 - **Never tracked, under any circumstances:** raw scrape output, verbatim third-party prose, extracted game assets, packaged archives, decryption keys, `.usmap` mapping files, and save-game blobs. They are derived from the reader's own licensed install or from someone else's copyrighted text, and shipping them here redistributes the publisher's content. They live in `local/` or an ignored cache. The `.gitignore` already refuses the common extensions; that is a backstop, not permission to try.
 - **What ships is normalized facts, never the source.** A guide becomes structured rules; it never becomes a quoted post. A spreadsheet becomes typed records with provenance; it never becomes a copy of the sheet.
 - **A source's license is verified before its data enters the tracked catalog**, not after. A source whose license does not permit a normalized redistribution stays out, and the gap is recorded as a gap.
-- **No circumvention.** If an archive is encrypted and the publisher has not made the key available, that source is closed. Do not add code that decrypts protected content, patches the executable, injects into the game process, or reads its memory. This is a hard boundary and not a trade-off to weigh against convenience.
+- **No circumvention.** If an archive is encrypted and the publisher has not made the key available, that source is closed. Do not add code that decrypts protected content, patches the executable, injects into the game process, or reads its memory. This is a hard boundary and not a trade-off to weigh against convenience. Parsing the player's own save file from disk is not circumvention and is allowed: it is unprotected local data belonging to whoever runs the tool, and the tool only ever reads it. The parsed contents are still never tracked.
 - **The catalog is versioned against the game build.** A patch means re-extract, structural diff, and revalidate the measurements the diff touched. A record whose build id is older than the installed game is stale, and stale is a state the code must be able to report.
 
 ## Architectural principles
