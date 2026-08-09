@@ -43,7 +43,19 @@ Read off real frames of a real run. These are the facts the run-state design res
 
 **Where a fact comes from decides how far it is trusted.** The community spreadsheet is the fastest source and it is not the authority; the game's own screens are. One claim in this document was wrong for exactly that reason, taken from column alignment in a spreadsheet tab and contradicted by the character screen. The catalog's evidence classes already encode this, and the source audit should treat a spreadsheet-derived record as provisional until a screen or an asset agrees with it.
 6. **Effect engine.** A small set of proven operations. No large speculative expression language.
-7. **Ranker.** Guide-derived rules and synergies combined with the deltas the engine computes.
+7. **Ranker.** Guide-derived rules and synergies combined with the deltas the engine computes. The decision is wider than the offer, see below.
+
+### The offer is not the decision space
+
+Scoring the three cards on screen and naming the best one solves a smaller problem than the one the player actually has. The screen also carries reroll, banish and lock, each with a count, and an offered active skill can replace one taken earlier as a placeholder. So the choices at a level-up include at least: take one of the offered options, reroll the whole offer, banish an option so it stops appearing in later offers, lock an option to keep it available for a later level, and replace an earlier filler with the real thing now that it has appeared.
+
+Three consequences, and none of them are cosmetic.
+
+- **Those counters are finite, so spending one is an economic decision rather than a tactical one.** A reroll spent on a mediocre offer at level eight is a reroll unavailable at level thirty, when the pool is thinner and the stakes are higher. Ranking cannot answer "reroll or take the least bad option" without a notion of what the remaining rerolls are worth.
+- **Banish changes the distribution of every later offer, which is the only lever that does.** Removing a power from the pool raises the odds of everything else, so its value is not the value of avoiding one bad card, it is the value of a better pool for the rest of the run. That is a probability question, and it is the one place where the arithmetic has to look forward rather than at the current state.
+- **Lock and replace exist because the right option and the right moment do not always coincide.** Two strong options in one offer is a case for locking one; taking a filler active skill early and swapping it when the intended one appears is a normal line of play, not a mistake being corrected.
+
+**The tool operates none of these.** It does not press reroll and it does not choose what to banish on the player's behalf. What it needs is to know they exist, to read how many of each remain, and to include them as candidate actions when it says what it would do. The counts are on screen at every level-up, so this costs nothing to read and would cost a redesign to add later.
 8. **Overlay surface.** Recommendation, confidence and deltas.
 
 ## Later, and gated on the engine rather than on effort
