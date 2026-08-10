@@ -83,6 +83,114 @@ game_version = "1.5d"
 """
 
 
+SKILL = """
+[[skill]]
+id = "ThunderingSlash"
+display = "Thundering Slash"
+granted_by_weapon = "WeaponBarbarian-03"
+parameters = [300.0, 30.0, 1.0]
+confidence = 0.9
+
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Thundering_Slash"
+retrieved = "2026-08-08"
+game_version = "unstated"
+"""
+
+
+class TestSkillRecords:
+    def test_a_skill_carries_the_weapon_whose_record_names_it(
+        self, tmp_path: Path
+    ) -> None:
+        # The install states it and the wiki confirms it in prose for this pair,
+        # "The Barbarian, 3rd Weapon", so the field is two readings rather than one.
+        write(tmp_path, "skill", SKILL)
+        entry = load(tmp_path).entry("ThunderingSlash")
+        assert entry.granted_by_weapon == "WeaponBarbarian-03"
+        assert entry.parameters == (300.0, 30.0, 1.0)
+
+    def test_a_skill_naming_no_weapon_is_normal_rather_than_incomplete(
+        self, tmp_path: Path
+    ) -> None:
+        # Most skills come from the general pool and no weapon grants them, so an
+        # absent field is the common case and must not read as a gap.
+        write(
+            tmp_path,
+            "skill",
+            SKILL.replace('granted_by_weapon = "WeaponBarbarian-03"\n', ""),
+        )
+        assert load(tmp_path).entry("ThunderingSlash").granted_by_weapon is None
+
+    def test_the_weapon_it_names_is_not_required_to_have_a_record(
+        self, tmp_path: Path
+    ) -> None:
+        # The weapons catalog is the pilot's narrow slice while the skills name
+        # weapons across every character. Requiring resolution would refuse a fact the
+        # install states in order to protect a gap that is already known.
+        write(tmp_path, "skill", SKILL)
+        assert load(tmp_path).entry("ThunderingSlash").granted_by_weapon not in {
+            e.id for e in load(tmp_path).entries_of_kind("weapon")
+        }
+
+
+class TestOneNameForTwoKinds:
+    def test_two_kinds_may_print_the_same_name(self, tmp_path: Path) -> None:
+        # The game does it: Purity is a rune and also a skill. A loader refusing this
+        # refuses a catalog that correctly describes the game.
+        write(tmp_path, "rune", RUNE.replace("Vulnerable Target", "Purity"))
+        write(tmp_path, "skill", SKILL.replace("Thundering Slash", "Purity"))
+        assert len(load(tmp_path)) == 2
+
+    def test_two_records_of_one_kind_may_not(self, tmp_path: Path) -> None:
+        write(
+            tmp_path,
+            "skill",
+            SKILL + SKILL.replace('id = "ThunderingSlash"', 'id = "SomethingElse"'),
+        )
+        with pytest.raises(CatalogError, match="claimed by two skill records"):
+            load(tmp_path)
+
+    def test_an_identifier_is_still_unique_across_every_kind(
+        self, tmp_path: Path
+    ) -> None:
+        # An identifier is what the save writes and what a build stores, so two
+        # records sharing one make a reference ambiguous where nothing can ask which
+        # was meant. That check did not loosen with the names.
+        write(tmp_path, "rune", RUNE.replace("RuneExtraCritChance", "Shared"))
+        write(tmp_path, "skill", SKILL.replace("ThunderingSlash", "Shared"))
+        with pytest.raises(CatalogError, match="id 'Shared' is claimed by both"):
+            load(tmp_path)
+
+    def test_an_ambiguous_name_asked_for_without_a_kind_names_every_claimant(
+        self, tmp_path: Path
+    ) -> None:
+        write(tmp_path, "rune", RUNE.replace("Vulnerable Target", "Purity"))
+        write(tmp_path, "skill", SKILL.replace("Thundering Slash", "Purity"))
+        with pytest.raises(
+            CatalogError, match="claimed by rune .*, skill|skill .*, rune"
+        ):
+            load(tmp_path).id_for("Purity")
+
+    def test_a_kind_picks_the_one_that_was_meant(self, tmp_path: Path) -> None:
+        write(tmp_path, "rune", RUNE.replace("Vulnerable Target", "Purity"))
+        write(tmp_path, "skill", SKILL.replace("Thundering Slash", "Purity"))
+        catalog = load(tmp_path)
+        assert catalog.id_for("Purity", kind="rune") == "RuneExtraCritChance"
+        assert catalog.id_for("Purity", kind="skill") == "ThunderingSlash"
+
+    def test_an_unambiguous_name_still_resolves_without_a_kind(
+        self, tmp_path: Path
+    ) -> None:
+        write(tmp_path, "skill", SKILL)
+        assert load(tmp_path).id_for("Thundering Slash") == "ThunderingSlash"
+
+
 class TestResolution:
     def test_a_name_resolves_to_the_identifier_it_has_no_resemblance_to(
         self, tmp_path: Path
@@ -300,15 +408,25 @@ class TestRefusal:
         with pytest.raises(CatalogError, match="Vulnerable Target"):
             load(tmp_path)
 
-    def test_one_name_claimed_by_two_kinds_stops_the_load(self, tmp_path: Path) -> None:
-        # A displayed name is the key a build and a screen reading both arrive with,
-        # so letting two kinds hold it would make that key ambiguous everywhere.
+    def test_one_name_claimed_by_two_kinds_is_refused_at_the_point_of_use(
+        self, tmp_path: Path
+    ) -> None:
+        # This used to stop the load, on the reading that a displayed name is the key
+        # a build and a screen reading both arrive with, so two kinds holding it would
+        # make that key ambiguous everywhere. The worry was right and the remedy was
+        # wrong: the game prints one name for two kinds, so refusing the load refused
+        # a catalog that correctly described the game. The ambiguity is now refused
+        # where a caller can answer it, and it is still never resolved by guessing.
         write(tmp_path, "weapon", WEAPON)
         write(
             tmp_path, "rune", RUNE.replace("Vulnerable Target", "Tempest Battle Axes")
         )
-        with pytest.raises(CatalogError, match="claimed by both"):
-            load(tmp_path)
+        catalog = load(tmp_path)
+        with pytest.raises(CatalogError, match="claimed by"):
+            catalog.id_for("Tempest Battle Axes")
+        assert catalog.id_for("Tempest Battle Axes", kind="weapon") == (
+            "WeaponBarbarian-03"
+        )
 
 
 class TestThePackItself:
@@ -316,6 +434,25 @@ class TestThePackItself:
 
     def test_the_pack_catalog_loads(self) -> None:
         assert len(load(PACK_CATALOG)) > 0
+
+    def test_every_skill_the_pilot_names_now_resolves(self) -> None:
+        # Until skills were extracted a build's skill references resolved against
+        # nothing, so the half of a recommendation that names skills could not be
+        # checked against the installed game at all.
+        with PILOT_BUILD.open("rb") as fh:
+            named = [s["id"] for s in tomllib.load(fh)["skills"]]
+        assert load(PACK_CATALOG).missing(named) == []
+
+    def test_a_skill_name_is_cited_and_never_derived(self) -> None:
+        # Splitting the identifier would name 229 of these correctly and 29 wrongly,
+        # in ways the identifier cannot express: a lowercase joiner, a possessive, a
+        # compound the install writes closed. So every name carries the page it was
+        # read from, and a record holding only the install reading would mean some
+        # name had been invented.
+        for entry in load(PACK_CATALOG).entries_of_kind("skill"):
+            types = {e.type for e in entry.evidence}
+            assert "game_asset" in types, entry.id
+            assert "community_source" in types, entry.id
 
     def test_the_pilot_weapon_resolves(self) -> None:
         catalog = load(PACK_CATALOG)

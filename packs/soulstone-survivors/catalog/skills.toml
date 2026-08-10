@@ -1,0 +1,3987 @@
+# 258 skills, read from resources.assets at build 1.5d2
+# and named from the wiki dump retrieved 2026-08-08.
+#
+# parameters are the float parameters the record stores, in its own order.
+# What each position means is NOT established here; a record also carries
+# typed tooltip parameters this does not read, so the list is partial by
+# construction and is a reading rather than an interpretation.
+
+[[skill]]
+id = "AbyssalFissure"
+display = "Abyssal Fissure"
+granted_by_weapon = "WeaponMyrmidon-04"
+parameters = [370.0, 3.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Abyssal_Fissure"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "AcidRain"
+display = "Acid Rain"
+parameters = [340.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Acid_Rain"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "AmmoBox"
+display = "Ammo Box"
+parameters = [1.0, 20.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Ammo_Box"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "AmmoOverload"
+display = "Ammo Overload"
+granted_by_weapon = "WeaponDemonHunter-02"
+parameters = [50.0, 20.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Ammo_Overload"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "AncestralEmpowerment"
+display = "Ancestral Empowerment"
+granted_by_weapon = "WeaponShaman-02"
+parameters = [0.5, 30.0, 1.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Ancestral_Empowerment"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Ancestry"
+display = "Ancestry"
+parameters = [15.0, 120.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Ancestry"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "AncientCurse"
+display = "Ancient Curse"
+parameters = [200.0, 50.0, 12.0, 300.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Ancient_Curse"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ArcaneAssault"
+display = "Arcane Assault"
+parameters = [400.0, 50.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Arcane_Assault"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ArcaneBeam"
+display = "Arcane Beam"
+parameters = [0.4, 15.0, 230.0, 4.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Arcane_Beam"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ArcaneBlade"
+display = "Arcane Blade"
+parameters = [850.0, 8.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Arcane_Blade"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ArcaneConjuration"
+display = "Arcane Conjuration"
+parameters = [10.0, 240.0, 5.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Arcane_Conjuration"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ArcaneDisc"
+display = "Arcane Disc"
+parameters = [670.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Arcane_Disc"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ArcaneExplosion"
+display = "Arcane Explosion"
+granted_by_weapon = "WeaponArcaneWeaver-01"
+parameters = [300.0, 40.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Arcane_Explosion"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ArcaneMace"
+display = "Arcane Mace"
+granted_by_weapon = "WeaponPaladin-03"
+parameters = [700.0, 60.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Arcane_Mace"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ArcaneMissiles"
+display = "Arcane Missiles"
+granted_by_weapon = "WeaponArcaneWeaver-01"
+parameters = [4.0, 80.0, 2.0, 25.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Arcane_Missiles"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ArcaneOrb"
+display = "Arcane Orb"
+parameters = [360.0, 5.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Arcane_Orb"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ArcaneOverload"
+display = "Arcane Overload"
+granted_by_weapon = "WeaponSpellbreaker-01"
+parameters = [12.0, 420.0, 1.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Arcane_Overload"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ArcanePower"
+display = "Arcane Power"
+parameters = [50.0, 10.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Arcane_Power"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ArcaneReaping"
+display = "Arcane Reaping"
+granted_by_weapon = "WeaponShaman-02"
+parameters = [140.0, 1.0, 1.0, 1.0, 3.0, 4.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Arcane_Reaping"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ArcaneRift"
+display = "Arcane Rift"
+parameters = [0.5, 75.0, 6.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Arcane_Rift"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ArcaneShield"
+display = "Arcane Shield"
+parameters = [15.0, 30.0, 30.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Arcane_Shield"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ArcaneSlash"
+display = "Arcane Slash"
+granted_by_weapon = "WeaponSpellbreaker-01"
+parameters = [170.0, 2.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Arcane_Slash"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ArcaneSparks"
+display = "Arcane Sparks"
+parameters = [5.0, 530.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Arcane_Sparks"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ArcaneStorm"
+display = "Arcane Storm"
+granted_by_weapon = "WeaponPyromancer-05"
+parameters = [0.5, 6.0, 3.0, 3.0, 350.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Arcane_Storm"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ArcticAssault"
+display = "Arctic Assault"
+granted_by_weapon = "WeaponSpellbreaker-03"
+parameters = [400.0, 2.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Arctic_Assault"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ArmorShatter"
+display = "Armor Shatter"
+parameters = [330.0, 19.999998092651367, 8.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Armor_Shatter"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "AuraOfChaos"
+display = "Aura of Chaos"
+parameters = [0.5, 6.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Aura_of_Chaos"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Avalanche"
+display = "Avalanche"
+parameters = [15.0, 700.0, 3.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Avalanche"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Backstab"
+display = "Backstab"
+granted_by_weapon = "WeaponRogue-02"
+parameters = [500.0, 1500.0, 1.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Backstab"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "BeaconOfLight"
+display = "Beacon of Light"
+parameters = [0.5, 6.0, 120.0, 16.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Beacon_of_Light"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "BearTrap"
+display = "Bear Trap"
+parameters = [360.0, 30.0, 1200.0, 24.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Bear_Trap"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "BestialWrath"
+display = "Bestial Wrath"
+parameters = [40.0, 70.0, 10.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Bestial_Wrath"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "BladedChakram"
+display = "Bladed Chakram"
+parameters = [550.0, 16.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Bladed_Chakram"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "BladesOfLight"
+display = "Blades of Light"
+granted_by_weapon = "WeaponPaladin-01"
+parameters = [290.0, 1.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Blades_of_Light"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Bladestorm"
+display = "Bladestorm"
+parameters = [20.0, 40.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Bladestorm"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Blizzard"
+display = "Blizzard"
+parameters = [0.2, 5.0, 130.0, 4.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Blizzard"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Bloodlust"
+display = "Bloodlust"
+parameters = [20.0, 40.0, 10.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Bloodlust"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "BloodySaw"
+display = "Bloody Saw"
+parameters = [5.0, 110.0, 80.0, 2.0, 0.3]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Bloody_Saw"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "BodySlam"
+display = "Body Slam"
+parameters = [450.0, 1.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Body_Slam"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "BoltBarrage"
+display = "Bolt Barrage"
+granted_by_weapon = "WeaponHoundMaster-04"
+parameters = [8.0, 100.0, 8.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Bolt_Barrage"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "BombBarrage"
+display = "Bomb Barrage"
+parameters = [10.0, 330.0, 500.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Bomb_Barrage"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Bombardment"
+display = "Bombardment"
+granted_by_weapon = "WeaponHoundMaster-01"
+parameters = [15.0, 500.0, 1.0, 200.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Bombardment"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "BrutalSlam"
+display = "Brutal Slam"
+granted_by_weapon = "WeaponBeastmaster-03"
+parameters = [560.0, 1.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Brutal_Slam"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Buckshot"
+display = "Buckshot"
+granted_by_weapon = "WeaponHoundMaster-02"
+parameters = [280.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Buckshot"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "BullCharge"
+display = "Bull Charge"
+parameters = [315.0, 2.0, 1.0, 1.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Bull_Charge"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "BurstOfLead"
+display = "Burst of Lead"
+granted_by_weapon = "WeaponEngineer-01"
+parameters = [0.2, 20.0, 130.0, 2.0, 50.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Burst_of_Lead"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "CallLightning"
+display = "Call Lightning"
+granted_by_weapon = "WeaponElementalist-01"
+parameters = [7.0, 180.0, 15.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Call_Lightning"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "CamorsArrow"
+display = "Camor's Arrow"
+parameters = [1200.0, 9.999999046325684, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Camor%27s_Arrow"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "CannonBarrage"
+display = "Cannon Barrage"
+granted_by_weapon = "WeaponPirate-03"
+parameters = [4.0, 180.0, 150.0, 2.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Cannon_Barrage"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Carnage"
+display = "Carnage"
+granted_by_weapon = "WeaponDeathKnight-03"
+parameters = [10.0, 140.0, 5.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Carnage"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "CarrionCrows"
+display = "Carrion Crows"
+granted_by_weapon = "WeaponNecromancer-04"
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Carrion_Crows"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "CelestialRetribution"
+display = "Celestial Retribution"
+granted_by_weapon = "WeaponArcaneWeaver-03"
+parameters = [11.0, 200.0, 15.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Celestial_Retribution"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ChainLightning"
+display = "Chain Lightning"
+parameters = [7.0, 460.0, 5.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Chain_Lightning"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ChaosBolt"
+display = "Chaos Bolt"
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Chaos_Bolt"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ChaosEruption"
+display = "Chaos Eruption"
+granted_by_weapon = "WeaponPyromancer-03"
+parameters = [3.0, 40.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Chaos_Eruption"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ChaosTotem"
+display = "Chaos Totem"
+parameters = [15.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Chaos_Totem"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ChaosWave"
+display = "Chaos Wave"
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Chaos_Wave"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ChaoticInferno"
+display = "Chaotic Inferno"
+granted_by_weapon = "WeaponPyromancer-03"
+parameters = [0.25, 20.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Chaotic_Inferno"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ChaoticMissile"
+display = "Chaotic Missile"
+granted_by_weapon = "WeaponBloodmage-01"
+parameters = [50.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Chaotic_Missile"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ChaoticSurge"
+display = "Chaotic Surge"
+parameters = [10.0, 35.0, 50.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Chaotic_Surge"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ChromaticBolt"
+display = "Chromatic Bolt"
+parameters = [60.0, 270.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Chromatic_Bolt"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ClusterBomb"
+display = "Cluster Bomb"
+granted_by_weapon = "WeaponSentinel-02"
+parameters = [10.0, 830.0, 1.0, 440.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Cluster_Bomb"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "CobraTotem"
+display = "Cobra Totem"
+parameters = [10.0, 100.0, 130.0, 2.4, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Cobra_Totem"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Combustion"
+display = "Combustion"
+parameters = [0.5, 6.0, 375.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Combustion"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Conflagrate"
+display = "Conflagrate"
+parameters = [500.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Conflagrate"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Contagion"
+display = "Contagion"
+parameters = [200.0, 250.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Contagion"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Corrosion"
+display = "Corrosion"
+granted_by_weapon = "WeaponBloodmage-02"
+parameters = [0.5, 6.0, 200.0, 10.0, 110.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Corrosion"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "CorrosiveSpear"
+display = "Corrosive Spear"
+granted_by_weapon = "WeaponLegionnaire-03"
+parameters = [300.0, 260.0, 0.5]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Corrosive_Spear"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "CrystalShard"
+display = "Crystal Shard"
+granted_by_weapon = "WeaponMachinist-01"
+parameters = [400.0, 1.0, 10.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Crystal_Shard"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "CursedRune"
+display = "Cursed Rune"
+granted_by_weapon = "WeaponDemonHunter-04"
+parameters = [5.0, 110.0, 80.0, 1.5]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Cursed_Rune"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "CycloneShot"
+display = "Cyclone Shot"
+granted_by_weapon = "WeaponHoundMaster-04"
+parameters = [170.0, 12.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Cyclone_Shot"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "DarkSwarm"
+display = "Dark Swarm"
+granted_by_weapon = "WeaponPyromancer-04"
+parameters = [5.0, 80.0, 2.0, 80.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Dark_Swarm"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Dash"
+display = "Dash"
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Dash"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "DeathClaw"
+display = "Death Claw"
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Death_Claw"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "DeathVortex"
+display = "Death Vortex"
+parameters = [0.5, 8.0, 90.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Death_Vortex"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "DebilitatingBomb"
+display = "Debilitating Bomb"
+granted_by_weapon = "WeaponRogue-03"
+parameters = [420.0, 300.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Debilitating_Bomb"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Demolish"
+display = "Demolish"
+granted_by_weapon = "WeaponBarbarian-02"
+parameters = [10.0, 420.0, 8.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Demolish"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "DemonicBreath"
+display = "Demonic Breath"
+parameters = [2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Demonic_Breath"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "DoubleSlash"
+display = "Double Slash"
+parameters = [440.0, 1.0, 1.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Double_Slash"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "DreadfulGrenade"
+display = "Dreadful Grenade"
+granted_by_weapon = "WeaponDemonHunter-03"
+parameters = [5.0, 600.0, 30.0, 2.4]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Dreadful_Grenade"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "EarthBolt"
+display = "Earth Bolt"
+parameters = [400.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Earth_Bolt"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "EarthShield"
+display = "Earth Shield"
+parameters = [3.0, 8.0, 500.0, 1.0, 4.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Earth_Shield"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Earthbreaker"
+display = "Earthbreaker"
+granted_by_weapon = "WeaponShaman-04"
+parameters = [350.0, 20.0, 1.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Earthbreaker"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Earthquake"
+display = "Earthquake"
+parameters = [0.5, 6.0, 230.0, 5.0, 8.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Earthquake"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "EggShooter"
+display = "Egg Shooter"
+parameters = [15.0, 250.0, 8.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Egg_Shooter"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ElectricStrike"
+display = "Electric Strike"
+parameters = [200.0, 1.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Electric_Strike"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Electrified"
+display = "Electrified"
+parameters = [12.0, 1000.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Electrified"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Eviscerate"
+display = "Eviscerate"
+granted_by_weapon = "WeaponRogue-01"
+parameters = [580.0, 600.0, 30.0, 400.0, 2.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Eviscerate"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ExplosiveShot"
+display = "Explosive Shot"
+parameters = [650.0, 10.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Explosive_Shot"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ExplosiveTrap"
+display = "Explosive Trap"
+parameters = [600.0, 30.0, 720.0, 10.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Explosive_Trap"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "FanOfBombs"
+display = "Fan of Bombs"
+granted_by_weapon = "WeaponRogue-03"
+parameters = [12.0, 380.0, 400.0, 4.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Fan_of_Bombs"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "FesteringStrike"
+display = "Festering Strike"
+granted_by_weapon = "WeaponDeathKnight-02"
+parameters = [125.0, 100.0, 2.4]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Festering_Strike"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "FieryBlades"
+display = "Fiery Blades"
+granted_by_weapon = "WeaponSpellbreaker-04"
+parameters = [70.0, 7.0, 25.0, 50.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Fiery_Blades"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "FieryMissiles"
+display = "Fiery Missiles"
+granted_by_weapon = "WeaponArcaneWeaver-02"
+parameters = [3.0, 5.0, 155.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Fiery_Missiles"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "FirePillar"
+display = "Fire Pillar"
+granted_by_weapon = "WeaponArcaneWeaver-02"
+parameters = [500.0, 1200.0, 24.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Fire_Pillar"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "FireSlash"
+display = "Fire Slash"
+granted_by_weapon = "WeaponPyromancer-01"
+parameters = [100.0, 200.0, 4.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Fire_Slash"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "FireWalk"
+display = "Fire Walk"
+granted_by_weapon = "WeaponPyromancer-01"
+parameters = [0.5, 6.0, 140.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Fire_Walk"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "FireWall"
+display = "Fire Wall"
+parameters = [100.0, 2.4, 10.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Fire_Wall"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Firebolt"
+display = "Fire Bolt"
+parameters = [300.0, 280.0, 12.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Fire_Bolt"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "FlameSyphon"
+display = "Flame Syphon"
+parameters = [20.0, 50.0, 0.2, 100.0, 1.2]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Flame_Syphon"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "FlameWave"
+display = "Flame Wave"
+parameters = [280.0, 600.0, 9.999999046325684]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Flame_Wave"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Flamethrower"
+display = "Flamethrower"
+parameters = [0.25, 24.0, 240.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Flamethrower"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "FleetStrike"
+display = "Fleet Strike"
+granted_by_weapon = "WeaponPirate-03"
+parameters = [11.0, 150.0, 100.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Fleet_Strike"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Flurry"
+display = "Flurry"
+parameters = [0.2, 20.0, 100.0, 60.0, 25.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Flurry"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "FragShot"
+display = "Frag Shot"
+parameters = [170.0, 2.0, 10.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Frag_Shot"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "FreezingBlow"
+display = "Freezing Blow"
+granted_by_weapon = "WeaponElementalist-02"
+parameters = [615.0, 6.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Freezing_Blow"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "FrenziedBunnies"
+display = "Frenzied Bunnies"
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Frenzied_Bunnies"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "FrostTotem"
+display = "Frost Totem"
+parameters = [25.0, 130.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Frost_Totem"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Frostbolt"
+display = "Frost Bolt"
+parameters = [360.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Frost_Bolt"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "FrozenBlade"
+display = "Frozen Blade"
+granted_by_weapon = "WeaponSpellbreaker-03"
+parameters = [450.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Frozen_Blade"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "FrozenShard"
+display = "Frozen Shard"
+granted_by_weapon = "WeaponMyrmidon-01"
+parameters = [8.0, 900.0, 100.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Frozen_Shard"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "FrozenWarhammer"
+display = "Frozen Warhammer"
+parameters = [610.0, 30.0, 1.0, 4.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Frozen_Warhammer"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "FuryOfTheDepths"
+display = "Fury of the Depths"
+granted_by_weapon = "WeaponMyrmidon-04"
+parameters = [250.0, 10.0, 6.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Fury_of_the_Depths"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "GatheringShadows"
+display = "Gathering Shadows"
+granted_by_weapon = "WeaponPyromancer-04"
+parameters = [6.0, 300.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Gathering_Shadows"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "GlacialAffinity"
+display = "Glacial Affinity"
+granted_by_weapon = "WeaponDeathKnight-04"
+parameters = [10.0, 0.5, 200.0, 8.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Glacial_Affinity"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Glacier"
+display = "Glacier"
+parameters = [450.0, 10.0, 4.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Glacier"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "GroundBreak"
+display = "Ground Break"
+parameters = [670.0, 10.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Ground_Break"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "GroundSlam"
+display = "Ground Slam"
+granted_by_weapon = "WeaponBarbarian-04"
+parameters = [4.0, 420.0, 3.0, 4.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Ground_Slam"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "HammerOfJustice"
+display = "Hammer of Justice"
+granted_by_weapon = "WeaponPaladin-02"
+parameters = [240.0, 2.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Hammer_of_Justice"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "HeartbreakOrbs"
+display = "Heartbreak Orbs"
+parameters = [3.0, 345.0, 8.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Heartbreak_Orbs"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "HeartrendingStrike"
+display = "Heartrending Strike"
+parameters = [230.0, 2.0, 1.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Heartrending_Strike"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "HeatExplosion"
+display = "Heat Explosion"
+granted_by_weapon = "WeaponElementalist-03"
+parameters = [200.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Heat_Explosion"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "HeavyStrike"
+display = "Heavy Strike"
+granted_by_weapon = "WeaponBarbarian-04"
+parameters = [170.0, 100.0, 4.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Heavy_Strike"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "HeroicStrike"
+display = "Heroic Strike"
+granted_by_weapon = "WeaponPaladin-02"
+parameters = [550.0, 1.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Heroic_Strike"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "HighVoltage"
+display = "High Voltage"
+parameters = [20.0, 225.0, 1.0, 10.0, 1.0, 0.2]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/High_Voltage"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "HolyFire"
+display = "Holy Fire"
+granted_by_weapon = "WeaponPaladin-01"
+parameters = [3.0, 310.0, 65.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Holy_Fire"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "IceVortex"
+display = "Ice Vortex"
+parameters = [0.2, 1.6, 820.0, 30.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Ice_Vortex"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "IcyVeins"
+display = "Icy Veins"
+parameters = [370.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Icy_Veins"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "IgnitionSpiral"
+display = "Ignition Spiral"
+granted_by_weapon = "WeaponSamurai-04"
+parameters = [275.0, 5.0, 200.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Ignition_Spiral"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "InfectedShot"
+display = "Infected Shot"
+granted_by_weapon = "WeaponBloodmage-02"
+parameters = [2.0, 60.0, 120.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Infected_Shot"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "IntimidatingShout"
+display = "Intimidating Shout"
+parameters = [480.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Intimidating_Shout"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "JupitersSpear"
+display = "Jupiter's Spear"
+granted_by_weapon = "WeaponLegionnaire-02"
+parameters = [4.0, 3.0, 120.0, 1.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Jupiter%27s_Spear"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "KrakensRum"
+display = "Kraken's Rum"
+parameters = [8.0, 20.0, 50.0, 1.0, 5.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Kraken%27s_Rum"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "LastStand"
+display = "Last Stand"
+parameters = [6.0, 3.0, 1.0, 1.0, 0.5, 325.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Last_Stand"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "LavaShield"
+display = "Lava Shield"
+parameters = [3.0, 6.0, 450.0, 480.0, 9.999999046325684]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Lava_Shield"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "LightBeam"
+display = "Light Beam"
+parameters = [0.4, 20.0, 140.0, 8.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Light_Beam"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "LightningBeam"
+display = "Lightning Beam"
+granted_by_weapon = "WeaponElementalist-01"
+parameters = [0.4, 10.0, 135.0, 4.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Lightning_Beam"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "LightningField"
+display = "Lightning Field"
+granted_by_weapon = "WeaponPyromancer-02"
+parameters = [0.5, 6.0, 90.0, 4.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Lightning_Field"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "LightningSurge"
+display = "Lightning Surge"
+parameters = [10.0, 45.0, 4.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Lightning_Surge"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Lightningbolt"
+display = "Lightning Bolt"
+parameters = [3.0, 310.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Lightning_Bolt"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "MagicMissiles"
+display = "Magic Missiles"
+parameters = [20.0, 180.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Magic_Missiles"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ManifestationsOfChaos"
+display = "Manifestations of Chaos"
+parameters = [4.0, 15.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Manifestations_of_Chaos"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Meteor"
+display = "Meteor"
+parameters = [700.0, 400.0, 6.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Meteor"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "MeteorShower"
+display = "Meteor Shower"
+parameters = [11.0, 150.0, 10.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Meteor_Shower"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Might"
+display = "Might"
+parameters = [50.0, 10.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Might"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "MineField"
+display = "Mine Field"
+parameters = [6.0, 280.0, 100.0, 780.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Mine_Field"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "MoltenFang"
+display = "Molten Fang"
+granted_by_weapon = "WeaponSamurai-04"
+parameters = [140.0, 4.0, 260.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Molten_Fang"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "MortarShot"
+display = "Mortar Shot"
+granted_by_weapon = "WeaponHoundMaster-01"
+parameters = [5.0, 170.0, 140.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Mortar_Shot"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "MurderOfCrows"
+display = "Murder of Crows"
+granted_by_weapon = "WeaponNecromancer-04"
+parameters = [2.0, 10.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Murder_of_Crows"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "NapalmBlast"
+display = "Napalm Blast"
+parameters = [800.0, 16.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Napalm_Blast"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Nightfang"
+display = "Nightfang"
+granted_by_weapon = "WeaponSamurai-02"
+parameters = [450.0, 6.0, 30.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Nightfang"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Obliterate"
+display = "Obliterate"
+granted_by_weapon = "WeaponDeathKnight-01"
+parameters = [100.0, 170.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Obliterate"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ObscureArrow"
+display = "Obscure Arrow"
+granted_by_weapon = "WeaponSentinel-03"
+parameters = [30.0, 220.0, 80.0, 4.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Obscure_Arrow"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "OnGuard"
+display = "On Guard"
+parameters = [170.0, 8.0, 3.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/On_Guard"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "OrbsOfDestruction"
+display = "Orbs of Destruction"
+granted_by_weapon = "WeaponBloodmage-03"
+parameters = [350.0, 650.0, 30.0, 400.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Orbs_of_Destruction"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "OverchargedBlast"
+display = "Overcharged Blast"
+granted_by_weapon = "WeaponPyromancer-02"
+parameters = [500.0, 30.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Overcharged_Blast"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "PathOfDecay"
+display = "Path of Decay"
+parameters = [0.5, 6.0, 100.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Path_of_Decay"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Penance"
+display = "Penance"
+parameters = [8.0, 380.0, 4.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Penance"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "PesticideBurst"
+display = "Pesticide Burst"
+granted_by_weapon = "WeaponHoundMaster-03"
+parameters = [0.25, 24.0, 240.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Pesticide_Burst"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "PiercingFlames"
+display = "Piercing Flames"
+granted_by_weapon = "WeaponLegionnaire-04"
+parameters = [4.0, 400.0, 225.0, 4.999999523162842]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Piercing_Flames"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "PiercingShout"
+display = "Piercing Shout"
+parameters = [450.0, 29.999998092651367]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Piercing_Shout"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "PoisonCloud"
+display = "Poison Cloud"
+parameters = [0.5, 8.0, 255.0, 3.6000001430511475]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Poison_Cloud"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Poisonbolt"
+display = "Poison Bolt"
+parameters = [5.0, 440.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Poison_Bolt"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "PortableNuke"
+display = "Portable Nuke"
+parameters = [3100.0, 10.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Portable_Nuke"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "PowderKeg"
+display = "Powder Keg"
+parameters = [1000.0, 3.0, 300.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Powder_Keg"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "PowerBlast"
+display = "Power Blast"
+granted_by_weapon = "WeaponHoundMaster-02"
+parameters = [720.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Power_Blast"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "PowerConductor"
+display = "Power Conductor"
+parameters = [20.0, 300.0, 8.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Power_Conductor"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "PowerGenerator"
+display = "Power Generator"
+granted_by_weapon = "WeaponEngineer-03"
+parameters = [30.0, 230.0, 2.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Power_Generator"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "PreciseShot"
+display = "Precise Shot"
+parameters = [500.0, 320.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Precise_Shot"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "PrecisionWave"
+display = "Precision Wave"
+parameters = [50.0, 10.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Precision_Wave"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "PurgingSlam"
+display = "Purging Slam"
+granted_by_weapon = "WeaponLegionnaire-03"
+parameters = [550.0, 200.0, 2.5]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Purging_Slam"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Purity"
+display = "Purity"
+parameters = [4.0, 800.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Purity"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Putrefy"
+display = "Putrefy"
+granted_by_weapon = "WeaponNecromancer-03"
+parameters = [880.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Putrefy"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "QuickStrike"
+display = "Quick Strike"
+parameters = [190.0, 1.0, 4.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Quick_Strike"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Quicksand"
+display = "Quicksand"
+granted_by_weapon = "WeaponShaman-04"
+parameters = [20.0, 50.0, 3.0, 1.0, 0.5, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Quicksand"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Radiance"
+display = "Radiance"
+parameters = [250.0, 4.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Radiance"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "RadiantLight"
+display = "Radiant Light"
+granted_by_weapon = "WeaponPaladin-03"
+parameters = [0.2, 20.0, 95.0, 25.0, 2.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Radiant_Light"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "RainOfArrows"
+display = "Rain of Arrows"
+granted_by_weapon = "WeaponSentinel-01"
+parameters = [0.3, 115.0, 5.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Rain_of_Arrows"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "RapidBarrage"
+display = "Rapid Barrage"
+parameters = [0.2, 20.0, 80.0, 25.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Rapid_Barrage"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "RavagingStrike"
+display = "Ravaging Strike"
+granted_by_weapon = "WeaponDeathKnight-03"
+parameters = [440.0, 1.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Ravaging_Strike"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "RayOfDoom"
+display = "Ray of Doom"
+granted_by_weapon = "WeaponDeathKnight-01"
+parameters = [2.0, 6.0, 160.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Ray_of_Doom"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "RayOfFire"
+display = "Ray of Fire"
+granted_by_weapon = "WeaponElementalist-03"
+parameters = [2.0, 6.0, 200.0, 7.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Ray_of_Fire"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Reap"
+display = "Reap"
+granted_by_weapon = "WeaponRogue-04"
+parameters = [250.0, 1000.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Reap"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ResonantSlam"
+display = "Resonant Slam"
+parameters = [450.0, 8.0, 4.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Resonant_Slam"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ResonatingCrystals"
+display = "Resonating Crystals"
+granted_by_weapon = "WeaponMachinist-01"
+parameters = [15.0, 55.0, 15.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Resonating_Crystals"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "RicochetShot"
+display = "Ricochet Shot"
+parameters = [60.0, 200.0, 8.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Ricochet_Shot"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "RippleOfLight"
+display = "Ripple of Light"
+granted_by_weapon = "WeaponBloodmage-04"
+parameters = [145.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Ripple_of_Light"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "RollingBoulder"
+display = "Rolling Boulder"
+parameters = [180.0, 1.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Rolling_Boulder"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Rupture"
+display = "Rupture"
+parameters = [880.0, 4.0, 5.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Rupture"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Ruthlessness"
+display = "Ruthlessness"
+parameters = [10.0, 4.0, 200.0, 8.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Ruthlessness"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "SacredOrb"
+display = "Sacred Orb"
+granted_by_weapon = "WeaponArcaneWeaver-03"
+parameters = [240.0, 8.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Sacred_Orb"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "SanctifiedOrb"
+display = "Sanctified Orb"
+granted_by_weapon = "WeaponBloodmage-04"
+parameters = [520.0, 4.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Sanctified_Orb"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "SanctifiedThrow"
+display = "Sanctified Throw"
+granted_by_weapon = "WeaponMyrmidon-03"
+parameters = [40.0, 2.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Sanctified_Throw"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "SavageStrike"
+display = "Savage Strike"
+parameters = [2900.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Savage_Strike"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ScentOfBlood"
+display = "Scent of Blood"
+parameters = [10.0, 0.2, 50.0, 10.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Scent_of_Blood"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ScorchingKatana"
+display = "Scorching Katana"
+parameters = [280.0, 360.0, 5.0, 30.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Scorching_Katana"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "SeekingChaos"
+display = "Seeking Chaos"
+parameters = [2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Seeking_Chaos"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "SeismicShock"
+display = "Seismic Shock"
+parameters = [2500.0, 10.0, 5.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Seismic_Shock"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "SevereCold"
+display = "Severe Cold"
+granted_by_weapon = "WeaponElementalist-02"
+parameters = [40.0, 310.0, 5.0, 4.999999523162842]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Severe_Cold"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ShadowGrasp"
+display = "Shadow Grasp"
+parameters = [300.0, 200.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Shadow_Grasp"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ShadowNova"
+display = "Shadow Nova"
+granted_by_weapon = "WeaponNecromancer-01"
+parameters = [25.0, 480.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Shadow_Nova"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ShadowOrb"
+display = "Shadow Orb"
+parameters = [300.0, 10.0, 400.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Shadow_Orb"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ShadowSlice"
+display = "Shadow Slice"
+granted_by_weapon = "WeaponSamurai-02"
+parameters = [360.0, 5.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Shadow_Slice"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ShadowStep"
+display = "Shadow Step"
+parameters = [850.0, 1.0, 750.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Shadow_Step"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Shadowbolt"
+display = "Shadow Bolt"
+parameters = [8.0, 480.0, 16.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Shadow_Bolt"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "SharpSpear"
+display = "Sharp Spear"
+parameters = [350.0, 3.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Sharp_Spear"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ShieldBash"
+display = "Shield Bash"
+granted_by_weapon = "WeaponLegionnaire-01"
+parameters = [560.0, 1.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Shield_Bash"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ShieldWall"
+display = "Shield Wall"
+parameters = [200.0, 4.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Shield_Wall"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Shockwave"
+display = "Shockwave"
+granted_by_weapon = "WeaponBarbarian-02"
+parameters = [200.0, 2.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Shockwave"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ShockwaveTotem"
+display = "Shockwave Totem"
+parameters = [20.0, 450.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Shockwave_Totem"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Shoot"
+display = "Shoot"
+granted_by_weapon = "WeaponSentinel-01"
+parameters = [3.0, 100.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Shoot"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ShrapnelBomb"
+display = "Shrapnel Bomb"
+parameters = [15.0, 200.0, 4.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Shrapnel_Bomb"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ShrapnelMine"
+display = "Shrapnel Mine"
+parameters = [12.0, 30.0, 1500.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Shrapnel_Mine"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ShrapnelShot"
+display = "Shrapnel Shot"
+parameters = [5.0, 300.0, 300.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Shrapnel_Shot"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "SinisterStrike"
+display = "Sinister Strike"
+granted_by_weapon = "WeaponRogue-01"
+parameters = [350.0, 300.0, 1.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Sinister_Strike"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Slash"
+display = "Slash"
+granted_by_weapon = "WeaponSpellbreaker-02"
+parameters = [110.0, 2.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Slash"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Smite"
+display = "Smite"
+parameters = [3.0, 780.0, 5.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Smite"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "SmokeBomb"
+display = "Smoke Bomb"
+parameters = [6.0, 20.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Smoke_Bomb"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "SniperShot"
+display = "Sniper Shot"
+parameters = [950.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Sniper_Shot"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "SpearTrap"
+display = "Spear Trap"
+parameters = [5.0, 280.0, 8.0, 10.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Spear_Trap"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "SpiderCocoon"
+display = "Spider Cocoon"
+granted_by_weapon = "WeaponBeastmaster-04"
+parameters = [5.0, 600.0, 12.0, 720.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Spider_Cocoon"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "SplitShot"
+display = "Split Shot"
+parameters = [10.0, 400.0, 4.0, 12.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Split_Shot"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "SpreadShot"
+display = "Spread Shot"
+parameters = [10.0, 210.0, 2.0, 4.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Spread_Shot"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "StaggeringBlow"
+display = "Staggering Blow"
+granted_by_weapon = "WeaponPaladin-04"
+parameters = [500.0, 20.0, 8.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Staggering_Blow"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Stomp"
+display = "Stomp"
+granted_by_weapon = "WeaponBarbarian-01"
+parameters = [550.0, 2.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Stomp"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "StormOfArrows"
+display = "Storm of Arrows"
+parameters = [50.0, 120.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Storm_of_Arrows"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "StormOfSpears"
+display = "Storm of Spears"
+parameters = [50.0, 100.0, 15.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Storm_of_Spears"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Subdue"
+display = "Subdue"
+parameters = [150.0, 40.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Subdue"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "SuctionBomb"
+display = "Suction Bomb"
+parameters = [450.0, 400.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Suction_Bomb"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "SugarRush"
+display = "Sugar Rush"
+parameters = [60.0, 8.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Sugar_Rush"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "SummonHelperElves"
+display = "Summon Helper Elves"
+parameters = [200.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Summon_Helper_Elves"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "SummonInfantry"
+display = "Summon Infantry"
+granted_by_weapon = "WeaponLegionnaire-02"
+parameters = [20.0, 85.0, 4.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Summon_Infantry"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "SurpriseGift"
+display = "Surprise Gift"
+parameters = [6.0, 220.0, 30.0, 800.0, 4.8]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Surprise_Gift"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "TemplarsVerdict"
+display = "Templar's Verdict"
+parameters = [480.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Templar%27s_Verdict"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ThreshingBlast"
+display = "Threshing Blast"
+granted_by_weapon = "WeaponHoundMaster-03"
+parameters = [360.0, 40.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Threshing_Blast"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ThrowAxe"
+display = "Throw Axe"
+granted_by_weapon = "WeaponBarbarian-01"
+parameters = [470.0, 5.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Throw_Axe"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Thrust"
+display = "Thrust"
+granted_by_weapon = "WeaponLegionnaire-01"
+parameters = [320.0, 1.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Thrust"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ThunderClap"
+display = "Thunder Clap"
+granted_by_weapon = "WeaponBarbarian-03"
+parameters = [600.0, 2.0, 4.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Thunder_Clap"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "ThunderingSlash"
+display = "Thundering Slash"
+granted_by_weapon = "WeaponBarbarian-03"
+parameters = [300.0, 30.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Thundering_Slash"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Thunderstrike"
+display = "Thunder Strike"
+parameters = [750.0, 4.0, 4.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Thunder_Strike"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "TitansCleaver"
+display = "Titan's Cleaver"
+parameters = [350.0, 1.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Titan%27s_Cleaver"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Tornado"
+display = "Tornado"
+parameters = [120.0, 8.0, 4.0, 0.5]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Tornado"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "TwinDaggers"
+display = "Twin Daggers"
+granted_by_weapon = "WeaponRogue-02"
+parameters = [120.0, 1.0, 1.0, 600.0, 400.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Twin_Daggers"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "TwinImpact"
+display = "Twin Impact"
+parameters = [700.0, 2.0, 16.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Twin_Impact"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "UnchainedChaos"
+display = "Unchained Chaos"
+granted_by_weapon = "WeaponBloodmage-01"
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Unchained_Chaos"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "UncontrolledArrows"
+display = "Uncontrolled Arrows"
+granted_by_weapon = "WeaponDemonHunter-01"
+parameters = [2.0, 60.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Uncontrolled_Arrows"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "UnholyAura"
+display = "Unholy Aura"
+parameters = [0.5, 6.0, 40.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Unholy_Aura"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "UnholyBolt"
+display = "Unholy Bolt"
+parameters = [200.0, 10.0, 100.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Unholy_Bolt"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "UnstableReactor"
+display = "Unstable Reactor"
+granted_by_weapon = "WeaponMachinist-02"
+parameters = [8.0, 500.0, 1.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Unstable_Reactor"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Uppercut"
+display = "Uppercut"
+granted_by_weapon = "WeaponSpellbreaker-02"
+parameters = [200.0, 15.0, 5.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Uppercut"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "VenomousStrike"
+display = "Venomous Strike"
+granted_by_weapon = "WeaponBeastmaster-01"
+parameters = [235.0, 250.0, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Venomous_Strike"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Void"
+display = "Void"
+parameters = [0.5, 6.0, 50.0, 190.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Void"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "VoidTrap"
+display = "Void Trap"
+granted_by_weapon = "WeaponSentinel-03"
+parameters = [470.0, 30.0, 400.0, 21.6]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Void_Trap"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "VolcanoEruption"
+display = "Volcano Eruption"
+granted_by_weapon = "WeaponBloodmage-03"
+parameters = [20.0, 180.0, 200.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Volcano_Eruption"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "WeakeningGrenade"
+display = "Weakening Grenade"
+parameters = [600.0, 720.0, 20.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Weakening_Grenade"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "WeakeningShot"
+display = "Weakening Shot"
+parameters = [720.0, 39.999996185302734, 2.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Weakening_Shot"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "Whirlwind"
+display = "Whirlwind"
+granted_by_weapon = "WeaponBarbarian-01"
+parameters = [230.0, 2.0, 1.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Whirlwind"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[skill]]
+id = "WildStrike"
+display = "Wild Strike"
+granted_by_weapon = "WeaponBeastmaster-02"
+parameters = [230.0, 20.0, 3.0]
+confidence = 0.9
+[[skill.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+[[skill.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Wild_Strike"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
