@@ -29,14 +29,19 @@ from pathlib import Path
 # One file per kind, and the kind is the table name inside it. Adding a kind means
 # adding a file, which keeps a record's kind out of the record itself where it would
 # be one more field to get wrong.
-KINDS = ("weapon", "rune")
+KINDS = ("weapon", "rune", "achievement")
 
 REQUIRED_FIELDS = ("id", "display", "confidence", "evidence")
 
 # Fields a kind cannot do without, beyond the ones every record carries. A rune with no
 # cost would be counted as free by the budget check and a rune with no slot as belonging
 # to no section, and both read as an answer rather than as a gap.
-REQUIRED_PER_KIND = {"rune": ("slot", "runic_power_cost")}
+REQUIRED_PER_KIND = {
+    "rune": ("slot", "runic_power_cost"),
+    # Stated on every achievement record rather than defaulted, for the reason a
+    # rune states its cost: a missing number reads as zero, and zero is a claim.
+    "achievement": ("grants_runic_power",),
+}
 
 SLOTS = ("tenacity", "versatility")
 
@@ -78,6 +83,11 @@ class CatalogEntry:
     # bought, so a record naming its node can be answered, and a record without one can
     # only be reported as unknown. Optional because most kinds have no such node.
     unlocked_by: str | None = None
+    # The achievement a rune unlocks through, spelled the way the save spells it rather
+    # than the way the install does, because the save is what this is matched against.
+    # The two vocabularies overlap without being the same set, so the value here is a
+    # translation the extractor documents and a save was used to falsify.
+    unlocked_by_achievement: str | None = None
     # The numeric parameters the installed game stores for this record, in its own
     # order. Kept apart from the prose effect on purpose: the prose comes from whichever
     # source described the rune and the numbers are read from the build itself, so a
@@ -89,6 +99,11 @@ class CatalogEntry:
     # it and is written as a negative cost. Summing magnitudes would reject the build
     # that rune exists to make possible.
     runic_power_cost: int = 0
+    # How much runic power completing this achievement adds to the ceiling. The
+    # game grants it through five of them, and which five is not readable from
+    # the install, so it is a community claim carried on a record with its
+    # source rather than a list buried in the code that reads the save.
+    grants_runic_power: int = 0
 
 
 class Catalog:
@@ -180,6 +195,16 @@ def _read_record(where: str, kind: str, record: object) -> CatalogEntry:
     for field in REQUIRED_FIELDS + REQUIRED_PER_KIND.get(kind, ()):
         if field not in record:
             raise CatalogError(f"{where} has no {field}")
+    if "unlocked_by" in record and "unlocked_by_achievement" in record:
+        # Ownership answers from the node and never looks at the achievement, so a
+        # record naming both would report a rune as missing while the achievement that
+        # granted it sits completed in the save. Whether the game has runes with two
+        # routes is unestablished, and a record that asserts one is asking for a reading
+        # nothing here implements.
+        raise CatalogError(
+            f"{where} names both unlocked_by and unlocked_by_achievement, and only one "
+            "of the two decides ownership. Keep the route the save can prove."
+        )
     return CatalogEntry(
         id=_read_text(where, record, "id"),
         display=_read_text(where, record, "display"),
@@ -187,9 +212,13 @@ def _read_record(where: str, kind: str, record: object) -> CatalogEntry:
         confidence=_read_confidence(where, record),
         evidence=_read_evidence(where, record),
         unlocked_by=_read_optional_text(where, record, "unlocked_by"),
+        unlocked_by_achievement=_read_optional_text(
+            where, record, "unlocked_by_achievement"
+        ),
         parameters=_read_parameters(where, record),
         slot=_read_slot(where, record),
-        runic_power_cost=_read_cost(where, record),
+        runic_power_cost=_read_whole_number(where, record, "runic_power_cost"),
+        grants_runic_power=_read_whole_number(where, record, "grants_runic_power"),
     )
 
 
@@ -200,10 +229,10 @@ def _read_slot(where: str, record: Mapping[str, object]) -> str | None:
     return slot
 
 
-def _read_cost(where: str, record: Mapping[str, object]) -> int:
-    value = record.get("runic_power_cost", 0)
+def _read_whole_number(where: str, record: Mapping[str, object], field: str) -> int:
+    value = record.get(field, 0)
     if isinstance(value, bool) or not isinstance(value, int):
-        raise CatalogError(f"{where}: runic_power_cost must be a whole number")
+        raise CatalogError(f"{where}: {field} must be a whole number")
     return value
 
 

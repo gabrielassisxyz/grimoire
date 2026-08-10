@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pytest
 
-from grimoire.catalog import CatalogError, load
+from grimoire.catalog import KINDS, CatalogError, load
 
 PACK = Path(__file__).resolve().parents[1] / "packs/soulstone-survivors"
 PACK_CATALOG = PACK / "catalog"
@@ -445,6 +445,19 @@ class TestThePackItself:
         # identifier that says it rerolls damage rolls.
         catalog = load(PACK_CATALOG)
         assert catalog.id_for("ControlledChaos") == "RuneRerollDamageRolls"
+
+    def test_no_record_is_less_certain_than_the_pack_already_is(self) -> None:
+        # Nothing reads confidence yet. The advisor will, once it has a ranking to
+        # refuse, and until then the field is written and never checked, which is how a
+        # record arrives at 0.5 with nobody noticing. This is not that threshold and is
+        # not a policy about how certain a record must be: it pins where the pack
+        # actually sits, so dropping below it is a line someone changes on purpose.
+        # The floor is the one achievement resting on a save reading and a wiki row
+        # with no confirmation from the install.
+        catalog = load(PACK_CATALOG)
+        records = [e for kind in KINDS for e in catalog.entries_of_kind(kind)]
+        assert len(records) == len(catalog)
+        assert min(e.confidence for e in records) == 0.8
 
     def test_every_rune_record_carries_a_cost_and_a_slot(self) -> None:
         # The budget check reads both off every record it is handed, and a rune missing

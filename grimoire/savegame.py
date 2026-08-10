@@ -20,6 +20,7 @@ local data, and nothing here writes to it. See AGENTS.md, "Data and provenance".
 from __future__ import annotations
 
 import gzip
+import math
 import struct
 from collections.abc import Iterable
 from dataclasses import dataclass
@@ -153,6 +154,30 @@ class PayloadReader:
                 f"int32 needs 4 bytes, {self.remaining} left at {self._pos}"
             )
         (value,) = struct.unpack_from("<i", self._data, self._pos)
+        self._pos += 4
+        return value
+
+    def read_int64(self) -> int:
+        if self.remaining < 8:
+            raise SaveFormatError(
+                f"int64 needs 8 bytes, {self.remaining} left at {self._pos}"
+            )
+        (value,) = struct.unpack_from("<q", self._data, self._pos)
+        self._pos += 8
+        return value
+
+    def read_float32(self) -> float:
+        if self.remaining < 4:
+            raise SaveFormatError(
+                f"float32 needs 4 bytes, {self.remaining} left at {self._pos}"
+            )
+        (value,) = struct.unpack_from("<f", self._data, self._pos)
+        if not math.isfinite(value):
+            # Four bytes read at the wrong offset are far more likely to decode as a
+            # denormal or a nan than as a plausible number, so this is where a layout
+            # that has drifted announces itself rather than returning something that
+            # only looks wrong much later.
+            raise SaveFormatError(f"float32 at {self._pos} is {value}, not a number")
         self._pos += 4
         return value
 

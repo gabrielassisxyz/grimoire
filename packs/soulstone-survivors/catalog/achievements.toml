@@ -1,0 +1,121 @@
+# Achievements that raise the runic power ceiling.
+#
+# Only these five are here, and the file exists for one reason: how much runic power a
+# player has decides whether a build can be loaded at all, and the game splits that
+# number in half. Five points come from a skill tree node the save states outright. The
+# other five come from achievements, and nothing in the installed game says which ones.
+#
+# That gap was looked for rather than assumed. Every achievement object in the install
+# was searched for a reference to runic power and exactly one turned up, the achievement
+# awarded for already having five of it, which is the opposite of what was wanted. The
+# reward an achievement pays is not a string in its record, so the pairing is only
+# available from a community source.
+#
+# So each record below is two claims from two places, kept apart on purpose. That the
+# identifier exists and is spelled this way is read from the install. That completing it
+# grants a runic power point is read from the wiki. The save then supplies the third
+# part, whether this player has completed it, which is why none of these records says
+# anything about that: a catalog describes the game, not a profile.
+#
+# The display name is the unlock condition rather than the name the interface shows.
+# The interface's name for an achievement has not been extracted, and inventing one to
+# fill a required field would be worse than using the text that actually identifies it
+# to a reader.
+
+[[achievement]]
+id = "CompleteAffixTierSurvivorsDesert6"
+display = "Win a match with all curse tiers up to VI enabled on The Scorching Valley"
+grants_runic_power = 1
+# The one record here whose identifier is not in the install, and the only one that
+# cannot cite it. The game's own achievement objects name the curse tier ones
+# ReachAffixTierProgressionPerMap-<Map>-<tier> and hold no Desert entry at all, while
+# the save writes CompleteAffixTierSurvivors<Map><tier>. Two naming schemes for what
+# reads as the same thing, and nothing checked so far says they are the same thing, so
+# this rests on the save alone plus the wiki's claim about what the condition grants.
+#
+# Desert is the Scorching Valley, from the same map table the rune extraction uses.
+confidence = 0.8
+
+[[achievement.evidence]]
+type = "save_file"
+domain = "achievementprogression"
+slot = "5"
+write_counter = "1026"
+build_id = "1.5d2"
+
+[[achievement.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[achievement]]
+id = "CompleteBossRushCycle3"
+display = "Complete 100% of Overlord Mode cycle 3"
+grants_runic_power = 1
+# The game calls this mode boss rush and the wiki calls it Overlord. The same pair shows
+# up in the rune catalog, where one rune could only be joined by its effect because the
+# two sources also disagree on the cycle number.
+confidence = 0.9
+
+[[achievement.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[achievement.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[achievement]]
+id = "ReachTotalBossesKilled600"
+display = "Eliminate a total of 600 Lords of the Void"
+grants_runic_power = 1
+confidence = 0.9
+
+[[achievement.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[achievement.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[achievement]]
+id = "ReachTotalEnemiesKilled500000"
+display = "Eliminate a total of 500,000 enemies"
+grants_runic_power = 1
+confidence = 0.9
+
+[[achievement.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[achievement.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"
+
+[[achievement]]
+id = "CompleteMatchInLessThanTime8"
+display = "Complete a match in less than 8:00 minutes"
+grants_runic_power = 1
+confidence = 0.9
+
+[[achievement.evidence]]
+type = "game_asset"
+asset_path = "Soulstone Survivors_Data/resources.assets"
+build_id = "1.5d2"
+
+[[achievement.evidence]]
+type = "community_source"
+url = "https://soulstone-survivors.fandom.com/wiki/Runes"
+retrieved = "2026-08-08"
+game_version = "unstated"

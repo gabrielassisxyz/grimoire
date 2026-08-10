@@ -13,10 +13,12 @@
 # character's equipped weapon as WeaponBarbarian-04. Two unrelated readings agree on the
 # same position, so the row order is the identifier order.
 #
-# That save reading is stated here in prose and not in the evidence of the record it
-# supports, because none of the four classes describes reading the player's own save.
-# It is the strongest single piece of evidence in this pack and the only one a reader
-# cannot get at mechanically, which is an argument for a class that covers it.
+# That save reading was stated here in prose rather than in the evidence of the record
+# it supports, because no evidence class described reading the player's own save. The
+# `save_file` class exists now and the anchor belongs in the record, where a check can
+# reach it: the strongest evidence in this pack should not be the part that lives in a
+# comment. Moving it needs the rotation slot and write counter the class requires, which
+# means reading the domain again rather than copying the prose across.
 #
 # Only the pilot character is covered. The other twenty-two are absent rather than
 # guessed at, and their absence is a gap the resolver reports by name.

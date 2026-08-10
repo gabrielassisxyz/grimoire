@@ -12,6 +12,7 @@ from pathlib import Path
 
 import pytest
 
+from grimoire.achievements import Achievement
 from grimoire.catalog import CatalogError, load
 from grimoire.ownership import OwnershipError, read_rune_ownership
 from grimoire.skilltree import SkillTreeNode
@@ -48,12 +49,24 @@ id = "RuneMasteryFire"
 display = "Skill Mastery: Fire"
 slot = "versatility"
 runic_power_cost = 0
+unlocked_by_achievement = "CompleteMatchInLessThanTime12Pyromancer"
 confidence = 0.9
 [[rune.evidence]]
 type = "community_source"
 url = "https://soulstone-survivors.fandom.com/wiki/Runes"
 retrieved = "2026-08-08"
-game_version = "1.5d2"
+game_version = "unstated"
+
+[[rune]]
+id = "RuneNamesNothing"
+display = "Names nothing"
+slot = "versatility"
+runic_power_cost = 0
+confidence = 0.9
+[[rune.evidence]]
+type = "game_asset"
+asset_path = "a"
+build_id = "1.5d2"
 """
 
 
@@ -65,6 +78,14 @@ def catalog(tmp_path: Path):
 
 def bought(*node_ids: str) -> list[SkillTreeNode]:
     return [SkillTreeNode(node_id=n, level=1) for n in node_ids]
+
+
+def recorded(**completion: bool) -> list[Achievement]:
+    """Achievements the save knows about, each done or not."""
+    return [
+        Achievement(achievement_id=k, progress=1.0 if v else 0.4, completed=v)
+        for k, v in completion.items()
+    ]
 
 
 class TestWhatTheSaveProves:
@@ -104,6 +125,7 @@ class TestWhatTheSaveProves:
             "RuneExtraCritChance",
             "RuneExtraDamageWhileBossIsAlive",
             "RuneMasteryFire",
+            "RuneNamesNothing",
         ]
         assert len(set(total)) == len(total)
 
@@ -126,6 +148,18 @@ class TestAgainstTheRealPack:
         entry = load(PACK_CATALOG).entry("RuneExtraDamageWhileBossIsAlive")
         assert entry.unlocked_by == "Necromancer_T02S01"
 
+    def test_no_rune_is_joined_to_an_achievement_the_game_has_superseded(self) -> None:
+        # A superseded achievement object survives in the install and the save never
+        # writes its id, so a rune joined to one is undecidable for every player who
+        # ever lives. It reads as a limit of the save rather than as the join having
+        # picked the wrong one of two objects, which is why it went unnoticed.
+        joined = [
+            entry.unlocked_by_achievement
+            for entry in load(PACK_CATALOG).entries_of_kind("rune")
+            if entry.unlocked_by_achievement
+        ]
+        assert [i for i in joined if i.endswith("old")] == []
+
 
 def test_an_unlocked_by_that_is_not_text_is_refused(tmp_path: Path) -> None:
     (tmp_path / "runes.toml").write_text(
@@ -138,6 +172,23 @@ def test_an_unlocked_by_that_is_not_text_is_refused(tmp_path: Path) -> None:
         load(tmp_path)
 
 
+def test_a_rune_naming_both_unlock_routes_is_refused(tmp_path: Path) -> None:
+    # Ownership decides on the node and never reaches the achievement, so a record
+    # carrying both would report the rune as not owned while the achievement that
+    # granted it sits completed in the save. Refusing it at load keeps that reading
+    # from being made by whichever branch happened to run first.
+    (tmp_path / "runes.toml").write_text(
+        '[[rune]]\nid = "R"\ndisplay = "D"\nslot = "tenacity"\n'
+        "runic_power_cost = 0\n"
+        'unlocked_by = "Necromancer_T02S01"\nunlocked_by_achievement = "Something"\n'
+        "confidence = 0.9\n"
+        '[[rune.evidence]]\ntype = "game_asset"\n'
+        'asset_path = "a"\nbuild_id = "1.5d2"\n'
+    )
+    with pytest.raises(CatalogError, match="names both unlocked_by"):
+        load(tmp_path)
+
+
 def test_asking_about_a_rune_the_catalog_never_had_is_loud(catalog) -> None:
     # A misspelled identifier used to answer "undecidable", which is a real state for a
     # rune no tree grants. So a typo in a build read as a rune the save merely cannot
@@ -146,3 +197,43 @@ def test_asking_about_a_rune_the_catalog_never_had_is_loud(catalog) -> None:
     ownership = read_rune_ownership(catalog, bought("Houndmaster_T03S01"))
     with pytest.raises(OwnershipError, match="RuneMasteryElectirc"):
         ownership.describe("RuneMasteryElectirc")
+
+
+class TestWhatTheAchievementsProve:
+    def test_a_rune_whose_achievement_is_complete_is_owned(self, catalog) -> None:
+        ownership = read_rune_ownership(
+            catalog,
+            bought(),
+            recorded(CompleteMatchInLessThanTime12Pyromancer=True),
+        )
+        assert ownership.describe("RuneMasteryFire") == "owned"
+
+    def test_a_rune_whose_achievement_is_unfinished_is_not_owned(self, catalog) -> None:
+        ownership = read_rune_ownership(
+            catalog,
+            bought(),
+            recorded(CompleteMatchInLessThanTime12Pyromancer=False),
+        )
+        assert ownership.describe("RuneMasteryFire") == "not owned"
+
+    def test_an_achievement_the_save_never_mentions_is_undecidable(
+        self, catalog
+    ) -> None:
+        # Absence is not incompletion, and reading it as one reported three runes this
+        # player has equipped as runes they do not own. The install names achievements
+        # the save has no record of at all, so this is the common case rather than a
+        # defensive one.
+        ownership = read_rune_ownership(catalog, bought(), recorded(SomethingElse=True))
+        assert ownership.describe("RuneMasteryFire") == "undecidable"
+
+    def test_without_the_achievement_domain_those_runes_stay_undecidable(
+        self, catalog
+    ) -> None:
+        # A caller that has not opened that file gets an honest unknown, not sixty-two
+        # runes reported as missing on the strength of evidence nobody read.
+        ownership = read_rune_ownership(catalog, bought())
+        assert ownership.describe("RuneMasteryFire") == "undecidable"
+
+    def test_a_rune_naming_neither_is_a_gap_in_the_catalog(self, catalog) -> None:
+        ownership = read_rune_ownership(catalog, bought(), recorded(Anything=True))
+        assert ownership.describe("RuneNamesNothing") == "undecidable"
