@@ -54,8 +54,22 @@ applies = ["Dazed"]
 # Many small ticks, each applying Dazed. Single-target setup for ThunderingSlash.
 # The release notes for the installed build raise this from one stack to four, so the
 # guide's weighting of it is understated by a factor the ranker must not inherit.
-disagreement = "guide predates a fourfold increase in stacks applied"
-evidence = { type = "community_source", source = "release-notes", game_version = "1.5d" }
+#
+# The install now states its own numbers, [0.4, 10.0, 135.0, 4.0], and they narrow this
+# from an argument between two prose sources to one open question. The wiki snapshot
+# prints 300 damage, 1% Dazed and 10 hits; the install agrees on 10, disagrees on the
+# damage, and holds 4 where the snapshot holds 1. That factor is the one the release
+# notes describe, arrived at from a source that has never read them.
+#
+# It is still not settled, and the remaining step is small and specific. Which position
+# in that list is the Dazed value is not established: the mapping is read off a tooltip
+# the wiki captured at an older version, so it is an inference from a stale layout. The
+# five other skills in this build have every install parameter reproduced exactly in
+# their own wiki numbers, which is what makes this one the exception rather than the
+# rule. Reading the current Lightning Beam tooltip off the game's own screen closes it,
+# and only then does the confidence above move.
+disagreement = "the install holds 4 where the wiki snapshot holds 1, and which parameter position carries the Dazed value is unread"
+evidence = { type = "game_asset", source = "install", game_version = "1.5d2" }
 
 [[skills]]
 id = "PowerConductor"

@@ -114,7 +114,8 @@ class TestShippedPilot:
         # and a file that looked settled while resting on it would be worse than one
         # that never recorded the conflict.
         assert pilot.disagreements == (
-            "LightningBeam: guide predates a fourfold increase in stacks applied",
+            "LightningBeam: the install holds 4 where the wiki snapshot holds 1, and "
+            "which parameter position carries the Dazed value is unread",
         )
 
     def test_a_disagreement_the_install_settled_is_gone_from_the_file(
