@@ -29,7 +29,7 @@ from pathlib import Path
 # One file per kind, and the kind is the table name inside it. Adding a kind means
 # adding a file, which keeps a record's kind out of the record itself where it would
 # be one more field to get wrong.
-KINDS = ("weapon", "rune", "achievement")
+KINDS = ("weapon", "rune", "achievement", "skill")
 
 REQUIRED_FIELDS = ("id", "display", "confidence", "evidence")
 
@@ -104,6 +104,12 @@ class CatalogEntry:
     # the install, so it is a community claim carried on a record with its
     # source rather than a list buried in the code that reads the save.
     grants_runic_power: int = 0
+    # The weapon whose record names this skill, where one does. Most skills come from
+    # the general pool and name none. It is deliberately not checked against the weapon
+    # records: the weapons catalog is the pilot's narrow slice and the skills name
+    # weapons across every character, so requiring resolution would refuse a fact the
+    # install states outright in order to protect a gap that is already known.
+    granted_by_weapon: str | None = None
 
 
 class Catalog:
@@ -111,7 +117,9 @@ class Catalog:
 
     def __init__(self, entries: list[CatalogEntry]) -> None:
         self._by_id = {e.id: e for e in entries}
-        self._by_display = {e.display: e for e in entries}
+        self._by_display: dict[str, list[CatalogEntry]] = {}
+        for entry in entries:
+            self._by_display.setdefault(entry.display, []).append(entry)
 
     def __len__(self) -> int:
         return len(self._by_id)
@@ -131,22 +139,36 @@ class Catalog:
     def id_for(self, display: str, *, kind: str | None = None) -> str:
         """The internal identifier a displayed name refers to.
 
-        The kind is optional and is checked rather than used to search, since a name
-        that resolves to the wrong kind is a mistake in the caller worth reporting
-        instead of a lookup worth narrowing. A displayed name is unique across every
-        kind, which the loader enforces, so there is nothing for a kind to narrow.
+        The kind narrows the lookup rather than merely checking it, because the game
+        prints one name for records of different kinds: Purity is a rune and also a
+        skill. Without a kind an ambiguous name fails naming every claimant, which is
+        the only honest answer when the caller has not said which it meant. A name
+        matching exactly one record still resolves without a kind, so the common case
+        is unchanged.
         """
-        found = self._by_display.get(display)
-        if found is None:
+        candidates = self._by_display.get(display, [])
+        if kind is not None:
+            narrowed = [e for e in candidates if e.kind == kind]
+            if not narrowed and candidates:
+                kinds = ", ".join(sorted({e.kind for e in candidates}))
+                raise CatalogError(
+                    f"{display!r} is a {kinds} in the catalog, asked for as a {kind}"
+                )
+            candidates = narrowed
+        if not candidates:
             raise CatalogError(
                 f"catalog miss: no record for the name {display!r}. Add one to the "
                 f"matching file under packs/<game>/catalog/ with its evidence."
             )
-        if kind is not None and found.kind != kind:
-            raise CatalogError(
-                f"{display!r} is a {found.kind} in the catalog, asked for as a {kind}"
+        if len(candidates) > 1:
+            claimed = ", ".join(
+                f"{e.kind} {e.id}" for e in sorted(candidates, key=lambda e: e.id)
             )
-        return found.id
+            raise CatalogError(
+                f"the name {display!r} is claimed by {claimed}. Ask for the one you "
+                "mean by passing kind."
+            )
+        return candidates[0].id
 
     def display_for(self, identifier: str) -> str:
         return self.entry(identifier).display
@@ -219,6 +241,7 @@ def _read_record(where: str, kind: str, record: object) -> CatalogEntry:
         slot=_read_slot(where, record),
         runic_power_cost=_read_whole_number(where, record, "runic_power_cost"),
         grants_runic_power=_read_whole_number(where, record, "grants_runic_power"),
+        granted_by_weapon=_read_optional_text(where, record, "granted_by_weapon"),
     )
 
 
@@ -314,20 +337,36 @@ def _read_one_evidence(where: str, entry: object) -> Evidence:
 
 
 def _refuse_duplicates(entries: list[CatalogEntry], directory: Path) -> None:
-    """Two records claiming one name is a contradiction, not a preference.
+    """Two records of one kind claiming one name is a contradiction, not a preference.
 
     Whichever the loader kept would be arbitrary, and the one it dropped would go on
-    being cited in a build that now resolves to something else. Names collide across
-    kinds as readily as within one, so the check spans the whole catalog.
+    being cited in a build that now resolves to something else.
+
+    Identifiers are checked across the whole catalog and displayed names only within a
+    kind, and the difference is the game's rather than a preference. An identifier is
+    what the save writes and what a build stores, so two records sharing one would make
+    a reference ambiguous at the point where nothing can ask which was meant. A
+    displayed name is what the interface prints, and the interface reuses one freely:
+    Purity is a rune and also a skill. Requiring names to be unique across kinds
+    therefore refused a catalog that correctly described the game, and the earlier
+    reading that they never collide simply had not met a second kind large enough.
+    Ambiguity is handled where it can be answered instead, by id_for.
     """
-    for attribute in ("id", "display"):
-        seen: dict[str, CatalogEntry] = {}
-        for entry in entries:
-            key = getattr(entry, attribute)
-            clash = seen.get(key)
-            if clash is not None:
-                raise CatalogError(
-                    f"{directory}: {attribute} {key!r} is claimed by both "
-                    f"{clash.kind} {clash.id} and {entry.kind} {entry.id}"
-                )
-            seen[key] = entry
+    seen_ids: dict[str, CatalogEntry] = {}
+    seen_names: dict[tuple[str, str], CatalogEntry] = {}
+    for entry in entries:
+        clash = seen_ids.get(entry.id)
+        if clash is not None:
+            raise CatalogError(
+                f"{directory}: id {entry.id!r} is claimed by both "
+                f"{clash.kind} {clash.id} and {entry.kind} {entry.id}"
+            )
+        seen_ids[entry.id] = entry
+
+        clash = seen_names.get((entry.kind, entry.display))
+        if clash is not None:
+            raise CatalogError(
+                f"{directory}: display {entry.display!r} is claimed by two "
+                f"{entry.kind} records, {clash.id} and {entry.id}"
+            )
+        seen_names[(entry.kind, entry.display)] = entry
