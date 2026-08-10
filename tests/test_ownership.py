@@ -237,3 +237,72 @@ class TestWhatTheAchievementsProve:
     def test_a_rune_naming_neither_is_a_gap_in_the_catalog(self, catalog) -> None:
         ownership = read_rune_ownership(catalog, bought(), recorded(Anything=True))
         assert ownership.describe("RuneNamesNothing") == "undecidable"
+
+
+class TestWhatTheSavedPresetsProve:
+    def test_a_rune_in_a_preset_is_owned_though_no_join_reaches_it(
+        self, catalog
+    ) -> None:
+        # The case this route exists for. Nothing about how the rune unlocks is
+        # knowable, and the player has it equipped, which settles the question without
+        # answering it.
+        ownership = read_rune_ownership(
+            catalog, bought(), recorded(Anything=True), ["RuneNamesNothing"]
+        )
+        assert ownership.describe("RuneNamesNothing") == "owned"
+
+    def test_a_rune_whose_achievement_the_save_omits_is_settled_by_a_preset(
+        self, catalog
+    ) -> None:
+        # The real shape of the two runes this found: the install and the save spell
+        # their achievement differently, so the join can never resolve and the rune is
+        # undecidable for every player. Equipping it is the only evidence left.
+        without = read_rune_ownership(catalog, bought(), recorded(SomethingElse=True))
+        assert without.describe("RuneMasteryFire") == "undecidable"
+        with_preset = read_rune_ownership(
+            catalog, bought(), recorded(SomethingElse=True), ["RuneMasteryFire"]
+        )
+        assert with_preset.describe("RuneMasteryFire") == "owned"
+
+    def test_a_preset_never_moves_a_rune_the_other_routes_already_settled(
+        self, catalog
+    ) -> None:
+        # Presets promote and never demote. A rune absent from every preset is a rune
+        # the player has not equipped lately, which says nothing about owning it.
+        ownership = read_rune_ownership(
+            catalog, bought("Houndmaster_T03S01"), None, ["RuneExtraCritChance"]
+        )
+        assert ownership.describe("RuneExtraCritChance") == "owned"
+        assert ownership.owned.count("RuneExtraCritChance") == 1
+
+    def test_a_preset_contradicting_an_unlock_route_is_loud(self, catalog) -> None:
+        # Both facts come from the same save, so a disagreement is a broken join or an
+        # unlock a patch moved. Promoting silently would hide the first and leaving it
+        # not owned would deny a rune the player has equipped.
+        with pytest.raises(OwnershipError, match="RuneExtraDamageWhileBossIsAlive"):
+            read_rune_ownership(
+                catalog,
+                bought("Houndmaster_T03S01"),
+                None,
+                ["RuneExtraDamageWhileBossIsAlive"],
+            )
+
+    def test_a_preset_rune_the_catalog_never_had_is_loud(self, catalog) -> None:
+        # On a save written by a newer build than the pack was extracted from this is
+        # what staleness looks like, and the project requires staleness to be a state
+        # the code can report rather than one it absorbs.
+        with pytest.raises(OwnershipError, match="RuneFromALaterPatch"):
+            read_rune_ownership(catalog, bought(), None, ["RuneFromALaterPatch"])
+
+    def test_every_rune_is_still_accounted_for_exactly_once(self, catalog) -> None:
+        ownership = read_rune_ownership(
+            catalog, bought("Necromancer_T02S01"), None, ["RuneMasteryFire"]
+        )
+        total = ownership.owned + ownership.not_owned + ownership.undecidable
+        assert sorted(total) == [
+            "RuneExtraCritChance",
+            "RuneExtraDamageWhileBossIsAlive",
+            "RuneMasteryFire",
+            "RuneNamesNothing",
+        ]
+        assert len(set(total)) == len(total)
